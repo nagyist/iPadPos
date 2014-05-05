@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectGuid>{3FC22CC0-C984-4633-B805-342DFD33090B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>iPadPos</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>iPadPos</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG;__MOBILE__;__IOS__;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchDebug>true</MtouchDebug>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <DefineConstants>__MOBILE__;__IOS__;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <MtouchLink>None</MtouchLink>
+    <ConsolePause>false</ConsolePause>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG;__MOBILE__;__IOS__;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <DefineConstants>__MOBILE__;__IOS__;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Ad-Hoc</OutputPath>
+    <DefineConstants>__MOBILE__;__IOS__;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <BuildIpa>true</BuildIpa>
+    <CodesignProvision>Automatic:AdHoc</CodesignProvision>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\AppStore</OutputPath>
+    <DefineConstants>__MOBILE__;__IOS__;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>Automatic:AppStore</CodesignProvision>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\" />
+    <Folder Include="Helpers\" />
+    <Folder Include="UI\" />
+    <Folder Include="UI\Controls\" />
+    <Folder Include="UI\ViewControllers\" />
+    <Folder Include="UI\Cells\" />
+    <Folder Include="UI\Controls\ViewComponents\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Info.plist" />
+    <None Include="Entitlements.plist" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="AppDelegate.cs" />
+    <Compile Include="UI\ViewControllers\InvoiceViewController.cs" />
+    <Compile Include="UI\ViewControllers\BaseViewController.cs" />
+    <Compile Include="App.cs" />
+    <Compile Include="Helpers\ObservableTableView.cs" />
+    <Compile Include="UI\Controls\InvoiceTableView.cs" />
+    <Compile Include="Helpers\Bind.cs" />
+    <Compile Include="UI\Cells\InvoiceLineCell.cs" />
+    <Compile Include="UI\Controls\InvoiceSideBar.cs" />
+    <Compile Include="Helpers\EasyLayout.cs" />
+    <Compile Include="UI\Controls\ItemSearchView.cs" />
+    <Compile Include="UI\Cells\SubTotalCell.cs" />
+    <Compile Include="UI\Cells\TotalCell.cs" />
+    <Compile Include="UI\Cells\DiscountCell.cs" />
+    <Compile Include="UI\Cells\PayCell.cs" />
+    <Compile Include="Helpers\CellTableViewSource.cs" />
+    <Compile Include="UI\Cells\ICellSelectable.cs" />
+    <Compile Include="UI\Cells\CustomerCell.cs" />
+    <Compile Include="UI\Controls\InvoiceBottomView.cs" />
+    <Compile Include="UI\ViewControllers\CustomerSearchViewController.cs" />
+    <Compile Include="UI\ViewControllers\CustomerInformationViewController.cs" />
+    <Compile Include="UI\Controls\IViewComponent.cs" />
+    <Compile Include="UI\Controls\ColumnView.cs" />
+    <Compile Include="UI\Cells\ColumnCell.cs" />
+    <Compile Include="UI\Cells\InvoiceHeaderCell.cs" />
+    <Compile Include="UI\Controls\ViewComponents\ViewComponentContainer.cs" />
+    <Compile Include="UI\Controls\UIBorderedButton.cs" />
+    <Compile Include="UI\Cells\ButtonCell.cs" />
+    <Compile Include="Theme.cs" />
+  </ItemGroup>
+  <Import Project="..\iPadPosShared\iPadPosShared.projitems" Label="Shared" Condition="Exists('..\iPadPosShared\iPadPosShared.projitems')" />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\FlyOutNavigation\FlyoutNavigation\FlyoutNavigation.csproj">
+      <Project>{E98F7600-6C2E-4586-A78C-D42BA89445B9}</Project>
+      <Name>FlyoutNavigation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\MonoTouch.Dialog\MonoTouch.Dialog\MonoTouch.Dialog.csproj">
+      <Project>{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}</Project>
+      <Name>MonoTouch.Dialog</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\iOSHelpers\iOSHelpers\iOSHelpers.csproj">
+      <Project>{4483B8BC-4226-4F9A-9418-4E554BF5EF1D}</Project>
+      <Name>iOSHelpers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\contacts.png" />
+    <BundleResource Include="Resources\contacts%402x.png" />
+  </ItemGroup>
+</Project>
