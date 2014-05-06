@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using System.IO;
 using System.Collections.Generic;
+using System.Text;
 
 namespace iPadPos
 {
@@ -23,7 +24,8 @@ namespace iPadPos
 		}
 		//const string baseUrl = "http://clancey.dyndns.org:83/pos/api/";
 
-		const string baseUrl = "http://10.0.1.36/pos/api/";
+		//const string baseUrl = "http://10.0.1.36/pos/api/";
+		const string baseUrl = "http://10.0.1.14:32021/api/";
 
 		public async Task<List<Customer>> SearchCustomer(string cust)
 		{
@@ -34,7 +36,10 @@ namespace iPadPos
 		{
 			return await Get<Item>("items",id);
 		}
-
+		public async Task<Customer> GetCustomer(string id)
+		{
+			return await Get<Customer>("Customer",id);
+		}
 	
 
 		public async Task<List<T>> GetGenericList<T>(string path)
@@ -47,17 +52,31 @@ namespace iPadPos
 
 		public Task<Stream> GetUrlStream(string path)
 		{
-			var client = new HttpClient ();
-			client.BaseAddress = new Uri(baseUrl);
+			var client = CreateClient ();
 			return client.GetStreamAsync (path);
 		}
 
 
 		public Task<string> GetUrl(string path)
 		{
+			var client = CreateClient ();
+			return client.GetStringAsync (path);
+		}
+
+		HttpClient CreateClient()
+		{
 			var client = new HttpClient ();
 			client.BaseAddress = new Uri(baseUrl);
-			return client.GetStringAsync (path);
+			return client;
+		}
+
+		public async Task<bool> PostInvoice(Invoice invoice)
+		{
+			var client = CreateClient ();
+			var json = Newtonsoft.Json.JsonConvert.SerializeObject (invoice);
+			var respons = await client.PostAsync ("Invoice", new StringContent (json, Encoding.UTF8,"application/json"));
+			var success = bool.Parse(await respons.Content.ReadAsStringAsync ());
+			return success;
 		}
 		public async Task<T> Get<T>(string path,string id = "")
 		{

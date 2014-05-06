@@ -25,5 +25,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Data\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\SQLite.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Locations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Payment.cs" />
   </ItemGroup>
 </Project>

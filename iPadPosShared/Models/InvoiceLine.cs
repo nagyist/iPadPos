@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace iPadPos
 {
@@ -14,12 +15,23 @@ namespace iPadPos
 			Cost = item.Cost;
 			TaxCode = item.TaxCode;
 			Price = item.Price;
-			TransactionCode = "S";
+			TransactionCode = item.TransCode;
+			ItemId = item.ItemID;
+			OnHand = item.OnHand;
 		}
 
 		public int ParentRecordId { get; set; }
 
+		string itemId;
+		public string ItemId {
+			get {
+				return itemId;
+			}
+			set { ProcPropertyChanged (ref itemId, value); }
+		}
+
 		string transactionCode;
+		[JsonProperty("TransCode")]
 		public string TransactionCode {
 			get {
 				return transactionCode;

@@ -48,7 +48,7 @@ namespace iPadPos
 
 		#region ICellSelectable implementation
 
-		public void Tapped ()
+		public virtual void Tapped ()
 		{
 			Clicked ();
 		}

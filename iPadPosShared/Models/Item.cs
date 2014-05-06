@@ -92,6 +92,7 @@ namespace iPadPos
 
 		public string TransCode { get; set; }
 	
+		public int OnHand {get;set;}
 
 		#endregion
 	}

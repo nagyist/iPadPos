@@ -13,6 +13,7 @@ namespace iPadPos
 		{
 			Customer = new Customer ();
 			Items = new ObservableCollection<InvoiceLine> ();
+			Payments = new List<Payment> ();
 		}
 		public int RecordId {get;set;}
 
@@ -26,7 +27,10 @@ namespace iPadPos
 
 		public string RegisterId { get; set; }
 
+		public List<Payment> Payments {get;set;}
+
 		ObservableCollection<InvoiceLine> items;
+		[JsonProperty("Lines")]
 		public ObservableCollection<InvoiceLine> Items {
 			get {
 				return items;
