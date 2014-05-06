@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30324.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BestPosApi", "BestPosApi\BestPosApi.csproj", "{0B0D3EC6-CFE8-4C43-8809-06C352253F56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simpler", "..\..\..\..\Projects\Simpler\app\Simpler\Simpler.csproj", "{6A2F45F9-172C-4B48-9344-B64646958AFC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simpler", "..\..\Simpler\app\Simpler\Simpler.csproj", "{6A2F45F9-172C-4B48-9344-B64646958AFC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

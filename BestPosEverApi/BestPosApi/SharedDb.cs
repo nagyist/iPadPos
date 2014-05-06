@@ -12,7 +12,7 @@ namespace WebApplication1
 
 	internal static class SharedDb
 	{
-		//public static string DefaltDatabaseConnection = "Driver=Adaptive Server Anywhere 12;DatabaseFile=c://Posim//Posim.db;UID=dba;PWD=mtdew;DBN=posim;LINKS=TCPIP(HOST=localhost);";
+		//public static string DefaltDatabaseConnection = "Driver=Adaptive Server Anywhere 6;Dsn=Posim;DatabaseFile=c://Posim//Posim.db;UID=dba;PWD=mtdew;DBN=posim;LINKS=TCPIP(HOST=localhost);";
 		public static string DefaltDatabaseConnection = "Dsn=Posim;uid=dba;pwd=mtdew";//"Data Source=OFFICE-PC;Initial Catalog=eMAPSS_DB_032614;User Id=sa;Password=openup;";
 		static OdbcConnection GetConnection()
 		{
@@ -57,6 +57,26 @@ namespace WebApplication1
 				throw;
 			}
 		}
+
+		public static int GetInt(string sql, object data = null)
+		{
+			try
+			{
+				using (var connection = GetConnection())
+				{
+					var obj = Db.GetScalar(connection, sql, data);
+					return (int)obj;
+				}
+			}
+			catch (Exception ex)
+			{
+				if (ex.Message == "Sequence contains no elements" || ex.Message.Contains("DBNull"))
+					return 0;
+
+				throw;
+			}
+		}
+
 
 		public static object Get(string sql, object data = null)
 		{
@@ -111,16 +131,16 @@ namespace WebApplication1
 			}
 		}
 
-		public static int Insert(string sql, object item)
-		{
-			using (var connection = GetConnection())
-			{
-				sql += "\r\n";
-				sql += "SELECT @@IDENTITY";
-				var id = Db.GetScalar(connection, sql, item);
-				return Convert.ToInt32(id);
-			}
-		}
+		//public static int Insert(string sql, object item)
+		//{
+		//	using (var connection = GetConnection())
+		//	{
+		//		sql += "\r\n";
+		//		sql += "SELECT @@IDENTITY";
+		//		var id = Db.GetScalar(connection, sql, item);
+		//		return Convert.ToInt32(id);
+		//	}
+		//}
 
 		public static DataSet GetDataSet(string sql)
 		{
