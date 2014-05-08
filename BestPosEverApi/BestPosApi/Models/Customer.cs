@@ -50,6 +50,7 @@ namespace WebApplication1.Models
 
 		public DateTime LastUpdate { get; set; }
 
+		public double OnAccount { get; set; }
 
 		public DateTime DateCreated { get; set; }
 		public bool doesThisMatch(string inputString)

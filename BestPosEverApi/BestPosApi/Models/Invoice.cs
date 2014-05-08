@@ -52,10 +52,11 @@ namespace WebApplication1.Models
 
 			lines.AddRange(Payments.Select(x=> new InvoiceLine
 			{
-				Description = x.PaymentType,
+				Description = x.PaymentType.Id,
 				TransCode = "Y",
 				Price = x.Amount,
 				Qty = 0,
+				TaxCode = "3",
 			}));
 
 			int i = 1;
