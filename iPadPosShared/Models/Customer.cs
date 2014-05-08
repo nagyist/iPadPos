@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace iPadPos
 {
@@ -26,9 +27,11 @@ namespace iPadPos
 
 		public string Country { get; set; }
 
-		public string Phone { get; set; }
+		public string HomePhone { get; set; }
 
-		public string Misc1 { get; set; }
+		public string PhoneExt { get; set; }
+
+		public string CellPhone { get; set; }
 
 		public string Misc2 { get; set; }
 

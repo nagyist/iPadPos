@@ -44,7 +44,7 @@ namespace iPadPos
 		{
 			get{ return TitleColor (UIControlState.Normal); }
 			set{ 
-				if (TintColor != value)
+				if (TintColor.Description != value.Description)
 					TintColor = value;
 				SetTitleColor (value, UIControlState.Normal);
 			}

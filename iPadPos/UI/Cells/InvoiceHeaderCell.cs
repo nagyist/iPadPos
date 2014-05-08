@@ -9,9 +9,8 @@ namespace iPadPos
 		public const string Key = "InvoiceLineCell";
 		public InvoiceHeaderCell () : base (Key)
 		{
-			UIColor headerColor = UIColor.White;
-			BackgroundView = new BrightlyBlurredUIView{
-			};
+			UIColor headerColor = UIColor.Black;
+
 			BackgroundColor = UIColor.LightGray.ColorWithAlpha (.25f);
 			AutoAddSubview (Description = new UILabel {
 				Text = "Description",

@@ -7,7 +7,8 @@ namespace iPadPos
 	{
 		public PayCell () : base ("paycell")
 		{
-			BackgroundColor = UIColor.FromRGB (38, 143, 130);
+			BackgroundColor = Theme.Current.PayColor;
+			//BackgroundColor = UIColor.FromRGB (38, 143, 130);
 			this.TextLabel.TextColor = UIColor.White;
 			this.TextLabel.Font = UIFont.BoldSystemFontOfSize (20);
 		}

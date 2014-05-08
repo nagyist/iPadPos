@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Collections.Generic;
 using System.Linq;
 using Praeclarum.Bind;
+using iOSHelpers;
 
 namespace iPadPos
 {
@@ -62,12 +63,17 @@ namespace iPadPos
 			UITableViewCell change;
 			UITableViewCell totalCell;
 			UITableViewCell onAccountCell;
+			UIButton five;
+			UIButton ten;
+			UIButton twenty;
+
 
 			public PaymentView ()
 			{
-				BackgroundColor = UIColor.DarkGray;
+				const float rowHeight = 60;
+				BackgroundColor = UIColor.FromPatternImage(UIImage.FromBundle("homeScreen"));
 				Add (backgroundView = new UIView {
-					BackgroundColor = UIColor.White.ColorWithAlpha (.25f),
+					BackgroundColor = UIColor.Black.ColorWithAlpha (.5f),
 					ClipsToBounds = true,
 					Layer = {
 						BorderColor = UIColor.White.ColorWithAlpha (.75f).CGColor,
@@ -78,47 +84,99 @@ namespace iPadPos
 				backgroundView.Add (TotalLabel = new UILabel ());
 				backgroundView.Add (tableView = new ObservableTableView (UITableViewStyle.Grouped) {
 					ContentInset = new UIEdgeInsets (-36, 0, 0, 0),
-					BackgroundColor = UIColor.Black.ColorWithAlpha (.25f),
+					BackgroundColor = UIColor.Clear,
 					CellIdentifier = PaymentCell.Key,
 					CreateCellFunc = () => new PaymentCell (),
+					RowHeight = rowHeight,
 					BindCellAction = (cell, item) => {
 						(cell as PaymentCell).Payment = item as Payment;
 					},
 				});
+				var bgColor = UIColor.Black.ColorWithAlpha(.3f);
 				backgroundView.Add (rightTableView = new UITableView (RectangleF.Empty, UITableViewStyle.Grouped) {
 					ContentInset = new UIEdgeInsets (-36, 0, 0, 0),
 					SectionHeaderHeight = 0,
+					BackgroundColor = UIColor.Clear,
 					ScrollEnabled = false,
+					RowHeight = 60,
 					Source = new CellTableViewSource {
 						(onAccountCell = new SubTotalCell {
+							Frame = new RectangleF (0, 0, 320, 30),
 							TextLabel = {
 								Text = "On Account"
-							}
+							},
+							BackgroundColor = bgColor
 						}),
 						(totalCell = new SubTotalCell {
+							Frame = new RectangleF (0, 0, 320, 30),
 							TextLabel = {
 								Text = "Total"
-							}
+							},
+							BackgroundColor = bgColor
 						}),
 						(remaining = new TotalCell {
+							Frame = new RectangleF (0, 0, 320, 44),
 							TextLabel = {
 								Text = "Remaining",
 								TextColor = UIColor.White,
-							}
+							},
+							DetailTextLabel = {
+								Font = UIFont.BoldSystemFontOfSize(25),
+							},
+							BackgroundColor = bgColor
 						}),
 						(change = new TotalCell {
+							Frame = new RectangleF (0, 0, 320, rowHeight),
 							TextLabel = {
 								Text = "Change",
 								TextColor = UIColor.White,
 							},
+							DetailTextLabel = {
+								TextColor = Theme.Current.PayColor,
+							},
+							BackgroundColor = bgColor,
 							SeparatorInset = new UIEdgeInsets (0, 0, 0, 0),
 						}),
 						new PayCell {
-							Frame = new RectangleF (0, 0, 320, 100),
-							Text = "Post"
+							Frame = new RectangleF (0, 0, 320, 76),
+							Text = "Post",
+							Tapped = () =>{
+								Settings.Shared.LastPostedChange = invoice.Change;
+
+							}
 						}
 					}
 				});
+
+				backgroundView.Add(five = new TintedButton{
+					Title = "$5",
+					TitleColor = UIColor.White.ColorWithAlpha(.75f),
+					SelectedTintColor = Theme.Current.PayColor,
+				});
+				five.TouchUpInside += (object sender, EventArgs e) => {
+					Invoice.CashPayment.Amount = 5;
+				};
+				five.SizeToFit();
+
+				backgroundView.Add(ten = new TintedButton{
+					Title = "$10",
+					TitleColor = UIColor.White.ColorWithAlpha(.75f),
+					SelectedTintColor = Theme.Current.PayColor,
+				});
+				ten.TouchUpInside += (object sender, EventArgs e) => {
+					Invoice.CashPayment.Amount = 10;
+				};
+				ten.SizeToFit();
+
+				backgroundView.Add(twenty = new TintedButton{
+					Title = "$20",
+					TitleColor = UIColor.White.ColorWithAlpha(.75f),
+					SelectedTintColor = Theme.Current.PayColor,
+				});
+				twenty.TouchUpInside += (object sender, EventArgs e) => {
+					Invoice.CashPayment.Amount = 20;
+				};
+				twenty.SizeToFit();
 
 
 			}
@@ -126,11 +184,13 @@ namespace iPadPos
 			public override void LayoutSubviews ()
 			{
 				base.LayoutSubviews ();
-				var frame = new RectangleF (0, 0, 500, 274);
+				var frame = new RectangleF (0, 0, 500, 292);
+				float h = 54;
 				backgroundView.Frame = frame;
 				var c = Center;
 				c.Y -= 100;
 				backgroundView.Center = c;
+				frame.Height -= h;
 
 				var rightWidth = 250;
 				frame.Width -= rightWidth;
@@ -139,6 +199,22 @@ namespace iPadPos
 				frame.X = frame.Right;
 				frame.Width = rightWidth;
 				rightTableView.Frame = frame;
+
+				var bottom = frame.Bottom + 10;
+				frame = five.Frame;
+
+				var width = (backgroundView.Frame.Width - 40)/3;
+				frame.X = 10;
+				frame.Width = width;
+				frame.Y = bottom;
+				five.Frame = frame;
+
+				frame.X = frame.Right + 10;
+				ten.Frame = frame;
+
+				frame.X = frame.Right + 10;
+				twenty.Frame = frame;
+
 			}
 
 			public object Payments {

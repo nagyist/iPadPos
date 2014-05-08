@@ -6,11 +6,7 @@ namespace iPadPos
 {
 	public class Settings : BaseModel
 	{
-
-		public const string CurrentRegionKey = "CurrentRegionId";
-		public const string CurrentCountryKey = "CurrentCountryId";
-		public const string CurrentContinentKey = "CurrentContinentId";
-		public const string CurrentRegionTypeKey = "CurrentRegionTypeId";
+		public const string LastPostedChangeKey = "LastPostedChange";
 		public const string HasDataKey = "HadData";
 
 		static Settings shared;
@@ -25,24 +21,19 @@ namespace iPadPos
 			Database.Main.CreateTable<Setting> ();
 		}
 
-		public int CurrentRegionId{ 
-			get { return GetInt (CurrentRegionKey); }
-			set { SetValue (CurrentRegionKey, value); }
-		}
+	
 
-		public int CurrentRegiontype {
-			get{ return GetInt (CurrentRegionTypeKey); }
-			set{ SetValue (CurrentRegionTypeKey, value); }
+		public double LastPostedChange {
+			get { return GetDouble (LastPostedChangeKey); }
+			set { 
+				SetValue (LastPostedChangeKey, value);
+				ProcPropertyChanged ("LastPostedChangeString");
+			}
 		}
-
-		public int CurrentCountry {
-			get { return GetInt (CurrentCountryKey); }
-			set { SetValue (CurrentCountryKey, value); }
-		}
-
-		public int CurrentContinent {
-			get { return GetInt (CurrentContinentKey); }
-			set { SetValue (CurrentContinentKey, value); }
+		public string LastPostedChangeString
+		{
+			get{ return LastPostedChange.ToString ("C"); }
+			set{ LastPostedChange = double.Parse (value, System.Globalization.NumberStyles.Currency); }
 		}
 
 		public bool HasData

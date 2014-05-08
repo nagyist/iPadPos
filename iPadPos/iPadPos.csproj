@@ -145,6 +145,7 @@
     <Compile Include="UI\ViewControllers\NumberInputViewController.cs" />
     <Compile Include="UI\Controls\NumberEntryView.cs" />
     <Compile Include="UI\Controls\TintedButton.cs" />
+    <Compile Include="UI\Cells\LastPostedCell.cs" />
   </ItemGroup>
   <Import Project="..\iPadPosShared\iPadPosShared.projitems" Label="Shared" Condition="Exists('..\iPadPosShared\iPadPosShared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -165,5 +166,8 @@
   <ItemGroup>
     <BundleResource Include="Resources\contacts.png" />
     <BundleResource Include="Resources\contacts%402x.png" />
+    <BundleResource Include="Resources\homeScreen.png" />
+    <BundleResource Include="Resources\homeScreen%402x.png" />
+    <BundleResource Include="Resources\PaymentBG.png" />
   </ItemGroup>
 </Project>

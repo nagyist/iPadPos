@@ -11,7 +11,7 @@ namespace iPadPos
 		public const string Key = "PaymentCell";
 		public PaymentCell () : base(UITableViewCellStyle.Value1, Key)
 		{
-			BackgroundColor = UIColor.White.ColorWithAlpha(.10f);
+			BackgroundColor = UIColor.Clear;//White.ColorWithAlpha(.10f);
 			DetailTextLabel.Text = "$9,999,000.00";
 			TextLabel.TextColor = UIColor.White;
 			DetailTextLabel.TextColor = UIColor.Clear;

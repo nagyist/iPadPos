@@ -12,7 +12,11 @@ namespace iPadPos
 //				NavigationRoot = ne
 //			};
 
-			return new UINavigationController(new InvoiceViewController ());
+			return new UINavigationController(new InvoiceViewController ()){
+				NavigationBar = {
+					BarStyle = UIBarStyle.BlackTranslucent,
+				}
+			};
 		}
 	}
 }

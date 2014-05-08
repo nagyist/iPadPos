@@ -238,6 +238,12 @@ namespace iPadPos
 		{
 			get{ return Remaining.ToString ("C"); }
 		}
+
+		[Newtonsoft.Json.JsonIgnore]
+		public Payment CashPayment
+		{
+			get { return Payments.Where (x => x.PaymentType.Id == "Cash").FirstOrDefault (); }
+		}
 			
 	}
 }

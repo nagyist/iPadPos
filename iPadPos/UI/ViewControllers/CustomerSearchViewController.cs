@@ -37,7 +37,8 @@ namespace iPadPos
 			});
 			searchBar.SizeToFit ();
 			View.Add (tableView = new UITableView{
-				Source = (source = new SearchSource())
+				Source = (source = new SearchSource()),
+				RowHeight = 75,
 			});
 		}
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using MonoTouch.UIKit;
 
 namespace iPadPos
 {
@@ -9,7 +10,8 @@ namespace iPadPos
 			CellIdentifier = InvoiceLineCell.Key;
 			SectionHeaderHeight =RowHeight = 60;
 			ContentOffset = new System.Drawing.PointF (0, -100);
-			BackgroundColor = Theme.Current.BackgroundGray;
+			BackgroundView = null;
+			BackgroundColor = UIColor.Clear;
 		}
 
 		Invoice invoice;

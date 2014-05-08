@@ -19,12 +19,15 @@ namespace iPadPos
 		UITableViewCell email;
 		UITableViewCell phoneNumber;
 		UITableViewCell onAccount;
+		UITableViewCell lastPostedChange;
 		CellTableViewSource source;
 		UIPopoverController popover;
 		public Action Checkout { get; set; }
 		public InvoiceSideBar ()
 		{
+			BackgroundColor = UIColor.DarkGray;
 			AddSubview (tableView = new UITableView(RectangleF.Empty, UITableViewStyle.Grouped){
+				BackgroundColor = UIColor.Clear,
 				Source = source = new CellTableViewSource{
 					(customer = new CustomerPickerCell{
 						Tapped = async ()=>{
@@ -47,12 +50,14 @@ namespace iPadPos
 						Tapped = ()=>{
 							Checkout();
 						}
-					}
+					},(lastPostedChange = new LastPostedCell(){
+
+					}),
 				},
 				ScrollEnabled = false,
 				TableHeaderView = new UIView(new RectangleF(0,0,0,64)),
 			});
-
+			Binding.Create(() => lastPostedChange.DetailTextLabel.Text == Settings.Shared.LastPostedChangeString );
 			customerInfo = new UITableViewCell[] {
 				(email = new MiniCell {
 					TextLabel = {
@@ -117,7 +122,7 @@ namespace iPadPos
 			}
 
 			email.DetailTextLabel.Text = cust == null ? "" : cust.Email;
-			phoneNumber.DetailTextLabel.Text = cust == null ? "" : cust.Phone;
+			phoneNumber.DetailTextLabel.Text = cust == null ? "" : cust.HomePhone;
 			onAccount.DetailTextLabel.Text = cust == null ? "" : cust.OnAccount.ToString("C");
 
 			source.InsertRange (1, customerInfo);

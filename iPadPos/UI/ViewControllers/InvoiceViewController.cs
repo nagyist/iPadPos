@@ -1,6 +1,6 @@
 ﻿using System;
 using MonoTouch.UIKit;
-
+using iOSHelpers;
 namespace iPadPos
 {
 	public class InvoiceViewController : BaseViewController
@@ -50,6 +50,7 @@ namespace iPadPos
 
 		class InvoiceView : UIView
 		{
+			//UIImageView backgroundView;
 			public InvoiceViewController Parent { get; set; }
 
 			public InvoiceTableView InvoiceTable { get; set; }
@@ -63,6 +64,8 @@ namespace iPadPos
 
 			public InvoiceView ()
 			{
+				BackgroundColor = Theme.Current.BackgroundGray;
+				//Add(backgroundView = new UIImageView(UIImage.FromBundle("PaymentBG").Blur(50)));
 				Add (InvoiceTable = new InvoiceTableView ());
 				Add (SideBar = new InvoiceSideBar{
 					Checkout = ()=>{
@@ -72,6 +75,10 @@ namespace iPadPos
 				Add (BottomView = new InvoiceBottomView());
 
 				this.ConstrainLayout(()=> 
+//					backgroundView.Frame.X == Frame.X &&
+//					backgroundView.Frame.Width == Frame.Width &&
+//					backgroundView.Frame.Height == Frame.Height &&
+//					backgroundView.Frame.Top == Frame.Top &&
 
 					BottomView.Frame.Right == Frame.Right &&
 					BottomView.Frame.Width == Frame.Width &&

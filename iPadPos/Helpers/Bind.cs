@@ -485,9 +485,11 @@ namespace Praeclarum.Bind
 			if (s.NodeType == ExpressionType.MemberAccess) {
 
 				var m = (MemberExpression)s;
-				CollectTriggers (m.Expression, triggers);
-				var t = new Trigger { Expression = m.Expression, Member = m.Member };
-				triggers.Add (t);
+				if (m.Expression != null) {
+					CollectTriggers (m.Expression, triggers);
+					var t = new Trigger { Expression = m.Expression, Member = m.Member };
+					triggers.Add (t);
+				}
 
 			} else {
 				var b = s as BinaryExpression;
