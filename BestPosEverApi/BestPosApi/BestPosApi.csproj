@@ -162,7 +162,7 @@
     </Compile>
     <Compile Include="Helpers\SqlStringExtensions.cs" />
     <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\CustomerSearchController.cs" />
+    <Compile Include="Controllers\CustomerSearchController.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\InvoiceLine.cs" />
     <Compile Include="Models\InvoiceStatus.cs" />
