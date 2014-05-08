@@ -5,7 +5,7 @@ namespace iPadPos
 {
 	public class ButtonCell : UITableViewCell, ICellSelectable
 	{
-		public Action Clicked = ()=>{};
+		public Action Tapped = ()=>{};
 		public ButtonCell () : this("button")
 		{
 			//TextLabel.Layer.BorderWidth = .5f;
@@ -22,13 +22,7 @@ namespace iPadPos
 			TextLabel.TextAlignment = UITextAlignment.Center;
 		}
 
-		public override void TintColorDidChange ()
-		{
-			base.TintColorDidChange ();
 
-			TextLabel.Layer.BorderColor = TintColor.CGColor;
-			TextLabel.TextColor = TintColor;
-		}
 		public string Text
 		{
 			get{ return TextLabel.Text; }
@@ -48,9 +42,10 @@ namespace iPadPos
 
 		#region ICellSelectable implementation
 
-		public virtual void Tapped ()
+		public virtual void OnSelect ()
 		{
-			Clicked ();
+			if (Tapped != null)
+				Tapped ();
 		}
 
 		#endregion

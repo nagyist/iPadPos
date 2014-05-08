@@ -4,7 +4,7 @@ namespace iPadPos
 {
 	public interface ICellSelectable
 	{
-		void Tapped();
+		void OnSelect();
 	}
 }
 

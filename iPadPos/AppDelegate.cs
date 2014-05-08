@@ -4,6 +4,7 @@ using System.Linq;
 
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
+using MonoTouch.ObjCRuntime;
 
 namespace iPadPos
 {
@@ -27,13 +28,19 @@ namespace iPadPos
 		{
 			// create a new window instance based on the screen size
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
-
+			ApplyTheme ();
 			window.RootViewController = App.Create ();
 
 			window.MakeKeyAndVisible ();
-			
+			WebService.Main.SyncAll ();
 			return true;
 		}
+		void ApplyTheme()
+		{
+
+		}
+
+
 	}
 }
 

@@ -38,6 +38,13 @@ namespace iPadPos
 
 		public string Email { get; set; }
 
+		public double OnAccount { get; set;}
+
+		public override string ToString ()
+		{
+			return string.Format ("{0} {1}",FirstName, LastName);
+		}
+
 	}
 }
 

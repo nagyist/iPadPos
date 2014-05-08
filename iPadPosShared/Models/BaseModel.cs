@@ -29,8 +29,9 @@ namespace iPadPos
 		}
 		internal void ProcPropertyChanged(string propertyName)
 		{
-			if (PropertyChanged != null)
+			if (PropertyChanged != null) {
 				PropertyChanged (this, new PropertyChangedEventArgs (propertyName));
+			}
 		}
 		void OnPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
 		{
@@ -58,6 +59,15 @@ namespace iPadPos
 				return;
 			if(actionList.Contains(action))
 				actionList.Remove(action);
+			actions[property] = actionList;
+		}
+
+		public void UnSubscribeToProperty(string property)
+		{
+			List<Action> actionList;
+			if (!actions.TryGetValue (property, out actionList))
+				return;
+			actionList.Clear();
 			actions[property] = actionList;
 		}
 	}

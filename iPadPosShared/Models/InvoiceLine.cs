@@ -36,7 +36,23 @@ namespace iPadPos
 			get {
 				return transactionCode;
 			}
-			set { ProcPropertyChanged (ref transactionCode, value); }
+			set { 
+				if (ProcPropertyChanged (ref transactionCode, value) && TransType == null || TransType.Id != transactionCode)
+					TransType = Database.Main.Table<TransactionType> ().Where (x => x.Id == transactionCode).FirstOrDefault ();
+
+			}
+		}
+		TransactionType transType;
+		[JsonIgnore, SQLite.Ignore]
+		public TransactionType TransType {
+			get {
+				return transType;
+			}
+			set {
+				transType = value;
+				TransactionCode = TransType.Id;
+				Qty = Math.Abs (Qty) * TransType.Multiplier;
+			}
 		}
 
 		int qty;
@@ -64,8 +80,10 @@ namespace iPadPos
 				return price;
 			}
 			set { 
-				if(ProcPropertyChanged (ref price, value))
-					updateTotals();
+				if (ProcPropertyChanged (ref price, value)) {
+					updateTotals ();
+					ProcPropertyChanged ("PriceString");
+				}
 			}
 		}
 
@@ -98,11 +116,24 @@ namespace iPadPos
 			get {
 				return finalPrice;
 			}
-			set { ProcPropertyChanged (ref finalPrice, value); }
+			set { 
+				if (ProcPropertyChanged (ref finalPrice, value))
+					ProcPropertyChanged ("FinalPriceString");
+			}
 		}
 		void updateTotals()
 		{
 			FinalPrice = Qty * Price;
+		}
+
+		public string PriceString
+		{
+			get{return Price.ToString("C");}
+		}
+
+		public string FinalPriceString
+		{
+			get{return FinalPrice.ToString("C");}
 		}
 	}
 }

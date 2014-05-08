@@ -14,7 +14,8 @@ namespace iPadPos
 	{		
 		public UITableViewRowAnimation AddAnimation { get; set; }
 		public UITableViewRowAnimation DeleteAnimation { get; set; }
-
+		public Func<UITableViewCell> CreateCellFunc {get;set;}
+		public Action<UITableViewCell,object> BindCellAction {get;set;}
 		object dataSource;
 		IList list;
 		INotifyCollectionChanged notifier;
@@ -22,7 +23,7 @@ namespace iPadPos
 		System.Threading.Thread mainThread;
 
 		bool loadedView = false;
-
+		public bool AutoDeselectRows { get; set; }
 		public string CellIdentifier = "C";
 		public bool UnEvenRows{get;set;}
 		public object DataSource {
@@ -66,7 +67,7 @@ namespace iPadPos
 
 			AddAnimation = UITableViewRowAnimation.Automatic;
 			DeleteAnimation = UITableViewRowAnimation.Automatic;
-
+			AutoDeselectRows = true;
 			Source = CreateSource ();
 
 			loadedView = true;
@@ -81,6 +82,8 @@ namespace iPadPos
 
 		protected virtual UITableViewCell CreateCell (string reuseId)
 		{
+			if (CreateCellFunc != null)
+				return CreateCellFunc ();
 			return new UITableViewCell (UITableViewCellStyle.Default, reuseId);
 		}
 		protected virtual UIView CreateHeader ()
@@ -90,6 +93,10 @@ namespace iPadPos
 
 		protected virtual void BindCell (UITableViewCell cell, object item, NSIndexPath indexPath)
 		{
+			if (BindCellAction != null) {
+				BindCellAction (cell, item);
+				return;
+			}
 			cell.TextLabel.Text = item.ToString ();
 		}
 
@@ -157,6 +164,8 @@ namespace iPadPos
 				} catch (Exception ex) {
 					Debug.WriteLine (ex);
 				}
+				if (controller.AutoDeselectRows)
+					tableView.DeselectRow (indexPath, true);
 			}
 
 			public override int NumberOfSections (UITableView tableView)

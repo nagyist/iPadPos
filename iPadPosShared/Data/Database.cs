@@ -14,6 +14,10 @@ namespace iPadPos
 		{
 			CreateTable<Invoice> ();
 			CreateTable<InvoiceLine>();
+			CreateTable<TaxType> ();
+			CreateTable<TransactionType> ();
+			CreateTable<PaymentType> ();
+
 		}
 	}
 }

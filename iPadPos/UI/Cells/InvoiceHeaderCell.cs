@@ -32,7 +32,7 @@ namespace iPadPos
 				TextColor = headerColor
 			}, 2);
 			AutoAddSubview (new UILabel{ 
-				Text = "TransType", 
+				Text = "T", 
 				TextAlignment = UITextAlignment.Center,
 				TextColor = headerColor
 			});

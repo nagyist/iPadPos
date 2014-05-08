@@ -43,13 +43,18 @@ namespace iPadPos
 		public UIColor TitleColor
 		{
 			get{ return TitleColor (UIControlState.Normal); }
-			set{ SetTitleColor (value, UIControlState.Normal); }
+			set{ 
+				if (TintColor != value)
+					TintColor = value;
+				SetTitleColor (value, UIControlState.Normal);
+			}
 		}
 
 		public override void TintColorDidChange ()
 		{
 			base.TintColorDidChange ();
 			TitleColor = TintColor;
+			Layer.BorderColor = TintColor.CGColor;
 		}
 
 		public string Title

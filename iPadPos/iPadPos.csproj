@@ -126,7 +126,6 @@
     <Compile Include="UI\Cells\PayCell.cs" />
     <Compile Include="Helpers\CellTableViewSource.cs" />
     <Compile Include="UI\Cells\ICellSelectable.cs" />
-    <Compile Include="UI\Cells\CustomerCell.cs" />
     <Compile Include="UI\Controls\InvoiceBottomView.cs" />
     <Compile Include="UI\ViewControllers\CustomerSearchViewController.cs" />
     <Compile Include="UI\ViewControllers\CustomerInformationViewController.cs" />
@@ -138,6 +137,14 @@
     <Compile Include="UI\Controls\UIBorderedButton.cs" />
     <Compile Include="UI\Cells\ButtonCell.cs" />
     <Compile Include="Theme.cs" />
+    <Compile Include="UI\Cells\MiniCell.cs" />
+    <Compile Include="UI\ViewControllers\PaymentViewController.cs" />
+    <Compile Include="UI\Cells\PaymentCell.cs" />
+    <Compile Include="UI\Cells\CustomerPickerCell.cs" />
+    <Compile Include="UI\Cells\CustomerCell.cs" />
+    <Compile Include="UI\ViewControllers\NumberInputViewController.cs" />
+    <Compile Include="UI\Controls\NumberEntryView.cs" />
+    <Compile Include="UI\Controls\TintedButton.cs" />
   </ItemGroup>
   <Import Project="..\iPadPosShared\iPadPosShared.projitems" Label="Shared" Condition="Exists('..\iPadPosShared\iPadPosShared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

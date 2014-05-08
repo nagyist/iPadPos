@@ -9,6 +9,12 @@ namespace iPadPos
 {
 	public class WebService 
 	{
+
+		//const string baseUrl = "http://clancey.dyndns.org:83/pos/api/";
+
+		//const string baseUrl = "http://10.0.1.36/pos/api/";
+		const string baseUrl = "http://10.0.1.14:32021/api/";
+
 		static WebService main;
 		public static WebService Main {
 			get {
@@ -22,14 +28,17 @@ namespace iPadPos
 		{
 
 		}
-		//const string baseUrl = "http://clancey.dyndns.org:83/pos/api/";
 
-		//const string baseUrl = "http://10.0.1.36/pos/api/";
-		const string baseUrl = "http://10.0.1.14:32021/api/";
+		public async Task SyncAll()
+		{
+			await GetTaxTypes ();
+			await GetTransactions ();
+			await GetPaymentTypes ();
+		}
 
 		public async Task<List<Customer>> SearchCustomer(string cust)
 		{
-			return await GetGenericList<Customer>("customer");
+			return await GetGenericList<Customer>(string.Format("CustomerSearch/{0}",cust));
 		}
 
 		public async Task<Item> GetItem(string id)
@@ -38,14 +47,31 @@ namespace iPadPos
 		}
 		public async Task<Customer> GetCustomer(string id)
 		{
-			return await Get<Customer>("Customer",id);
+			return await Get<Customer>("customer",id);
 		}
 	
+		public async Task<List<TaxType>> GetTaxTypes()
+		{
+			return await GetGenericList<TaxType>("TaxType",true);
+		}
 
-		public async Task<List<T>> GetGenericList<T>(string path)
+		public async Task<List<PaymentType>> GetPaymentTypes()
+		{
+			return await GetGenericList<PaymentType>("PaymentType",true);
+		}
+
+		public async Task<List<TransactionType>> GetTransactions()
+		{
+			return await GetGenericList<TransactionType>("TransactionType",true);
+		}
+
+		public async Task<List<T>> GetGenericList<T>(string path,bool insert = false)
 		{
 			var items = await Get<List<T>>(path);
 
+			if (insert) {
+				Database.Main.InsertAll (items,"OR REPLACE");
+			}
 			return items;
 		}
 

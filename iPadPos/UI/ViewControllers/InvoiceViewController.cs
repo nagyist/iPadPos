@@ -64,7 +64,11 @@ namespace iPadPos
 			public InvoiceView ()
 			{
 				Add (InvoiceTable = new InvoiceTableView ());
-				Add (SideBar = new InvoiceSideBar ());
+				Add (SideBar = new InvoiceSideBar{
+					Checkout = ()=>{
+						Parent.NavigationController.PushViewController(new PaymentViewController{Invoice = Invoice},true);
+					}
+				});
 				Add (BottomView = new InvoiceBottomView());
 
 				this.ConstrainLayout(()=> 

@@ -1,6 +1,8 @@
 ﻿using System;
 using MonoTouch.UIKit;
 using Praeclarum.Bind;
+using iOSHelpers;
+using System.Linq;
 
 namespace iPadPos
 {
@@ -20,6 +22,12 @@ namespace iPadPos
 				Title = "0",
 			},2);
 			AutoAddSubview (TransTypeButton = new UIBorderedButton{ Title = "S" });
+			TransTypeButton.TouchUpInside += (sender, e) => {
+				var sheet = new SimpleActionSheet();
+				var types = Database.Main.Table<TransactionType>().ToList();
+				types.ForEach(x=> sheet.Add(x.Description,()=> Line.TransType = x));
+				sheet.ShowFrom(TransTypeButton.Bounds,TransTypeButton,true);
+			};
 			AddSubview (Total = new UILabel{ Text = "Total",TextAlignment = UITextAlignment.Center },9,columnspan:2);
 		}
 
@@ -52,10 +60,11 @@ namespace iPadPos
 		{
 			binding = Binding.Create (() =>
 				Description.Text == Line.Description &&
-				Price.Text == Line.FinalPrice.ToString ("C") &&
-				Total.Text == Line.FinalPrice.ToString("C") &&
-				TransTypeButton.Title == line.TransactionCode 
+				Price.Text == Line.PriceString &&
+				Total.Text == Line.FinalPriceString &&
+				TransTypeButton.Title == line.TransactionCode
 			);
+			line.SubscribeToProperty ("FinalPrice", updateTextColor);
 		}
 
 		void Unbind ()
@@ -63,6 +72,12 @@ namespace iPadPos
 			if (binding == null)
 				return;
 			binding.Unbind ();
+			line.UnSubscribeToProperty ("FinalPrice",updateTextColor);
+		}
+
+		void updateTextColor()
+		{
+			Total.TextColor = (line.FinalPrice < 0 ? UIColor.Red : UIColor.Black);
 		}
 
 	}
