@@ -13,6 +13,13 @@ namespace iPadPos
 		public Action<Customer> CustomerPicked { get; set; }
 		public CustomerSearchViewController ()
 		{
+			this.Title = "Customer Search";
+			this.EdgesForExtendedLayout = UIRectEdge.None;
+			this.NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add,(s,e)=>{
+				this.NavigationController.PushViewController(new CustomerInformationViewController{
+					Customer = new Customer()
+				},true);
+			});
 			PreferredContentSize = new System.Drawing.SizeF (600, 400);
 			View.Add (searchBar = new UISearchBar{
 				//SearchBarStyle = UISearchBarStyle.Minimal,

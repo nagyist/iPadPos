@@ -13,14 +13,16 @@ namespace iPadPos
 				return amount;
 			}
 			set {
-				if (this.ProcPropertyChanged (ref amount, value))
-					ProcPropertyChanged ("AmountString");
+				this.ProcPropertyChanged (ref amount, value);
+				ProcPropertyChanged ("AmountString");
 			}
 		}
 		public string AmountString
 		{
 			get{ return Amount.ToString ("C"); }
-			set{ Amount = double.Parse (value, NumberStyles.Currency); }
+			set{ 
+				Amount = string.IsNullOrEmpty(value) ? 0 : double.Parse (value, NumberStyles.Currency);
+			}
 		}
 	}
 }

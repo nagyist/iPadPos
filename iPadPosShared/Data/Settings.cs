@@ -33,7 +33,7 @@ namespace iPadPos
 		public string LastPostedChangeString
 		{
 			get{ return LastPostedChange.ToString ("C"); }
-			set{ LastPostedChange = double.Parse (value, System.Globalization.NumberStyles.Currency); }
+			set{ LastPostedChange = string.IsNullOrEmpty(value) ? 0 : double.Parse (value, System.Globalization.NumberStyles.Currency); }
 		}
 
 		public bool HasData

@@ -8,7 +8,8 @@ namespace iPadPos
 		public InvoiceTableView () : base(MonoTouch.UIKit.UITableViewStyle.Plain)
 		{
 			CellIdentifier = InvoiceLineCell.Key;
-			SectionHeaderHeight =RowHeight = 60;
+			SectionHeaderHeight = 30;
+			RowHeight = 60;
 			ContentOffset = new System.Drawing.PointF (0, -100);
 			BackgroundView = null;
 			BackgroundColor = UIColor.Clear;

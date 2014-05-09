@@ -16,6 +16,14 @@ namespace iPadPos
 			get{ return ColumnView.Columns; }
 			set{ ColumnView.Columns = value; }
 		}
+		public float Padding {
+			get {
+				return ColumnView.Padding;
+			}
+			set {
+				ColumnView.Padding = value;
+			}
+		}
 
 		public override void LayoutSubviews ()
 		{

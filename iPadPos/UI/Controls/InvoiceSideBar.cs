@@ -22,42 +22,50 @@ namespace iPadPos
 		UITableViewCell lastPostedChange;
 		CellTableViewSource source;
 		UIPopoverController popover;
+
 		public Action Checkout { get; set; }
+
 		public InvoiceSideBar ()
 		{
+			this.Layer.BorderColor = UIColor.Black.ColorWithAlpha (.25f).CGColor;
+			this.Layer.BorderWidth = .5f;
 			BackgroundColor = UIColor.DarkGray;
-			AddSubview (tableView = new UITableView(RectangleF.Empty, UITableViewStyle.Grouped){
+			AddSubview (tableView = new UITableView (RectangleF.Empty, UITableViewStyle.Grouped) {
 				BackgroundColor = UIColor.Clear,
-				Source = source = new CellTableViewSource{
-					(customer = new CustomerPickerCell{
-						Tapped = async ()=>{
-							popover = new UIPopoverController(new CustomerSearchViewController{
-								CustomerPicked = (c)=>{
+				Source = source = new CellTableViewSource {
+					(customer = new CustomerPickerCell {
+						Tapped = async () => {
+							popover = new UIPopoverController (new UINavigationController (new CustomerSearchViewController {
+								CustomerPicked = (c) => {
 									Invoice.Customer = c;
-									popover.Dismiss(true);
-									popover.Dispose();
+									popover.Dismiss (true);
+									popover.Dispose ();
+								}
+							}) {
+								NavigationBar = {
+									BarStyle = UIBarStyle.BlackTranslucent,
 								}
 							});
-							popover.PresentFromRect(customer.Frame,tableView,UIPopoverArrowDirection.Right,true);
+							popover.PresentFromRect (customer.Frame, tableView, UIPopoverArrowDirection.Right, true);
 						}
 					}),
-					(subtotal = new SubTotalCell()),
-					(discount = new DiscountCell()),
-					(total = new TotalCell()),
-					new PayCell{
+					(subtotal = new SubTotalCell ()),
+					(discount = new DiscountCell ()),
+					(total = new TotalCell ()),
+					new PayCell {
 						Text = "Checkout",
 						TintColor = UIColor.White,
-						Tapped = ()=>{
-							Checkout();
+						Tapped = () => {
+							Checkout ();
 						}
-					},(lastPostedChange = new LastPostedCell(){
+					}, (lastPostedChange = new LastPostedCell () {
 
 					}),
 				},
 				ScrollEnabled = false,
-				TableHeaderView = new UIView(new RectangleF(0,0,0,64)),
+				TableHeaderView = new UIView (new RectangleF (0, 0, 0, 64)),
 			});
-			Binding.Create(() => lastPostedChange.DetailTextLabel.Text == Settings.Shared.LastPostedChangeString );
+			Binding.Create (() => lastPostedChange.DetailTextLabel.Text == Settings.Shared.LastPostedChangeString);
 			customerInfo = new UITableViewCell[] {
 				(email = new MiniCell {
 					TextLabel = {
@@ -77,6 +85,7 @@ namespace iPadPos
 			};
 
 		}
+
 		public override void LayoutSubviews ()
 		{
 			base.LayoutSubviews ();
@@ -84,6 +93,7 @@ namespace iPadPos
 		}
 
 		Invoice invoice;
+
 		public Invoice Invoice {
 			get {
 				return invoice;
@@ -96,15 +106,17 @@ namespace iPadPos
 		}
 
 		Binding binding;
-		void bind()
+
+		void bind ()
 		{
-			binding  = Binding.Create(() => 
+			binding = Binding.Create (() => 
 				total.Value == Invoice.Total &&
-				subtotal.DetailTextLabel.Text == Invoice.SubtotalString
+			subtotal.DetailTextLabel.Text == Invoice.SubtotalString
 			);
 			Invoice.SubscribeToProperty ("Customer", CustomerChanged);
 		}
-		void unbind()
+
+		void unbind ()
 		{
 			if (binding == null)
 				return;
@@ -112,18 +124,19 @@ namespace iPadPos
 			binding.Unbind ();
 			Invoice.UnSubscribeToProperty ("Customer", CustomerChanged);
 		}
-		void CustomerChanged()
+
+		void CustomerChanged ()
 		{
 			var cust = Invoice.Customer;
-			customer.TextLabel.Text = cust == null ? "Pick a Customer" : cust.ToString() ;
-			if (cust == null || string.IsNullOrEmpty(cust.CustomerId)) {
+			customer.TextLabel.Text = cust == null ? "Pick a Customer" : cust.ToString ();
+			if (cust == null || string.IsNullOrEmpty (cust.CustomerId)) {
 				source.RemoveRange (customerInfo);
 				return;
 			}
 
 			email.DetailTextLabel.Text = cust == null ? "" : cust.Email;
 			phoneNumber.DetailTextLabel.Text = cust == null ? "" : cust.HomePhone;
-			onAccount.DetailTextLabel.Text = cust == null ? "" : cust.OnAccount.ToString("C");
+			onAccount.DetailTextLabel.Text = cust == null ? "" : cust.OnAccount.ToString ("C");
 
 			source.InsertRange (1, customerInfo);
 

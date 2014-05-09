@@ -10,8 +10,13 @@ namespace iPadPos
 		public InvoiceHeaderCell () : base (Key)
 		{
 			UIColor headerColor = UIColor.Black;
-
-			BackgroundColor = UIColor.LightGray.ColorWithAlpha (.25f);
+			Padding = 5;
+			BackgroundView = new UIBlurView{
+				//TintColor = Theme.Current.PayColor,
+				//AccentColorIntensity = .1f,
+			};
+			BackgroundColor = UIColor.Clear;
+			//BackgroundColor = UIColor.LightGray.ColorWithAlpha (.25f);
 			AutoAddSubview (Description = new UILabel {
 				Text = "Description",
 				TextAlignment = UITextAlignment.Left,

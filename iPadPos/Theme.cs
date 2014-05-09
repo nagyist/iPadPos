@@ -25,6 +25,8 @@ namespace iPadPos
 		public UIColor BackgroundGray{get;set;}
 		public UIColor SideBackgroundColor {get;set;}
 		public UIColor PayColor{get;set;}
+		public UIColor FormLabelColor = UIColor.FromRGB (100, 100, 100);
+		public Lazy<UIFont> FormLabelFont = new Lazy<UIFont>(() => UIFont.SystemFontOfSize(UIFont.SmallSystemFontSize));
 	}
 }
 

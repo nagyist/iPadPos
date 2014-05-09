@@ -13,7 +13,8 @@ namespace iPadPos
 		//const string baseUrl = "http://clancey.dyndns.org:83/pos/api/";
 
 		//const string baseUrl = "http://10.0.1.36/pos/api/";
-		const string baseUrl = "http://10.0.1.14:32021/api/";
+		//const string baseUrl = "http://10.0.1.14:32021/api/";
+		const string baseUrl = "http://clancey.dyndns.org:32021/api/";
 
 		static WebService main;
 		public static WebService Main {

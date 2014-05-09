@@ -146,6 +146,8 @@
     <Compile Include="UI\Controls\NumberEntryView.cs" />
     <Compile Include="UI\Controls\TintedButton.cs" />
     <Compile Include="UI\Cells\LastPostedCell.cs" />
+    <Compile Include="UI\Controls\ViewComponents\FormElementTextView.cs" />
+    <Compile Include="UI\Controls\ViewComponents\ViewComponent.cs" />
   </ItemGroup>
   <Import Project="..\iPadPosShared\iPadPosShared.projitems" Label="Shared" Condition="Exists('..\iPadPosShared\iPadPosShared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

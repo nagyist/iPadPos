@@ -30,7 +30,7 @@ namespace iPadPos
 			window = new UIWindow (UIScreen.MainScreen.Bounds);
 			ApplyTheme ();
 			window.RootViewController = App.Create ();
-
+			window.TintColor = Theme.Current.PayColor;
 			window.MakeKeyAndVisible ();
 			WebService.Main.SyncAll ();
 			return true;
