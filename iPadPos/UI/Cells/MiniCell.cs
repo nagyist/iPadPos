@@ -3,8 +3,9 @@ using MonoTouch.UIKit;
 
 namespace iPadPos
 {
-	public class MiniCell : UITableViewCell
+	public class MiniCell : UITableViewCell, ICellSelectable
 	{
+		public Action Tapped { get; set; }
 		public const string Key = "MiniCell";
 		public MiniCell () : base (UITableViewCellStyle.Value1,Key)
 		{
@@ -12,6 +13,16 @@ namespace iPadPos
 			TextLabel.Font = UIFont.SystemFontOfSize (UIFont.SmallSystemFontSize);
 			DetailTextLabel.Font = UIFont.SystemFontOfSize (UIFont.SmallSystemFontSize);
 		}
+
+		#region ICellSelectable implementation
+
+		public void OnSelect ()
+		{
+			if (Tapped != null)
+				Tapped ();
+		}
+
+		#endregion
 	}
 }
 

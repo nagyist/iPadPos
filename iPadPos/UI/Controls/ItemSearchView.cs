@@ -24,8 +24,8 @@ namespace iPadPos
 					return;
 				ItemSelected(item);
 				this.Text = "";
-				this.EndEditing(true);
-				this.ResignFirstResponder();
+				//this.EndEditing(true);
+				//this.ResignFirstResponder();
 
 			}
 			catch(Exception ex) {

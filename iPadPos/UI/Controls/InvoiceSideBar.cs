@@ -35,7 +35,8 @@ namespace iPadPos
 				Source = source = new CellTableViewSource {
 					(customer = new CustomerPickerCell {
 						Tapped = async () => {
-							popover = new UIPopoverController (new UINavigationController (new CustomerSearchViewController {
+							CustomerSearchViewController customerSearch;
+							popover = new UIPopoverController (new UINavigationController (customerSearch = new CustomerSearchViewController {
 								CustomerPicked = (c) => {
 									Invoice.Customer = c;
 									popover.Dismiss (true);
@@ -46,6 +47,7 @@ namespace iPadPos
 									BarStyle = UIBarStyle.BlackTranslucent,
 								}
 							});
+							customerSearch.Popover = popover;
 							popover.PresentFromRect (customer.Frame, tableView, UIPopoverArrowDirection.Right, true);
 						}
 					}),
@@ -70,20 +72,47 @@ namespace iPadPos
 				(email = new MiniCell {
 					TextLabel = {
 						Text = "Email"
-					}
+					},
+					Tapped = ()=>{
+						showEditor(email);
+					},
 				}),
 				(phoneNumber = new MiniCell {
 					TextLabel = {
 						Text = "Phone"
-					}
+					},
+					Tapped = ()=>{
+						showEditor(phoneNumber);
+					},
 				}),
 				(onAccount = new MiniCell {
 					TextLabel = {
 						Text = "On Account"
-					}
+					},
+					Tapped = ()=>{
+						showEditor(onAccount);
+					},
 				}),
 			};
 
+		}
+		public void showEditor(UIView fromView)
+		{
+			CustomerInformationViewController customerSearch;
+			popover = new UIPopoverController (new UINavigationController (customerSearch = new CustomerInformationViewController {
+				Customer = Invoice.Customer,
+				Created = (c) => {
+					Invoice.Customer = c;
+					popover.Dismiss (true);
+					popover.Dispose ();
+				}
+			}) {
+				NavigationBar = {
+					BarStyle = UIBarStyle.BlackTranslucent,
+				}
+			});
+			customerSearch.Popover = popover;
+			popover.PresentFromRect (fromView.Frame, tableView, UIPopoverArrowDirection.Right, true);
 		}
 
 		public override void LayoutSubviews ()

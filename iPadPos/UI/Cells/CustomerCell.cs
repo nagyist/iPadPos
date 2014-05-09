@@ -12,7 +12,7 @@ namespace iPadPos
 			ContentView.AddSubview (phone = new UILabel {
 				Font = UIFont.SystemFontOfSize(15),
 				TextColor = UIColor.DarkGray,
-				Text = "907-947-9195"
+				Text = "907-947-9195 test "
 			});
 			phone.SizeToFit ();
 			ContentView.AddSubview (cellPhone = new UILabel {
@@ -39,8 +39,8 @@ namespace iPadPos
 		{
 			TextLabel.Text = Customer.ToString ();
 			DetailTextLabel.Text = Customer.Email;
-			phone.Text = customer.HomePhone;
-			cellPhone.Text = customer.CellPhone;
+			phone.Text = "h: "+ customer.HomePhone;
+			cellPhone.Text = "c:" + customer.CellPhone;
 		}
 		public override void LayoutSubviews ()
 		{

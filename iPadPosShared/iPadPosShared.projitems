@@ -29,5 +29,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\TaxType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\TransactionType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PaymentType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\iDirty.cs" />
   </ItemGroup>
 </Project>

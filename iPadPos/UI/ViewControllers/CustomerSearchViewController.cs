@@ -11,16 +11,21 @@ namespace iPadPos
 		UITableView tableView;
 		SearchSource source;
 		public Action<Customer> CustomerPicked { get; set; }
+		public UIPopoverController Popover { get; set;}
 		public CustomerSearchViewController ()
 		{
 			this.Title = "Customer Search";
 			this.EdgesForExtendedLayout = UIRectEdge.None;
 			this.NavigationItem.RightBarButtonItem = new UIBarButtonItem(UIBarButtonSystemItem.Add,(s,e)=>{
 				this.NavigationController.PushViewController(new CustomerInformationViewController{
-					Customer = new Customer()
+					Customer = new Customer(),
+					Popover = Popover,
+					Created = (c) =>{
+						CustomerPicked (c);
+					}
 				},true);
 			});
-			PreferredContentSize = new System.Drawing.SizeF (600, 400);
+			PreferredContentSize = new System.Drawing.SizeF (700, 400);
 			View.Add (searchBar = new UISearchBar{
 				//SearchBarStyle = UISearchBarStyle.Minimal,
 				BarStyle = UIBarStyle.Black,
@@ -80,6 +85,7 @@ namespace iPadPos
 			base.ViewDidAppear (animated);
 			searchBar.BecomeFirstResponder ();
 			source.Parent = this;
+		
 		}
 		public override void ViewWillDisappear (bool animated)
 		{

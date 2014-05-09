@@ -3,45 +3,153 @@ using Newtonsoft.Json;
 
 namespace iPadPos
 {
-	public class Customer
+	public class Customer : BaseModel, iDirty
 	{
+		public Customer()
+		{
+			State = "AK";
+		}
+		public bool IsDirty {get;set;}
 		public string CustomerId { get; set; }
 
-		public string Company { get; set; }
+		string company;
+		public string Company {
+			get {
+				return company;
+			}
+			set { ProcPropertyChanged (ref company, value); }
+		}
 
-		public string FirstName { get; set; }
+		string firstName;
+		public string FirstName {
+			get {
+				return firstName;
+			}
+			set { ProcPropertyChanged (ref firstName, value); }
+		}
 
-		public string LastName { get; set; }
+		string lastName;
+		public string LastName {
+			get {
+				return lastName;
+			}
+			set { ProcPropertyChanged (ref lastName, value); }
+		}
 
-		public string MiddleName { get; set; }
+		string middleName;
+		public string MiddleName {
+			get {
+				return middleName;
+			}
+			set { ProcPropertyChanged (ref middleName, value); }
+		}
 
-		public string Address { get; set; }
+		string address;
+		[JsonProperty("Address1")]
+		public string Address {
+			get {
+				return address;
+			}
+			set { ProcPropertyChanged (ref address, value); }
+		}
 
-		public string Address2 { get; set; }
+		string address2;
+		public string Address2 {
+			get {
+				return address2;
+			}
+			set { ProcPropertyChanged (ref address2, value); }
+		}
 
-		public string City { get; set; }
+		string city;
+		public string City {
+			get {
+				return city;
+			}
+			set { ProcPropertyChanged (ref city, value); }
+		}
 
-		public string State { get; set; }
+		string state;
+		public string State {
+			get {
+				return state;
+			}
+			set { ProcPropertyChanged (ref state, value); }
+		}
 
-		public string Zip { get; set; }
+		string zip;
+		public string Zip {
+			get {
+				return zip;
+			}
+			set { ProcPropertyChanged (ref zip, value); }
+		}
 
-		public string Country { get; set; }
+		string country;
+		public string Country {
+			get {
+				return country;
+			}
+			set { ProcPropertyChanged (ref country, value); }
+		}
 
-		public string HomePhone { get; set; }
+		string homePhone;
+		public string HomePhone {
+			get {
+				return homePhone;
+			}
+			set { ProcPropertyChanged (ref homePhone, value); }
+		}
 
-		public string PhoneExt { get; set; }
+		string phoneExt;
+		public string PhoneExt {
+			get {
+				return phoneExt;
+			}
+			set { ProcPropertyChanged (ref phoneExt, value); }
+		}
 
-		public string CellPhone { get; set; }
+		string cellPhone;
+		public string CellPhone {
+			get {
+				return cellPhone;
+			}
+			set { ProcPropertyChanged (ref cellPhone, value); }
+		}
 
-		public string Misc2 { get; set; }
+		string misc2;
+		public string Misc2 {
+			get {
+				return misc2;
+			}
+			set { ProcPropertyChanged (ref misc2, value); }
+		}
 
-		public DateTime LastUpdate { get; set; }
+		DateTime lastUpdate;
+		public DateTime LastUpdate {
+			get {
+				return lastUpdate;
+			}
+			set { ProcPropertyChanged (ref lastUpdate, value); }
+		}
 
 		public DateTime DateCreated { get; set; }
 
-		public string Email { get; set; }
+		string email;
+		public string Email {
+			get {
+				return email;
+			}
+			set { ProcPropertyChanged (ref email, value); }
+		}
 
-		public double OnAccount { get; set;}
+		double onAccount;
+		public double OnAccount {
+			get {
+				return onAccount;
+			}
+			set { ProcPropertyChanged (ref onAccount, value); }
+		}
 
 		public override string ToString ()
 		{
