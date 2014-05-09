@@ -175,6 +175,7 @@
     <Compile Include="Models\TransactionType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharedDb.cs" />
+    <Compile Include="Tasks\GetCustomerIdTask.cs" />
     <Compile Include="Tasks\GetInvoiceIdTask.cs" />
     <Compile Include="Tasks\GetTaxTypeTask.cs" />
     <Compile Include="Tasks\PostInvoiceTask.cs" />

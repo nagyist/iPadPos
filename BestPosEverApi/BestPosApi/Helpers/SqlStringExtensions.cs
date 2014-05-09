@@ -7,7 +7,7 @@ namespace WebApplication1.Helpers
 {
 	public static class SqlStringExtensions
 	{
-		public static string GetSqlCompatible(this string stringIn, bool quote = false)
+		public static string GetSqlCompatible(this string stringIn, bool quote = true)
 		{
 			string newString = "";
 			if (!string.IsNullOrEmpty(stringIn))

@@ -31,14 +31,14 @@ namespace WebApplication1.Tasks
 				                     In.Customer.CustomerID +
 				                     "','" + invDate + "','" +
 				                     Date.ToString("yyyy'-'MM'-'dd") + "','" +
-				                     In.Customer.Company.GetSqlCompatible() + "','" + In.Customer.FirstName.GetSqlCompatible() +
-				                     "','" + In.Customer.MiddleInitial.GetSqlCompatible() + "','" +
-				                     In.Customer.LastName.GetSqlCompatible() + "','" + In.Customer.Address1.GetSqlCompatible() +
-				                     "','" + In.Customer.Address2.GetSqlCompatible() + "','" +
-				                     In.Customer.City.GetSqlCompatible() + "','" + In.Customer.State.GetSqlCompatible() + "','" +
-				                     In.Customer.Zip.GetSqlCompatible() + "','" + In.Customer.Country.GetSqlCompatible() + "','" +
-				                     In.Customer.HomePhone + "','B','" + In.Customer.Email.GetSqlCompatible() + "','" +
-				                     In.Customer.ShipName.GetSqlCompatible() + "'," + In.Total;
+									 In.Customer.Company.GetSqlCompatible(false) + "','" + In.Customer.FirstName.GetSqlCompatible(false) +
+									 "','" + In.Customer.MiddleInitial.GetSqlCompatible(false) + "','" +
+									 In.Customer.LastName.GetSqlCompatible(false) + "','" + In.Customer.Address1.GetSqlCompatible(false) +
+									 "','" + In.Customer.Address2.GetSqlCompatible(false) + "','" +
+									 In.Customer.City.GetSqlCompatible(false) + "','" + In.Customer.State.GetSqlCompatible(false) + "','" +
+									 In.Customer.Zip.GetSqlCompatible(false) + "','" + In.Customer.Country.GetSqlCompatible(false) + "','" +
+									 In.Customer.HomePhone + "','B','" + In.Customer.Email.GetSqlCompatible(false) + "','" +
+									 In.Customer.ShipName.GetSqlCompatible(false) + "'," + In.Total;
 				string winHdrInsertString =
 					@"INSERT INTO DBA.WInvHeaders
 							(RecordID,
