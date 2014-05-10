@@ -53,6 +53,12 @@ namespace iPadPos
 		}
 		async void PostInvoice()
 		{
+			var isValid = Invoice.Validate ();
+			if (!isValid.Item1) {
+				App.ShowAlert ("Error", isValid.Item2);
+				return;
+			}
+
 			BigTed.BTProgressHUD.ShowContinuousProgress();
 			var success = await WebService.Main.PostInvoice(Invoice);
 			BigTed.BTProgressHUD.Dismiss ();
