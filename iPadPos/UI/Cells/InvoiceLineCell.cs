@@ -9,7 +9,7 @@ namespace iPadPos
 	public class InvoiceLineCell : ColumnCell
 	{
 		public const string Key = "InvoiceLineCell";
-
+		UIPopoverController popup;
 		public InvoiceLineCell () : base (Key)
 		{
 			AutoAddSubview (Description = new UILabel {
@@ -20,7 +20,27 @@ namespace iPadPos
 			AutoAddSubview (Price = new UILabel{ Text = "Price",TextAlignment = UITextAlignment.Center },2);
 			AutoAddSubview (Discount = new UIBorderedButton () {
 				Title = "0",
-			},2);
+				Tapped = (b) =>{
+
+					if(popup != null)
+						popup.Dispose();
+
+					var d = new DiscountViewController(line.Price){
+						DollarChanged = (dollar) =>{
+							Line.Discount = dollar;
+							popup.Dismiss(true);
+						}
+					};
+
+					popup = new UIPopoverController(d);
+					popup.DidDismiss += (object sender, EventArgs e) => {
+						d.Dispose();
+						popup.Dispose();
+						popup = null;
+					};
+					popup.PresentFromRect(Discount.Bounds,Discount, UIPopoverArrowDirection.Any,true);
+				}},2);
+
 			AutoAddSubview (TransTypeButton = new UIBorderedButton{ Title = "S" });
 			TransTypeButton.TouchUpInside += (sender, e) => {
 				var sheet = new SimpleActionSheet();
@@ -62,7 +82,8 @@ namespace iPadPos
 				Description.Text == Line.Description &&
 				Price.Text == Line.PriceString &&
 				Total.Text == Line.FinalPriceString &&
-				TransTypeButton.Title == line.TransactionCode
+				TransTypeButton.Title == line.TransactionCode && 
+				Discount.Title == line.DiscountString
 			);
 			line.SubscribeToProperty ("FinalPrice", updateTextColor);
 		}

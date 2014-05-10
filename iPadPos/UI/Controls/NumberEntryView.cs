@@ -7,6 +7,7 @@ namespace iPadPos
 	public class NumberEntryView : UITextField
 	{
 		UIPopoverController popover;
+		public Action<string> NewValue { get; set; }
 		public NumberEntryView ()
 		{
 			BackgroundColor = UIColor.White;
@@ -31,6 +32,8 @@ namespace iPadPos
 				return true;
 			};
 			this.EditingDidEnd += (s,e) => {
+				if(NewValue != null)
+					NewValue(Text);
 				if(popover != null && popover.PopoverVisible)
 					popover.Dismiss(true);
 			};

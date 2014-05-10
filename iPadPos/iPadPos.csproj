@@ -152,6 +152,8 @@
     <Compile Include="UI\Controls\ViewComponents\FormElementTextView.cs" />
     <Compile Include="UI\Controls\ViewComponents\ViewComponent.cs" />
     <Compile Include="Helpers\SocketScannerHelper.cs" />
+    <Compile Include="UI\ViewControllers\DiscountViewController.cs" />
+    <Compile Include="UI\Controls\ViewComponents\NumberEntryViewConponent.cs" />
   </ItemGroup>
   <Import Project="..\iPadPosShared\iPadPosShared.projitems" Label="Shared" Condition="Exists('..\iPadPosShared\iPadPosShared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

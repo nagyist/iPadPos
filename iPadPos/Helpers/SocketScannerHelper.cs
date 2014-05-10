@@ -22,6 +22,8 @@ namespace iPadPos
 		ScanApiHelper ScanApi;
 		public SocketScannerHelper ()
 		{
+			if (MonoTouch.ObjCRuntime.Runtime.Arch == MonoTouch.ObjCRuntime.Arch.SIMULATOR)
+				return;
 			ScanApi = new ScanApiHelper ();
 			ScanApi.Delegate = new ScanDelegate (this);
 			ScanApi.Open ();

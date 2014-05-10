@@ -66,6 +66,28 @@ namespace iPadPos
 			}
 		}
 
+		double discount;
+		public double Discount {
+			get {
+				return discount;
+			}
+			set { 
+				if (ProcPropertyChanged (ref discount, value)) {
+					updateTotals ();
+					ProcPropertyChanged ("DiscountString");
+				}
+			}
+		}
+
+		public string DiscountString {
+			get {
+				return Discount.ToString("C");
+			}
+//			set {
+//				discountString = value;
+//			}
+		}
+
 		string description;
 		public string Description {
 			get {
@@ -123,7 +145,7 @@ namespace iPadPos
 		}
 		void updateTotals()
 		{
-			FinalPrice = Qty * Price;
+			FinalPrice = Qty * (Price - Discount);
 		}
 
 		public string PriceString

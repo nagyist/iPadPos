@@ -1,9 +1,10 @@
 ﻿using System;
 using MonoTouch.UIKit;
+using iOSHelpers;
 
 namespace iPadPos
 {
-	public class UIBorderedButton : UIButton
+	public class UIBorderedButton : SimpleButton
 	{
 		public UIBorderedButton()
 		{
