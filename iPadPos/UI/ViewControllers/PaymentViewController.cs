@@ -115,6 +115,9 @@ namespace iPadPos
 					BindCellAction = (cell, item) => {
 						(cell as PaymentCell).Payment = item as Payment;
 					},
+					ItemTapped = (p) =>{
+						Invoice.PaymentSelected(p as Payment);
+					},
 				});
 				var bgColor = UIColor.Black.ColorWithAlpha(.3f);
 				backgroundView.Add (rightTableView = new UITableView (RectangleF.Empty, UITableViewStyle.Grouped) {
@@ -204,6 +207,7 @@ namespace iPadPos
 
 
 			}
+
 
 			public override void LayoutSubviews ()
 			{

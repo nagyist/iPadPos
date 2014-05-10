@@ -186,7 +186,7 @@ namespace iPadPos
 			Total = SubTotal - DiscountAmount;
 
 			AppliedPayment = Payments.Sum (x => x.Amount);
-			Remaining = AppliedPayment >= Total ? 0 : Total - AppliedPayment;
+			Remaining = AppliedPayment >= Total && Total > 0 ? 0 : Total - AppliedPayment;
 			Change = AppliedPayment <= Total ? 0 : AppliedPayment - Total;
 		}
 
@@ -270,6 +270,15 @@ namespace iPadPos
 				return new Tuple<bool,string>(false, "There is still a remaining balance");
 
 			return new Tuple<bool, string> (true, "Ready to go");
+		}
+
+		public void PaymentSelected (Payment payment)
+		{
+			if (payment.PaymentType.Id == "Acct") {
+				payment.Amount = Math.Min (Remaining, Customer.OnAccount);
+				return;
+			}
+			payment.Amount = Remaining;
 		}
 	}
 }

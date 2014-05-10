@@ -102,11 +102,17 @@ namespace iPadPos
 
 		public async Task<bool> PostInvoice (Invoice invoice)
 		{
-			var client = CreateClient ();
-			var json = Newtonsoft.Json.JsonConvert.SerializeObject (invoice);
-			var respons = await client.PostAsync ("Invoice", new StringContent (json, Encoding.UTF8, "application/json"));
-			var success = bool.Parse (await respons.Content.ReadAsStringAsync ());
-			return success;
+			try{
+				var client = CreateClient ();
+				var json = Newtonsoft.Json.JsonConvert.SerializeObject (invoice);
+				var respons = await client.PostAsync ("Invoice", new StringContent (json, Encoding.UTF8, "application/json"));
+				var success = bool.Parse (await respons.Content.ReadAsStringAsync ());
+				return success;
+			}
+			catch(Exception ex) {
+				Console.WriteLine (ex);
+			}
+			return false;
 		}
 
 		public async Task<Customer> CreateCustomer (Customer customer)

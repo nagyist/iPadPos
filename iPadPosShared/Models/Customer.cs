@@ -9,6 +9,8 @@ namespace iPadPos
 		{
 			State = "AK";
 		}
+
+		public int RecordId { get; set; }
 		public bool IsDirty {get;set;}
 		public string CustomerId { get; set; }
 

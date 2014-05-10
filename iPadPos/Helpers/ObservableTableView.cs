@@ -16,6 +16,7 @@ namespace iPadPos
 		public UITableViewRowAnimation DeleteAnimation { get; set; }
 		public Func<UITableViewCell> CreateCellFunc {get;set;}
 		public Action<UITableViewCell,object> BindCellAction {get;set;}
+		public Action<object> ItemTapped { get;set;}
 		object dataSource;
 		IList list;
 		INotifyCollectionChanged notifier;
@@ -102,6 +103,8 @@ namespace iPadPos
 
 		protected virtual void OnRowSelected (object item, NSIndexPath indexPath)
 		{
+			if (ItemTapped != null)
+				ItemTapped (item);
 		}
 
 		protected virtual UITableViewCellEditingStyle EditingStyleForRow (NSIndexPath indexPath)
