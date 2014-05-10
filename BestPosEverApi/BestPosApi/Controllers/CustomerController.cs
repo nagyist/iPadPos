@@ -9,6 +9,7 @@ namespace WebApplication1.Controllers
 	public class CustomerController : ApiController
 	{
 		public const string select = @"select
+RecordID as RecordID,
 	CustomerID,
 	BillCompany as Company,
 	BillFName as FirstName,
@@ -33,7 +34,7 @@ namespace WebApplication1.Controllers
     else(select SUM(Balance) from
         dba.ARItems where(ParentRecordID = C.RecordID) and
         (DocType in(0,1)))
-    endif) as OnAccount
+    endif) *-1 as OnAccount
 from DBA.Customers as C ";
 
 
