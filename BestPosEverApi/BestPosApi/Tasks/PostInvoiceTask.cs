@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Transactions;
 using Simpler;
 using WebApplication1.Helpers;
@@ -22,6 +23,7 @@ namespace WebApplication1.Tasks
 				};
 				invTask.Execute();
 				string invDate = Date.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
+				string date = Date.Date.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
 				string wId = In.Id = invTask.Out;
 				//Create Working Invoice
 				string rexordQuery = "select max(recordID) + 1 from DBA.WInvHeaders";
@@ -64,6 +66,24 @@ namespace WebApplication1.Tasks
 						VALUES (" + winHdrArray + ")";
 				bool success = SharedDb.Execute(winHdrInsertString) > 0;
 
+
+				invTask.InvoiceStatus = InvoiceStatus.Posted;
+				invTask.Execute();
+				string pId = invTask.Out;
+
+				//Update Rewards
+				var acctPayment = In.Payments.FirstOrDefault(x => x.PaymentType.Id == "Acct" && x.Amount != 0);
+				if (acctPayment != null)
+				{
+					//insert AR Items
+					string insertArQuery =
+						string.Format(
+							@"INSERT INTO DBA.ARItems(LockFlag,PARENTRECORDID,CLOSEDON,DOCDATE, DOCTYPE,REFNO,TERMS,SALE,PAYMENT,APPLIED,BALANCE,BALANCEFORWARDED,PERIOD,REGISTERID,LATEFEECODE)
+						VALUES (0,{0},'2300/jan/01 00:00',{1},0,{2},'Net30',{3},0,0,{3},0,0,{4},0)", In.Customer.RecordID, date.GetSqlCompatible(), pId.GetSqlCompatible(), acctPayment.Amount, In.RegisterId.GetSqlCompatible());
+					SharedDb.Execute(insertArQuery);
+
+					SharedDb.Execute(string.Format("call ApplyToOldestAux({0})", In.Customer.RecordID));
+				}
 				//Insert WInvLines
 				In.GetCompinedLines().ForEach(x =>
 				{
@@ -77,16 +97,12 @@ namespace WebApplication1.Tasks
 					SharedDb.Execute(winLineInsertString);
 				});
 
-				invTask.InvoiceStatus = InvoiceStatus.Posted;
-				invTask.Execute();
-				string pId = invTask.Out;
+
 				//Create posted invoice
 				string copyQuery = string.Format("CALL CopyWInv2PInv ('{0}','{1}', '{2}' )", wId, pId, invDate);
 				SharedDb.Execute(copyQuery);
 
-				//Update Rewards
-
-
+				
 				//Post
 				string precQuery = "select RecordID from PInvHeaders where InvoiceID = " + pId.GetSqlCompatible(true);
 				recordId = SharedDb.GetInt(precQuery);
@@ -95,6 +111,8 @@ namespace WebApplication1.Tasks
 					In.Customer.CustomerID.GetSqlCompatible(true),
 					invDate.GetSqlCompatible(true));
 				SharedDb.Execute(postQuery);
+
+			
 
 				//Cleanup
 				SharedDb.Execute(string.Format("CALL DisposeWInv ({0})", wId.GetSqlCompatible(true)));
