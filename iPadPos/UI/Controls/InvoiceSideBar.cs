@@ -143,6 +143,7 @@ namespace iPadPos
 			subtotal.DetailTextLabel.Text == Invoice.SubtotalString
 			);
 			Invoice.SubscribeToProperty ("Customer", CustomerChanged);
+			CustomerChanged ();
 		}
 
 		void unbind ()
@@ -158,17 +159,16 @@ namespace iPadPos
 		{
 			var cust = Invoice.Customer;
 			customer.TextLabel.Text = cust == null ? "Pick a Customer" : cust.ToString ();
-			if (cust == null || string.IsNullOrEmpty (cust.CustomerId)) {
-				source.RemoveRange (customerInfo);
-				return;
-			}
 
 			email.DetailTextLabel.Text = cust == null ? "" : cust.Email;
 			phoneNumber.DetailTextLabel.Text = cust == null ? "" : cust.HomePhone;
 			onAccount.DetailTextLabel.Text = cust == null ? "" : cust.OnAccount.ToString ("C");
 
-			source.InsertRange (1, customerInfo);
 
+			if (cust == null || string.IsNullOrEmpty (cust.CustomerId))
+				source.RemoveRange (customerInfo);
+			else
+				source.InsertRange (1, customerInfo);
 
 		}
 	}

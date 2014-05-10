@@ -69,7 +69,12 @@ namespace iPadPos
 				Add (InvoiceTable = new InvoiceTableView ());
 				Add (SideBar = new InvoiceSideBar{
 					Checkout = ()=>{
-						Parent.NavigationController.PushViewController(new PaymentViewController{Invoice = Invoice},true);
+						PaymentViewController paymentVc = null;
+						Parent.NavigationController.PushViewController(paymentVc = new PaymentViewController{Invoice = Invoice, InvoicePosted = () => {
+								Invoice = new Invoice();
+								paymentVc.Dispose();
+							}
+						},true);
 					}
 				});
 				Add (BottomView = new InvoiceBottomView());

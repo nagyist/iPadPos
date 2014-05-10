@@ -103,6 +103,9 @@ namespace iPadPos
 			var start = this.items.IndexOf (enumerable [0]);
 
 			this.items.RemoveRange (start, enumerable.Count ());
+
+			if (tableView != null)
+				tableView.DeleteRows (indexPaths , UITableViewRowAnimation.Automatic);
 		}
 		public void Clear ()
 		{

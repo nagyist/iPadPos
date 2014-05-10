@@ -10,6 +10,7 @@ namespace iPadPos
 {
 	public class PaymentViewController : UIViewController
 	{
+		public Action InvoicePosted { get; set; }
 		public PaymentViewController ()
 		{
 			Title = "Complete Purchase";
@@ -18,11 +19,11 @@ namespace iPadPos
 			});
 		}
 
-		PaymentView view;
+		PaymentView view{ get { return View as PaymentView; } }
 
 		public override void LoadView ()
 		{
-			View = view = new PaymentView ();
+			View = new PaymentView ();
 		}
 
 		public override void ViewWillAppear (bool animated)
@@ -35,13 +36,13 @@ namespace iPadPos
 					.OrderBy (X => X.SortOrder).ToList ().ForEach (x => Invoice.Payments.Add (new Payment{ PaymentType = x }));
 			}
 			view.Payments = Invoice.Payments;
+			view.PostInvoice = PostInvoice;
 		}
-
-		public override void ViewDidAppear (bool animated)
+		public override void ViewWillDisappear (bool animated)
 		{
-			base.ViewDidAppear (animated);
+			base.ViewWillDisappear (animated);
+			view.PostInvoice = null;
 		}
-
 		public Invoice Invoice {
 			get {
 				return view.Invoice;
@@ -50,11 +51,28 @@ namespace iPadPos
 				(View as PaymentView).Invoice = value;
 			}
 		}
+		async void PostInvoice()
+		{
+			BigTed.BTProgressHUD.ShowContinuousProgress();
+			var success = await WebService.Main.PostInvoice(Invoice);
+			BigTed.BTProgressHUD.Dismiss ();
+			if(!success)
+			{
+				new UIAlertView("Error","There was an error posting the invoice. Please try again",null,"Ok").Show();
+				return;
+			}
+			Settings.Shared.LastPostedChange = Invoice.Change;
+			Settings.Shared.LastPostedInvoice = Invoice.Id;
+			NavigationController.PopViewControllerAnimated(true);
+			if (InvoicePosted != null)
+				InvoicePosted ();
+		}
 
 
 
 		class PaymentView : UIView
 		{
+			public Action PostInvoice { get; set; }
 			UIView backgroundView;
 			UILabel TotalLabel;
 			ObservableTableView tableView;
@@ -140,9 +158,9 @@ namespace iPadPos
 						new PayCell {
 							Frame = new RectangleF (0, 0, 320, 76),
 							Text = "Post",
-							Tapped = () =>{
-								Settings.Shared.LastPostedChange = invoice.Change;
-
+							Tapped = async () =>{
+								if(PostInvoice != null)
+									PostInvoice();
 							}
 						}
 					}

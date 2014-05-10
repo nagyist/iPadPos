@@ -77,7 +77,8 @@ namespace iPadPos
 
 		bool shouldDismiss(UIPopoverController pop)
 		{
-			return false;
+			view.DismisKeyboard ();
+			return !Customer.IsDirty;
 		}
 		public Customer Customer
 		{

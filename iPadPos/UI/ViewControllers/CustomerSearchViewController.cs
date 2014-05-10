@@ -35,8 +35,13 @@ namespace iPadPos
 				source.State = SearchSource.SearchState.Searching;
 				tableView.ReloadData();
 
-				source.Customers = await WebService.Main.SearchCustomer(searchBar.Text);
-				source.State = SearchSource.SearchState.Completed;
+				var results = await WebService.Main.SearchCustomer(searchBar.Text);
+				if(results == null)
+					source.State = SearchSource.SearchState.Error;
+				else{
+					source.Customers = results;
+					source.State = SearchSource.SearchState.Completed;
+				}
 				tableView.ReloadData();
 
 			};
@@ -101,6 +106,7 @@ namespace iPadPos
 				New,
 				Completed,
 				Searching,
+				Error,
 
 			}
 			public SearchState State {get;set;}
@@ -117,8 +123,8 @@ namespace iPadPos
 						return spinner.GetCell (tableView);
 					}
 
-					var c = (tableView.DequeueReusableCell ("default") ?? new UITableViewCell (UITableViewCellStyle.Value2, "default"));
-					c.TextLabel.Text = "No Results";
+					var c = (tableView.DequeueReusableCell ("default") ?? new UITableViewCell (UITableViewCellStyle.Value1, "default"));
+					c.TextLabel.Text =  State == SearchState.Error ? "There was an eror searching. Please try again" :"No Results";
 					return c;
 				}
 

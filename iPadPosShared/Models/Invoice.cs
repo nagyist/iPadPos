@@ -19,7 +19,7 @@ namespace iPadPos
 		public int RecordId {get;set;}
 
 		[JsonProperty("InvoiceID")]
-		public int Id {get;set;}
+		public string Id {get;set;}
 
 		Customer customer;
 		[SQLite.Ignore]

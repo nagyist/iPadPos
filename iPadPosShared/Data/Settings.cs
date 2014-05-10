@@ -7,6 +7,7 @@ namespace iPadPos
 	public class Settings : BaseModel
 	{
 		public const string LastPostedChangeKey = "LastPostedChange";
+		public const string LastPostedInvoiceKey = "LastPostedInvoice";
 		public const string HasDataKey = "HadData";
 
 		static Settings shared;
@@ -28,6 +29,13 @@ namespace iPadPos
 			set { 
 				SetValue (LastPostedChangeKey, value);
 				ProcPropertyChanged ("LastPostedChangeString");
+			}
+		}
+
+		public string LastPostedInvoice {
+			get { return GetStringValue (LastPostedInvoiceKey); }
+			set { 
+				SetValue (LastPostedInvoiceKey, value);
 			}
 		}
 		public string LastPostedChangeString
