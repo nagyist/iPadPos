@@ -40,12 +40,21 @@ namespace iPadPos
 		{
 			base.ViewWillAppear (animated);
 			view.Parent = this;
+			SocketScannerHelper.Shared.Scaned = itemScanned;
+		}
+		async void itemScanned(string scannedText)
+		{
+			var item = await WebService.Main.GetItem (scannedText);
+			if(item == null)
+				return;
+			Invoice.AddItem(item);
 		}
 
 		public override void ViewWillDisappear (bool animated)
 		{
 			base.ViewWillDisappear (animated);
 			view.Parent = null;
+			SocketScannerHelper.Shared.Scaned = null;
 		}
 		public void Checkout()
 		{

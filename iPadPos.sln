@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlyoutNavigation", "..\FlyO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iOSHelpers", "..\iOSHelpers\iOSHelpers\iOSHelpers.csproj", "{4483B8BC-4226-4F9A-9418-4E554BF5EF1D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketMobile", "SocketMobile\SocketMobile.csproj", "{D801B852-E082-492E-81AB-9357282E1986}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -67,6 +69,20 @@ Global
 		{4483B8BC-4226-4F9A-9418-4E554BF5EF1D}.Tests|iPhoneSimulator.ActiveCfg = Tests|iPhoneSimulator
 		{4483B8BC-4226-4F9A-9418-4E554BF5EF1D}.Tests|iPhoneSimulator.Build.0 = Tests|iPhoneSimulator
 		{81840AC4-32EB-4570-8EED-D2EB1B59878D}.Tests|iPhoneSimulator.ActiveCfg = Tests|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.AppStore|iPhone.Build.0 = Release|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.Release|iPhone.Build.0 = Release|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.Tests|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{D801B852-E082-492E-81AB-9357282E1986}.Tests|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{E98F7600-6C2E-4586-A78C-D42BA89445B9}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
 		{E98F7600-6C2E-4586-A78C-D42BA89445B9}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
 		{E98F7600-6C2E-4586-A78C-D42BA89445B9}.AppStore|iPhone.ActiveCfg = Release|Any CPU
@@ -86,6 +102,7 @@ Global
 		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50} = {A9B568D9-A5E1-4C56-89B0-70BB6CC0B251}
 		{E98F7600-6C2E-4586-A78C-D42BA89445B9} = {A9B568D9-A5E1-4C56-89B0-70BB6CC0B251}
 		{4483B8BC-4226-4F9A-9418-4E554BF5EF1D} = {A9B568D9-A5E1-4C56-89B0-70BB6CC0B251}
+		{D801B852-E082-492E-81AB-9357282E1986} = {A9B568D9-A5E1-4C56-89B0-70BB6CC0B251}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = iPadPos\iPadPos.csproj
