@@ -50,7 +50,7 @@ namespace WebApplication1.Models
 				Description = "--------------------"
 			});
 
-			lines.AddRange(Payments.Select(x=> new InvoiceLine
+			lines.AddRange(Payments.Where(x=> x.Amount != 0).Select(x=> new InvoiceLine
 			{
 				Description = x.PaymentType.Id,
 				TransCode = "Y",
