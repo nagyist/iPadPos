@@ -117,7 +117,7 @@ namespace iPadPos
 				return finalPrice;
 			}
 			set { 
-				if (ProcPropertyChanged (ref finalPrice, value))
+				if (ProcPropertyChanged (ref finalPrice, Math.Round(value,2)))
 					ProcPropertyChanged ("FinalPriceString");
 			}
 		}

@@ -144,7 +144,7 @@ namespace iPadPos
 			get {
 				return discountAmount;
 			}
-			set { ProcPropertyChanged (ref discountAmount, value); }
+			set { ProcPropertyChanged (ref discountAmount, Math.Round(value,2)); }
 		}
 		public double TaxAmount {get;set;}
 		double subTotal;
@@ -153,7 +153,7 @@ namespace iPadPos
 				return subTotal;
 			}
 			set { 
-				if(ProcPropertyChanged (ref subTotal, value))
+				if(ProcPropertyChanged (ref subTotal, Math.Round(value,2)))
 					ProcPropertyChanged("SubtotalString");
 			}
 		}
@@ -164,7 +164,7 @@ namespace iPadPos
 				return total;
 			}
 			set { 
-				if(ProcPropertyChanged (ref total, value))
+				if(ProcPropertyChanged (ref total, Math.Round(value,2)))
 					ProcPropertyChanged("TotalString");
 			}
 		}
@@ -196,7 +196,7 @@ namespace iPadPos
 				return appliedPayment;
 			}
 			set {
-				if(ProcPropertyChanged (ref appliedPayment, value))
+				if(ProcPropertyChanged (ref appliedPayment, Math.Round(value,2)))
 					ProcPropertyChanged("AppliedPaymentString");
 			}
 		}
@@ -207,7 +207,7 @@ namespace iPadPos
 				return remaining;
 			}
 			set {
-				if(ProcPropertyChanged (ref remaining, value))
+				if(ProcPropertyChanged (ref remaining, Math.Round(value,2)))
 					ProcPropertyChanged("RemainingString");
 			}
 		}
@@ -218,7 +218,7 @@ namespace iPadPos
 				return change;
 			}
 			set {
-				if(ProcPropertyChanged (ref change, value))
+				if(ProcPropertyChanged (ref change, Math.Round(value,2)))
 					ProcPropertyChanged("ChangeString");
 			}
 		}
@@ -245,6 +245,32 @@ namespace iPadPos
 			get { return Payments.Where (x => x.PaymentType.Id == "Cash").FirstOrDefault (); }
 		}
 			
+		public Tuple<bool,string> IsReadyForPayment ()
+		{
+			if (Customer == null || string.IsNullOrEmpty(Customer.CustomerId))
+				return new Tuple<bool, string> (false, "Invoice requires a customer");
+
+			if (!HasItems ())
+				return new Tuple<bool,string> (false, "There are no items on this invoice");
+
+			return new Tuple<bool, string> (true, "Ready to go");
+		}
+		public bool HasItems()
+		{
+			return items.Any ();
+		}
+
+		public Tuple<bool,string> Validate()
+		{
+			var result = IsReadyForPayment ();
+			if (!result.Item1)
+				return result;
+
+			if(remaining != 0)
+				return new Tuple<bool,string>(false, "There is still a remaining balance");
+
+			return new Tuple<bool, string> (true, "Ready to go");
+		}
 	}
 }
 

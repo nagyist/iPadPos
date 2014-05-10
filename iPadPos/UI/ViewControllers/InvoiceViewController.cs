@@ -47,7 +47,20 @@ namespace iPadPos
 			base.ViewWillDisappear (animated);
 			view.Parent = null;
 		}
-
+		public void Checkout()
+		{
+			var isReady = Invoice.IsReadyForPayment();
+			if (!isReady.Item1) {
+				App.ShowAlert ("Error", isReady.Item2);
+				return;
+			}
+			PaymentViewController paymentVc = null;
+			NavigationController.PushViewController(paymentVc = new PaymentViewController{Invoice = Invoice, InvoicePosted = () => {
+					Invoice = new Invoice();
+					paymentVc.Dispose();
+				}
+			},true);
+		}
 		class InvoiceView : UIView
 		{
 			//UIImageView backgroundView;
@@ -69,12 +82,7 @@ namespace iPadPos
 				Add (InvoiceTable = new InvoiceTableView ());
 				Add (SideBar = new InvoiceSideBar{
 					Checkout = ()=>{
-						PaymentViewController paymentVc = null;
-						Parent.NavigationController.PushViewController(paymentVc = new PaymentViewController{Invoice = Invoice, InvoicePosted = () => {
-								Invoice = new Invoice();
-								paymentVc.Dispose();
-							}
-						},true);
+						Parent.Checkout();
 					}
 				});
 				Add (BottomView = new InvoiceBottomView());
