@@ -18,7 +18,7 @@ namespace iPadPos
 		public Theme()
 		{
 			BackgroundGray = UIColor.FromRGB(196,196,196);
-			SideBackgroundColor = UIColor.FromRGB (70, 70, 70);
+			SideBackgroundColor = UIColor.FromRGB (53, 53, 53);
 			PayColor = UIColor.FromRGB (167, 204, 27);
 		}
 

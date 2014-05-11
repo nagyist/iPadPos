@@ -8,7 +8,7 @@ namespace iPadPos
 		public DiscountViewController (double price)
 		{
 			view.Price = price;
-			PreferredContentSize = new System.Drawing.SizeF (320, 125);
+			PreferredContentSize = new System.Drawing.SizeF (400, 65);
 		}
 		public override void LoadView ()
 		{
@@ -28,9 +28,25 @@ namespace iPadPos
 		}
 		class DiscountView : ColumnView
 		{
-			public double Price {get;set;}
+			double price;
+			public double Price {
+				get {
+					return price;
+				}
+				set {
+					price = value;
+					twentyFive.Title = calculatePrice (.25);
+					fifty.Title = calculatePrice (.5);
+				}
+			}
+
+			string calculatePrice(double percent)
+			{
+				var newPrice = Price - Price * percent;
+				return newPrice.ToString ("C");
+			}
 			public Action<double> DollarChanged {get;set;}
-			NumberEntryViewConponent dollarText;
+			//NumberEntryViewConponent dollarText;
 			UIBorderedButton twentyFive;
 			UIBorderedButton fifty;
 			UIBorderedButton dollar;
@@ -41,37 +57,47 @@ namespace iPadPos
 			}
 			void Init()
 			{
-				AddSubview(dollarText = new NumberEntryViewConponent{
-					Column = 0,
-					ColumnSpan = 3,
-					LabelText = "Dollar Amount",
-					
-				});
-				dollarText.Textview.NewValue = (s) => {
-
-				};
+//				AddSubview(dollarText = new NumberEntryViewConponent{
+//					Column = 0,
+//					ColumnSpan = 3,
+//					LabelText = "Dollar Amount",
+//					
+//				});
+//				dollarText.Textview.NewValue = (s) => {
+//
+//				};
+				this.TintColor = UIColor.Red;
 				AddSubview (twentyFive = new TintedButton{
 					Title = "25%",
+					Font = UIFont.BoldSystemFontOfSize(20),
+					//BackgroundColor = UIColor.White.ColorWithAlpha(.1f),
+//					BorderWidth = 1,
 					Tapped = (b) => {
 						PercentChange(.25f);
 					},
-				}, 0, 1, 1, 1);
+				}, 0, 1, 0, 1);
 
 				AddSubview (fifty = new TintedButton(){
 					Title = "50%",
+					Font = UIFont.BoldSystemFontOfSize(20),
+					//BackgroundColor = UIColor.White.ColorWithAlpha(.1f),
+//					BorderWidth = 1,
 					Tapped = (b) =>{
 						PercentChange(.5f);
 					},
-				}, 1, 1, 1, 1);
+				}, 1, 1, 0, 1);
 
 				AddSubview (dollar = new TintedButton(){
 					Title = "$1",
+					Font = UIFont.BoldSystemFontOfSize(20),
+					//BackgroundColor = UIColor.White.ColorWithAlpha(.1f),
+//					BorderWidth = 1,
 					Tapped = (b) =>{
 
 						DollarChanged (Price - 1);
 
 					},
-				}, 2, 1, 1, 1);
+				}, 2, 1, 0, 1);
 			}
 
 			void PercentChange(float percent)

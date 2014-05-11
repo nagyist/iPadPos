@@ -165,7 +165,7 @@ namespace iPadPos
 			onAccount.DetailTextLabel.Text = cust == null ? "" : cust.OnAccount.ToString ("C");
 
 
-			if (cust == null || string.IsNullOrEmpty (cust.CustomerId))
+			if (cust == null || string.IsNullOrEmpty (cust.CustomerId) || cust.CustomerId == Settings.Shared.CashCustomer)
 				source.RemoveRange (customerInfo);
 			else
 				source.InsertRange (1, customerInfo);

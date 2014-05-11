@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using SQLite;
 
 namespace iPadPos
 {
@@ -12,6 +13,7 @@ namespace iPadPos
 
 		public int RecordId { get; set; }
 		public bool IsDirty {get;set;}
+		[PrimaryKey]
 		public string CustomerId { get; set; }
 
 		string company;
@@ -155,6 +157,8 @@ namespace iPadPos
 
 		public override string ToString ()
 		{
+			if (CustomerId == Settings.Shared.CashCustomer)
+				return "Cash Customer";
 			return string.Format ("{0} {1}",FirstName, LastName);
 		}
 

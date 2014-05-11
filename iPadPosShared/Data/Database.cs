@@ -1,6 +1,7 @@
 ﻿using System;
 using SQLite;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace iPadPos
 {
@@ -17,7 +18,19 @@ namespace iPadPos
 			CreateTable<TaxType> ();
 			CreateTable<TransactionType> ();
 			CreateTable<PaymentType> ();
+			CreateTable<Customer> ();
 
+		}
+
+
+		public async Task<Customer> GetCashCustomer()
+		{
+			var cust = Table<Customer>().Where(x=> x.CustomerId == Settings.Shared.CashCustomer).FirstOrDefault();
+			if (cust == null) {
+				cust = await WebService.Main.GetCustomer (Settings.Shared.CashCustomer);
+				InsertOrReplace (cust);
+			}
+			return cust;
 		}
 	}
 }

@@ -50,6 +50,14 @@ namespace iPadPos
 			set{ SetValue (HasDataKey, value); }
 		}
 
+		public string CashCustomer
+		{
+			get { return GetStringValue ("CashCustomerId") ?? "CASH"; }
+			set { 
+				SetValue ("CashCustomerId", value);
+			}
+		}
+
 
 		public string GetStringValue(string key)
 		{

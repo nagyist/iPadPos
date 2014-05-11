@@ -27,13 +27,14 @@ namespace iPadPos
 
 					var d = new DiscountViewController(line.Price){
 						DollarChanged = (dollar) =>{
-							Line.Discount = dollar;
 							popup.Dismiss(true);
+							Line.Discount = dollar;
 						}
 					};
 
 					popup = new UIPopoverController(d);
 					popup.DidDismiss += (object sender, EventArgs e) => {
+						line.Discount = 0;
 						d.Dispose();
 						popup.Dispose();
 						popup = null;
@@ -99,6 +100,7 @@ namespace iPadPos
 		void updateTextColor()
 		{
 			Total.TextColor = (line.FinalPrice < 0 ? UIColor.Red : UIColor.Black);
+			Discount.TintColor = (line.Discount == 0) ? null : UIColor.Red;
 		}
 
 	}

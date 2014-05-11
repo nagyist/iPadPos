@@ -25,6 +25,10 @@ namespace iPadPos
 					}
 				},true);
 			});
+			this.NavigationItem.LeftBarButtonItem = new UIBarButtonItem ("Cash Customer", UIBarButtonItemStyle.Plain ,async (s, e) => {
+				var cust = await  Database.Main.GetCashCustomer();
+				CustomerPicked(cust);
+			});
 			PreferredContentSize = new System.Drawing.SizeF (700, 400);
 			View.Add (searchBar = new UISearchBar{
 				//SearchBarStyle = UISearchBarStyle.Minimal,
