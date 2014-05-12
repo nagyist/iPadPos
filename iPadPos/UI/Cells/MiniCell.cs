@@ -9,9 +9,9 @@ namespace iPadPos
 		public const string Key = "MiniCell";
 		public MiniCell () : base (UITableViewCellStyle.Value1,Key)
 		{
-			Frame = new System.Drawing.RectangleF (0, 0, 320, 20);
-			TextLabel.Font = UIFont.SystemFontOfSize (UIFont.SmallSystemFontSize);
-			DetailTextLabel.Font = UIFont.SystemFontOfSize (UIFont.SmallSystemFontSize);
+			Frame = new System.Drawing.RectangleF (0, 0, 320, 30);
+			TextLabel.Font = UIFont.SystemFontOfSize (UIFont.SmallSystemFontSize + 2);
+			DetailTextLabel.Font = UIFont.SystemFontOfSize (UIFont.SmallSystemFontSize + 2);
 		}
 
 		#region ICellSelectable implementation

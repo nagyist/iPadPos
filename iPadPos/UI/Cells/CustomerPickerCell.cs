@@ -14,7 +14,7 @@ namespace iPadPos
 			TextLabel.TextAlignment = UITextAlignment.Center;
 			TextLabel.TextColor = UIColor.White;
 			TextLabel.Font = UIFont.BoldSystemFontOfSize (TextLabel.Font.PointSize);
-			BackgroundColor = UIColor.FromRGB (69,70,69);// Theme.Current.SideBackgroundColor.ColorWithAlpha(.5f);
+			BackgroundColor = Color.LightBlue;//UIColor.FromRGB (69,70,69);// Theme.Current.SideBackgroundColor.ColorWithAlpha(.5f);
 			ImageView.TintColor = UIColor.White;
 			ImageView.Image = image.Value.ImageWithRenderingMode (UIImageRenderingMode.AlwaysTemplate);
 			SeparatorInset = new UIEdgeInsets (0, 0, 0, 0);

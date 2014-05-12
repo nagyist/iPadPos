@@ -11,7 +11,7 @@ namespace iPadPos
 			SeparatorInset = new UIEdgeInsets (0, 0, 0, 0);
 			SelectionStyle = UITableViewCellSelectionStyle.None;
 			TextColor = UIColor.White;
-			BackgroundColor = Theme.Current.SideBackgroundColor;
+			BackgroundColor = Theme.Current.SideBarCellColor;
 			DetailTextLabel.Font = UIFont.BoldSystemFontOfSize (30);
 		}
 		double value;
@@ -39,7 +39,7 @@ namespace iPadPos
 		void update()
 		{
 			DetailTextLabel.Text = Value.ToString ("C");
-			DetailTextLabel.TextColor = Value >= 0 ? TextColor : UIColor.Red;
+			DetailTextLabel.TextColor = Value >= 0 ? TextColor : Color.Red;
 		}
 	}
 }

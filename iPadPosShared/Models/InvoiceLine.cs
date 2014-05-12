@@ -143,9 +143,17 @@ namespace iPadPos
 					ProcPropertyChanged ("FinalPriceString");
 			}
 		}
+		double subTotal;
+		public double SubTotal {
+			get{ return subTotal; }
+			set{
+				ProcPropertyChanged (ref subTotal, Math.Round (value, 2));
+			}
+		}
 		void updateTotals()
 		{
-			FinalPrice = Qty * (Price - Discount);
+			SubTotal = Qty * price;
+			FinalPrice = Qty *  (Price - Discount);
 		}
 
 		public string PriceString

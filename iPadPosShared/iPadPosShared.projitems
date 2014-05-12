@@ -30,5 +30,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\TransactionType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\PaymentType.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\iDirty.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Color.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Theme.cs" />
   </ItemGroup>
 </Project>

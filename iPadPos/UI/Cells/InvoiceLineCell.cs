@@ -42,11 +42,11 @@ namespace iPadPos
 					popup.PresentFromRect(Discount.Bounds,Discount, UIPopoverArrowDirection.Any,true);
 				}},2);
 
-			AutoAddSubview (TransTypeButton = new UIBorderedButton{ Title = "S" });
+			AutoAddSubview (TransTypeButton = new UIBorderedButton{ Title = "S" ,TintColor = Color.LightBlue});
 			TransTypeButton.TouchUpInside += (sender, e) => {
 				var sheet = new SimpleActionSheet();
 				var types = Database.Main.Table<TransactionType>().ToList();
-				types.ForEach(x=> sheet.Add(x.Description,()=> Line.TransType = x));
+				types.ForEach(x=> sheet.Add(x.Description,Color.LightBlue,()=> Line.TransType = x));
 				sheet.ShowFrom(TransTypeButton.Bounds,TransTypeButton,true);
 			};
 			AddSubview (Total = new UILabel{ Text = "Total",TextAlignment = UITextAlignment.Center },9,columnspan:2);
@@ -72,6 +72,7 @@ namespace iPadPos
 				Unbind ();
 				line = value;
 				Bind ();
+				updateTextColor ();
 			}
 		}
 
@@ -99,8 +100,8 @@ namespace iPadPos
 
 		void updateTextColor()
 		{
-			Total.TextColor = (line.FinalPrice < 0 ? UIColor.Red : UIColor.Black);
-			Discount.TintColor = (line.Discount == 0) ? null : UIColor.Red;
+			Total.TextColor = (line.FinalPrice < 0 ? Color.Red : UIColor.Black);
+			Discount.TintColor = (line.Discount == 0) ? Color.Gray : (UIColor)Color.Red;
 		}
 
 	}

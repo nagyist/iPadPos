@@ -66,7 +66,7 @@ namespace iPadPos
 //				dollarText.Textview.NewValue = (s) => {
 //
 //				};
-				this.TintColor = UIColor.Red;
+				this.TintColor = Color.Red;
 				AddSubview (twentyFive = new TintedButton{
 					Title = "25%",
 					Font = UIFont.BoldSystemFontOfSize(20),

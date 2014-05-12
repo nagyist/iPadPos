@@ -139,7 +139,6 @@
     <Compile Include="UI\Controls\ViewComponents\ViewComponentContainer.cs" />
     <Compile Include="UI\Controls\UIBorderedButton.cs" />
     <Compile Include="UI\Cells\ButtonCell.cs" />
-    <Compile Include="Theme.cs" />
     <Compile Include="UI\Cells\MiniCell.cs" />
     <Compile Include="UI\ViewControllers\PaymentViewController.cs" />
     <Compile Include="UI\Cells\PaymentCell.cs" />
@@ -181,6 +180,8 @@
     <BundleResource Include="Resources\homeScreen.png" />
     <BundleResource Include="Resources\homeScreen%402x.png" />
     <BundleResource Include="Resources\PaymentBG.png" />
+    <BundleResource Include="Resources\plus-outline.png" />
+    <BundleResource Include="Resources\plus-outline%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="btprogresshud">

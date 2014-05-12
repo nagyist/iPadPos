@@ -9,7 +9,7 @@ namespace iPadPos
 		{
 			TextLabel.Text = "Last Change";
 			SelectionStyle = UITableViewCellSelectionStyle.None;
-			BackgroundColor = Theme.Current.SideBackgroundColor;
+			BackgroundColor = Theme.Current.SideBarCellColor;
 			TextLabel.TextColor = UIColor.White;
 			DetailTextLabel.TextColor = UIColor.White;
 		}

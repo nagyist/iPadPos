@@ -94,7 +94,7 @@ namespace iPadPos
 
 			public PaymentView ()
 			{
-				const float rowHeight = 60;
+				const float rowHeight = 80;
 				BackgroundColor = UIColor.FromPatternImage(UIImage.FromBundle("homeScreen"));
 				Add (backgroundView = new UIView {
 					BackgroundColor = UIColor.Black.ColorWithAlpha (.5f),
@@ -128,24 +128,24 @@ namespace iPadPos
 					RowHeight = 60,
 					Source = new CellTableViewSource {
 						(onAccountCell = new SubTotalCell {
-							Frame = new RectangleF (0, 0, 320, 30),
+							Frame = new RectangleF (0, 0, 320, 50),
 							TextLabel = {
 								Text = "On Account"
 							},
 							BackgroundColor = bgColor
 						}),
 						(totalCell = new SubTotalCell {
-							Frame = new RectangleF (0, 0, 320, 30),
+							Frame = new RectangleF (0, 0, 320, 50),
 							TextLabel = {
 								Text = "Total"
 							},
 							BackgroundColor = bgColor
 						}),
 						(remaining = new TotalCell {
-							Frame = new RectangleF (0, 0, 320, 44),
+							Frame = new RectangleF (0, 0, 320, 65),
 							TextLabel = {
 								Text = "Remaining",
-								TextColor = UIColor.White,
+								TextColor = Theme.Current.PayColor,
 							},
 							DetailTextLabel = {
 								Font = UIFont.BoldSystemFontOfSize(25),
@@ -159,7 +159,7 @@ namespace iPadPos
 								TextColor = UIColor.White,
 							},
 							DetailTextLabel = {
-								TextColor = Theme.Current.PayColor,
+								TextColor = UIColor.White,
 							},
 							BackgroundColor = bgColor,
 							SeparatorInset = new UIEdgeInsets (0, 0, 0, 0),
@@ -212,7 +212,7 @@ namespace iPadPos
 			public override void LayoutSubviews ()
 			{
 				base.LayoutSubviews ();
-				var frame = new RectangleF (0, 0, 500, 292);
+				var frame = new RectangleF (0, 0, 500, 400);
 				float h = 54;
 				backgroundView.Frame = frame;
 				var c = Center;

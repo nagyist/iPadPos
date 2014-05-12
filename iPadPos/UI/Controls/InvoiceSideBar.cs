@@ -29,7 +29,7 @@ namespace iPadPos
 		{
 			this.Layer.BorderColor = UIColor.Black.ColorWithAlpha (.25f).CGColor;
 			this.Layer.BorderWidth = .5f;
-			BackgroundColor = UIColor.DarkGray;
+			BackgroundColor = Theme.Current.SideBarBackGroundColor;//UIColor.DarkGray;
 			AddSubview (tableView = new UITableView (RectangleF.Empty, UITableViewStyle.Grouped) {
 				BackgroundColor = UIColor.Clear,
 				Source = source = new CellTableViewSource {
@@ -52,9 +52,14 @@ namespace iPadPos
 						}
 					}),
 					(subtotal = new SubTotalCell ()),
-					(discount = new DiscountCell ()),
+					(discount = new DiscountCell {
+						AddDiscount = () =>{
+
+						}
+					}),
 					(total = new TotalCell ()),
 					new PayCell {
+						Frame = new RectangleF(0,0,320,60),
 						Text = "Checkout",
 						TintColor = UIColor.White,
 						Tapped = () => {
@@ -140,12 +145,18 @@ namespace iPadPos
 		{
 			binding = Binding.Create (() => 
 				total.Value == Invoice.Total &&
-			subtotal.DetailTextLabel.Text == Invoice.SubtotalString
+				subtotal.DetailTextLabel.Text == Invoice.SubtotalString &&
+				discount.DetailTextLabel.Text == Invoice.DiscountString
 			);
+			updateDiscount ();
+			invoice.SubscribeToProperty ("Discount", updateDiscount);
 			Invoice.SubscribeToProperty ("Customer", CustomerChanged);
 			CustomerChanged ();
 		}
-
+		void updateDiscount()
+		{
+			discount.DetailTextLabel.TextColor = Invoice.DiscountAmount == 0 ? Color.Gray : Color.Red;
+		}
 		void unbind ()
 		{
 			if (binding == null)
@@ -153,6 +164,7 @@ namespace iPadPos
 
 			binding.Unbind ();
 			Invoice.UnSubscribeToProperty ("Customer", CustomerChanged);
+			invoice.UnSubscribeToProperty ("Discount", updateDiscount);
 		}
 
 		void CustomerChanged ()

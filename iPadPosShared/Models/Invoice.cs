@@ -144,7 +144,10 @@ namespace iPadPos
 			get {
 				return discountAmount;
 			}
-			set { ProcPropertyChanged (ref discountAmount, Math.Round(value,2)); }
+			set { 
+				if(ProcPropertyChanged (ref discountAmount, Math.Round(value,2)))
+					ProcPropertyChanged("DiscountString");
+			}
 		}
 		public double TaxAmount {get;set;}
 		double subTotal;
@@ -179,11 +182,22 @@ namespace iPadPos
 			get{ return SubTotal.ToString ("C"); }
 		}
 
+		public string DiscountString {
+			get { return (DiscountAmount * -1 ).ToString("C"); }
+		}
+		public double TotalDiscount {
+			get{ return discountAmount + itemsDiscount; }
+		}
+
+		double itemsDiscount = 0;
 		void UpdateTotals()
 		{
+			var itemsSubTotal = Items.Sum (x => x.SubTotal);
 			SubTotal = Items.Sum (x => x.FinalPrice);
-
+			itemsDiscount =  itemsSubTotal - SubTotal;
 			Total = SubTotal - DiscountAmount;
+			ProcPropertyChanged("DiscountString");
+			ProcPropertyChanged("Discount");
 
 			AppliedPayment = Payments.Sum (x => x.Amount);
 			Remaining = AppliedPayment >= Total && Total > 0 ? 0 : Total - AppliedPayment;
