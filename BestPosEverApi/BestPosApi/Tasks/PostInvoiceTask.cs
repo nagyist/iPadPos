@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Transactions;
 using Simpler;
 using WebApplication1.Helpers;
@@ -11,7 +12,7 @@ namespace WebApplication1.Tasks
 	{
 		DateTime Date = DateTime.Now;
 
-		public override void Execute()
+		public override SimpleTask Execute()
 		{
 			//using (var t = new TransactionScope())
 			{
@@ -112,13 +113,20 @@ namespace WebApplication1.Tasks
 					invDate.GetSqlCompatible(true));
 				SharedDb.Execute(postQuery);
 
-			
+				//Task.Factory.StartNew(() =>
+				//{
+					new SendEmailTask
+					{
+						Invoice = In,
+					}.Execute();
+				//});
 
 				//Cleanup
 				SharedDb.Execute(string.Format("CALL DisposeWInv ({0})", wId.GetSqlCompatible(true)));
 
 				//t.Complete();
 				Out = true;
+				return this;
 			}
 		}
 	}

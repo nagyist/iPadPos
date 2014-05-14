@@ -10,7 +10,7 @@ namespace WebApplication1.Controllers
 {
     public class ItemsController : ApiController
     {
-	    const string select = @"Select
+	    public const string select = @"Select
 RecordId,
 ItemID,
 Description,

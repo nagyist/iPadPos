@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace WebApplication1.Models
 {
@@ -37,6 +38,14 @@ namespace WebApplication1.Models
 		public string SalesPersonId { get; set; }
 
 		public double TaxAmount1 { get; set; }
+
+		[JsonIgnore]
+		public double SubTotal
+		{
+			get { return Total + TotalDiscount; }
+		}
+
+		public double TotalDiscount { get; set; }
 
 		public double TaxAmount2 { get; set; }
 

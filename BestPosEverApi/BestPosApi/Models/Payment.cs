@@ -10,5 +10,6 @@ namespace WebApplication1.Models
 		public int Id { get; set; }
 		public PaymentType PaymentType { get; set; }
 		public double Amount { get; set; }
+		public double Change { get; set; }
 	}
 }

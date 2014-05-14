@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.Ajax.Utilities;
+using WebApplication1.Helpers;
 
 namespace WebApplication1.Models
 {
@@ -69,6 +71,13 @@ namespace WebApplication1.Models
 			}
 			return false;
 		}
+
+		public override string ToString()
+		{
+			return string.Format("{0} {1}", FirstName.UppercaseFirst(), LastName.UppercaseFirst());
+		}
+
+
 
 		#endregion
 	}

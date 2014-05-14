@@ -35,6 +35,8 @@ namespace WebApplication1.Models
 
 		public string TaxCode { get; set; }
 
+		public double Discount { get; set; }
+
 		public string TransCode { get; set; }
 	}
 }
