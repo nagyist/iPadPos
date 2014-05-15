@@ -211,16 +211,39 @@ namespace iPadPos
 		}
 
 		public double TotalDiscount {
-			get{ return discountAmount + itemsDiscount; }
+			get{ return discountAmount + couponDiscount; }
+		}
+		public string TotalDiscountString
+		{
+			get{ 
+				return TotalDiscount.ToString ("C");
+			}
+		}
+		double couponDiscount =0;
+		[JsonIgnore,Ignore]
+		public List<InvoiceLine> Coupons
+		{
+			get{
+				return Items.Where(x=> x.ItemType == ItemType.Coupon).ToList ();
+			}
+		}
+		void updateCoupons()
+		{
+			Coupons.Where (x => x.DiscountPercent > 0).ForEach (x => {
+				x.Price = SubTotal * x.DiscountPercent * -1f;
+			});
+			couponDiscount = Coupons.Sum (x => x.Price);
+			ProcPropertyChanged("TotalDiscountString");
 		}
 
 		double itemsDiscount = 0;
 		void UpdateTotals()
 		{
-			var itemsSubTotal = Items.Sum (x => x.SubTotal);
-			SubTotal = Items.Sum (x => x.FinalPrice);
+			var itemsSubTotal = Items.Where(x => x.ItemType != ItemType.Coupon).Sum (x => x.SubTotal);
+			SubTotal = Items.Where(x => x.ItemType != ItemType.Coupon).Sum (x => x.FinalPrice);
+			updateCoupons ();
 			itemsDiscount =  itemsSubTotal - SubTotal;
-			Total = SubTotal - DiscountAmount;
+			Total = SubTotal - TotalDiscount;
 			ProcPropertyChanged("DiscountString");
 			ProcPropertyChanged("Discount");
 

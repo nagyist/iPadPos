@@ -84,9 +84,8 @@ namespace iPadPos
 		}
 		public async Task<List<Item>> GetCoupons()
 		{
-			var items = (await GetGenericList<Item> ("Coupons"));
-			items.ForEach (x => x.ItemType = ItemType.Coupon);
-			return items;
+			var items = (await GetGenericList<Coupon> ("Coupons"));
+			return items.Cast<Item>().ToList();
 		}
 
 		public async Task<List<T>> GetGenericList<T> (string path, bool insert = false)

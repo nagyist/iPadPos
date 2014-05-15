@@ -162,7 +162,7 @@ namespace iPadPos
 			binding = Binding.Create (() => 
 				total.Value == Invoice.Total &&
 				subtotal.DetailTextLabel.Text == Invoice.SubtotalString &&
-				discount.DetailTextLabel.Text == Invoice.DiscountString
+				discount.DetailTextLabel.Text == Invoice.TotalDiscountString
 			);
 			updateDiscount ();
 			invoice.SubscribeToProperty ("Discount", updateDiscount);

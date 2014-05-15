@@ -22,8 +22,14 @@ namespace iPadPos
 			TransactionCode = item.TransCode;
 			ItemId = item.ItemID;
 			OnHand = item.OnHand;
+			ItemType = item.ItemType;
+			var cpn = item as Coupon;
+			if (cpn != null) {
+				DiscountPercent = cpn.DiscountPercent;
+			}
 		}
-
+		[Ignore,JsonIgnore]
+		public ItemType ItemType {get;set;}
 		public int ParentRecordId { get; set; }
 
 		string itemId;
@@ -82,7 +88,7 @@ namespace iPadPos
 				}
 			}
 		}
-
+		public float DiscountPercent { get; set; }
 		public string DiscountString {
 			get {
 				return Discount.ToString("C");
