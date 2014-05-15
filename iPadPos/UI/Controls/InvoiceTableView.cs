@@ -13,6 +13,7 @@ namespace iPadPos
 			ContentOffset = new System.Drawing.PointF (0, -100);
 			BackgroundView = null;
 			BackgroundColor = UIColor.Clear;
+			AutoScroll = true;
 		}
 
 		Invoice invoice;
@@ -35,7 +36,7 @@ namespace iPadPos
 		}
 		protected override MonoTouch.UIKit.UIView CreateHeader ()
 		{
-			return this.DequeueReusableCell (InvoiceHeaderCell.Key) as InvoiceHeaderCell ?? new InvoiceHeaderCell ();
+			return new InvoiceHeaderCell ();
 		}
 	}
 }

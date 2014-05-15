@@ -4,17 +4,17 @@ using iOSHelpers;
 
 namespace iPadPos
 {
-	public class InvoiceHeaderCell : ColumnCell
+	public class InvoiceHeaderCell : ColumnView
 	{
-		public const string Key = "InvoiceLineCell";
-		public InvoiceHeaderCell () : base (Key)
+		UIView BackgroundView;
+		public InvoiceHeaderCell () 
 		{
 			UIColor headerColor = UIColor.Black;
 			Padding = 5;
-			BackgroundView = new UIBlurView{
+			AddSubview(BackgroundView = new UIBlurView{
 				//TintColor = Theme.Current.PayColor,
 				//AccentColorIntensity = .1f,
-			};
+			});
 			BackgroundColor = UIColor.Clear;
 			//BackgroundColor = UIColor.LightGray.ColorWithAlpha (.25f);
 			AutoAddSubview (Description = new UILabel {
@@ -56,7 +56,7 @@ namespace iPadPos
 		public override void LayoutSubviews ()
 		{
 			base.LayoutSubviews ();
-			//BackgroundView.Frame = Bounds;
+			BackgroundView.Frame = Bounds;
 		}
 
 

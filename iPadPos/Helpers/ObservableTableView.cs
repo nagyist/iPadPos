@@ -6,6 +6,7 @@ using System.Diagnostics;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using System.Drawing;
+using System.Linq;
 
 namespace iPadPos
 {
@@ -20,7 +21,7 @@ namespace iPadPos
 		object dataSource;
 		IList list;
 		INotifyCollectionChanged notifier;
-
+		public bool AutoScroll { get; set; }
 		System.Threading.Thread mainThread;
 
 		bool loadedView = false;
@@ -130,6 +131,8 @@ namespace iPadPos
 						paths [i] = NSIndexPath.FromRowSection (e.NewStartingIndex + i, 0);
 					}
 					this.InsertRows (paths, AddAnimation);
+					if(AutoScroll)
+						ScrollToRow(paths.Last(),UITableViewScrollPosition.None,true);
 				} else if (e.Action == NotifyCollectionChangedAction.Remove) {
 					var count = e.OldItems.Count;
 					var paths = new NSIndexPath[count];
