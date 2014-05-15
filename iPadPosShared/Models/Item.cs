@@ -106,6 +106,7 @@ namespace iPadPos
 
 	public enum ItemType
 	{
+		Item,
 		NewCustomerTracking,
 		NewProduct,
 		Coupon,

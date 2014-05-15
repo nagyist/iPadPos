@@ -161,7 +161,7 @@ namespace iPadPos
 		{
 			binding = Binding.Create (() => 
 				total.Value == Invoice.Total &&
-				subtotal.DetailTextLabel.Text == Invoice.SubtotalString &&
+				subtotal.DetailTextLabel.Text == Invoice.ItemsSubtotalString &&
 				discount.DetailTextLabel.Text == Invoice.TotalDiscountString
 			);
 			updateDiscount ();
@@ -171,7 +171,7 @@ namespace iPadPos
 		}
 		void updateDiscount()
 		{
-			discount.DetailTextLabel.TextColor = Invoice.DiscountAmount == 0 ? Color.Gray : Color.Red;
+			discount.DetailTextLabel.TextColor = Invoice.TotalDiscount == 0 ? Color.Gray : Color.Red;
 		}
 		void unbind ()
 		{

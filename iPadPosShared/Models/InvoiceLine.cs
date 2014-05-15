@@ -28,7 +28,7 @@ namespace iPadPos
 				DiscountPercent = cpn.DiscountPercent;
 			}
 		}
-		[Ignore,JsonIgnore]
+		[JsonIgnore]
 		public ItemType ItemType {get;set;}
 		public int ParentRecordId { get; set; }
 

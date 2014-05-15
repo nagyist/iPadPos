@@ -180,8 +180,7 @@ namespace iPadPos
 				return subTotal;
 			}
 			set { 
-				if(ProcPropertyChanged (ref subTotal, Math.Round(value,2)))
-					ProcPropertyChanged("SubtotalString");
+				ProcPropertyChanged (ref subTotal, Math.Round (value, 2));
 			}
 		}
 
@@ -201,9 +200,9 @@ namespace iPadPos
 			get{ return Total.ToString ("C"); }
 		}
 
-		public string SubtotalString
+		public string ItemsSubtotalString
 		{
-			get{ return SubTotal.ToString ("C"); }
+			get{ return ItemsSubtotal.ToString ("C"); }
 		}
 
 		public string DiscountString {
@@ -230,20 +229,28 @@ namespace iPadPos
 		void updateCoupons()
 		{
 			Coupons.Where (x => x.DiscountPercent > 0).ForEach (x => {
-				x.Price = SubTotal * x.DiscountPercent * -1f;
+				x.Price = ItemsSubtotal * x.DiscountPercent * -1f;
 			});
 			couponDiscount = Coupons.Sum (x => x.Price);
 			ProcPropertyChanged("TotalDiscountString");
 		}
 
-		double itemsDiscount = 0;
+		double itemSubtotal;
+		public double ItemsSubtotal
+		{
+			get{ return itemSubtotal; }
+			set { 
+				if(ProcPropertyChanged (ref itemSubtotal, Math.Round(value,2)))
+					ProcPropertyChanged("ItemsSubtotalString");
+			}
+
+		}
 		void UpdateTotals()
 		{
-			var itemsSubTotal = Items.Where(x => x.ItemType != ItemType.Coupon).Sum (x => x.SubTotal);
-			SubTotal = Items.Where(x => x.ItemType != ItemType.Coupon).Sum (x => x.FinalPrice);
+			ItemsSubtotal = Items.Where(x => x.ItemType != ItemType.Coupon).Sum (x => x.SubTotal);
 			updateCoupons ();
-			itemsDiscount =  itemsSubTotal - SubTotal;
-			Total = SubTotal - TotalDiscount;
+			SubTotal = Items.Sum (x => x.FinalPrice);
+			Total = SubTotal - DiscountAmount;
 			ProcPropertyChanged("DiscountString");
 			ProcPropertyChanged("Discount");
 
