@@ -65,6 +65,7 @@ namespace iPadPos
 			}
 			PaymentViewController paymentVc = null;
 			NavigationController.PushViewController(paymentVc = new PaymentViewController{Invoice = Invoice, InvoicePosted = () => {
+					Invoice.DeleteLocal();
 					Invoice = new Invoice();
 					paymentVc.Dispose();
 				}
