@@ -5,16 +5,24 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using WebApplication1.Models;
+using WebGrease.Css.Extensions;
 
 namespace WebApplication1.Controllers
 {
     public class CouponsController : ApiController
     {
 		// GET: api/Coupons
-		public IEnumerable<Item> Get()
+		public IEnumerable<Coupon> Get()
 		{
 			var selectString = string.Format(ItemsController.select + " Where ItemId in ({0})", "'CPNMILITITARY','CPNFSG','CPNFSR','CPNBKCG','CPNBKCR','CPNBOWCLUB','CPNBOWR','CPNTEXT'");
-			return SharedDb.GetMany<Item>(selectString);
+			var coupons = SharedDb.GetMany<Coupon>(selectString);
+			coupons.ForEach(x =>
+			{
+				float percent;
+				if(float.TryParse(x.Misc1, out percent))
+					x.DiscountPercent = percent;
+			});
+			return coupons;
 		}
 
         // GET: api/Coupons/5
