@@ -160,11 +160,13 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\CouponsController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\NewCustomerTrackingController.cs" />
+    <Compile Include="Controllers\NewProductsController.cs" />
     <Compile Include="Controllers\PaymentTypeController.cs" />
     <Compile Include="Controllers\TaxTypeController.cs" />
     <Compile Include="Controllers\TransactionTypeController.cs" />

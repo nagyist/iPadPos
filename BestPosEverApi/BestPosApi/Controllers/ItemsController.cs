@@ -21,7 +21,6 @@ Misc3,
 Misc4,
 Misc5,
 Available as Qty,
-TaxCode,
 TransCode,
 AvgCost as Cost
 from Items 
