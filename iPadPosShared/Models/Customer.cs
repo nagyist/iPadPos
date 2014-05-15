@@ -155,11 +155,13 @@ namespace iPadPos
 			set { ProcPropertyChanged (ref onAccount, value); }
 		}
 
+		public bool IsNew {get;set;}
+
 		public override string ToString ()
 		{
 			if (CustomerId == Settings.Shared.CashCustomer)
 				return "Cash Customer";
-			return string.Format ("{0} {1}",FirstName, LastName);
+			return string.Format ("{0} {1}",FirstName.UppercaseFirst(), LastName.UppercaseFirst());
 		}
 
 	}

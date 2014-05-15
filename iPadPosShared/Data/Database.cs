@@ -2,6 +2,7 @@
 using SQLite;
 using System.IO;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace iPadPos
 {
@@ -19,6 +20,7 @@ namespace iPadPos
 			CreateTable<TransactionType> ();
 			CreateTable<PaymentType> ();
 			CreateTable<Customer> ();
+			CreateTable<Item> ();
 
 		}
 

@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.IO;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace iPadPos
 {
@@ -67,6 +68,25 @@ namespace iPadPos
 		public async Task<List<TransactionType>> GetTransactions ()
 		{
 			return await GetGenericList<TransactionType> ("TransactionType", true);
+		}
+
+		public async Task<List<Item>> GetNewCustomerInformation()
+		{
+			var items = (await GetGenericList<Item> ("NewCustomerTracking"));
+			items.ForEach (x => x.ItemType = ItemType.NewCustomerTracking);
+			return items;
+		}	
+		public async Task<List<Item>> GetNewProducts()
+		{
+			var items = (await GetGenericList<Item> ("NewProducts"));
+			items.ForEach (x => x.ItemType = ItemType.NewProduct);
+			return items;
+		}
+		public async Task<List<Item>> GetCoupons()
+		{
+			var items = (await GetGenericList<Item> ("Coupons"));
+			items.ForEach (x => x.ItemType = ItemType.Coupon);
+			return items;
 		}
 
 		public async Task<List<T>> GetGenericList<T> (string path, bool insert = false)

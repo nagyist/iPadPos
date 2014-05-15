@@ -32,5 +32,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\iDirty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Color.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Theme.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringExtensions.cs" />
   </ItemGroup>
 </Project>

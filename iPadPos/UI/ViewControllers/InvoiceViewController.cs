@@ -31,8 +31,8 @@ namespace iPadPos
 
 		public override void LoadView ()
 		{
-			View = new InvoiceView {
-				Invoice = new Invoice()
+			View = new InvoiceView(this) {
+				Invoice = Invoice.FromLocalId(Settings.Shared.CurrentInvoice),
 			};
 		}
 
@@ -82,9 +82,9 @@ namespace iPadPos
 			public InvoiceBottomView BottomView {get;set;}
 
 			const float sideBarWidth = 320f;
-			const float bottomHeight = 100;
+			const float bottomHeight = 340;
 
-			public InvoiceView ()
+			public InvoiceView (UIViewController  parent)
 			{
 				BackgroundColor = Theme.Current.BackgroundGray;
 				//Add(backgroundView = new UIImageView(UIImage.FromBundle("PaymentBG").Blur(50)));
@@ -94,7 +94,11 @@ namespace iPadPos
 						Parent.Checkout();
 					}
 				});
-				Add (BottomView = new InvoiceBottomView());
+				Add (BottomView = new InvoiceBottomView(parent){
+					AddItem = (i) =>{
+						Invoice.AddItem(i);
+					}
+				});
 
 				this.ConstrainLayout(()=> 
 //					backgroundView.Frame.X == Frame.X &&

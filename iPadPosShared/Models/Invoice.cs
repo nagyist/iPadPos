@@ -5,16 +5,29 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using SQLite;
 
 namespace iPadPos
 {
 	public class Invoice : BaseModel
 	{
+		int localId;
+		[PrimaryKey, AutoIncrement]
+		public int LocalId {
+			get {
+				return localId;
+			}
+			set {
+				localId = value;
+				if (Items != null)
+					Items.ForEach (x => x.LocalParentId = LocalId);
+			}
+		}
 		public Invoice()
 		{
 			Customer = new Customer ();
-			Items = new ObservableCollection<InvoiceLine> ();
 			Payments = new ObservableCollection<Payment> ();
+			Items = new ObservableCollection<InvoiceLine> ();
 		}
 		public int RecordId {get;set;}
 
@@ -83,6 +96,8 @@ namespace iPadPos
 
 		void HandlePropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
+			if (sender is InvoiceLine)
+				Database.Main.Update (sender);
 			if (e.PropertyName == "FinalPrice" || e.PropertyName == "Amount")
 				UpdateTotals ();
 		}
@@ -100,6 +115,7 @@ namespace iPadPos
 			set {
 				unbindAllItems ();
 				items = value;
+				UpdateTotals ();
 				Items.CollectionChanged += HandleItemsCollectionChanged;
 				bindAllItems ();
 			}
@@ -108,15 +124,23 @@ namespace iPadPos
 		public void AddItem(Item item)
 		{
 			var i = new InvoiceLine (item);
+			i.LocalParentId = LocalId;
 			i.PropertyChanged += HandlePropertyChanged;
 			Items.Add (i);
+			Database.Main.Insert (i);
 		}
 
 		void HandleItemsCollectionChanged (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
 			UpdateTotals ();
-			if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove)
-				e.OldItems.Cast<InvoiceLine> ().ToList ().ForEach (x => x.PropertyChanged -= HandlePropertyChanged);
+			if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove) {
+				e.OldItems.Cast<InvoiceLine> ().ToList ().ForEach (x => {
+					x.PropertyChanged -= HandlePropertyChanged;
+					if(x is InvoiceLine)
+						Database.Main.Delete(x);
+				});
+
+			}
 		}
 		void bindAllItems()
 		{
@@ -185,6 +209,7 @@ namespace iPadPos
 		public string DiscountString {
 			get { return (DiscountAmount * -1 ).ToString("C"); }
 		}
+
 		public double TotalDiscount {
 			get{ return discountAmount + itemsDiscount; }
 		}
@@ -202,6 +227,8 @@ namespace iPadPos
 			AppliedPayment = Payments.Sum (x => x.Amount);
 			Remaining = AppliedPayment >= Total && Total > 0 ? 0 : Total - AppliedPayment;
 			Change = AppliedPayment <= Total ? 0 : AppliedPayment - Total;
+			if(Items.Count >= 0)
+				Save ();
 		}
 
 		double appliedPayment;
@@ -234,6 +261,8 @@ namespace iPadPos
 			set {
 				if(ProcPropertyChanged (ref change, Math.Round(value,2)))
 					ProcPropertyChanged("ChangeString");
+				if(CashPayment != null)
+				CashPayment.Change = value;
 			}
 		}
 
@@ -293,6 +322,39 @@ namespace iPadPos
 				return;
 			}
 			payment.Amount = Remaining;
+		}
+		bool hasSaved = false;
+		public void Save()
+		{
+			if (LocalId == 0)
+				Database.Main.Insert (this);
+			else
+				Database.Main.Update (this);
+			if (hasSaved)
+				return;
+			Database.Main.InsertAll (Items, "OR REPLACE");
+
+			hasSaved = true;
+		}
+		public void Save(bool force)
+		{
+			if (force)
+				hasSaved = false;
+		}
+
+		public void DeleteLocal()
+		{
+			Items.ForEach (x => Database.Main.Delete (x));
+			Database.Main.Delete (this);
+			Settings.Shared.CurrentInvoice = 0;
+		}
+		public static Invoice FromLocalId(int id)
+		{
+			var invoice = Database.Main.Table<Invoice> ().Where (x => x.LocalId == id).FirstOrDefault () ?? new Invoice ();
+			if (invoice.LocalId != 0) {
+				invoice.Items = new  ObservableCollection<InvoiceLine> (Database.Main.Table<InvoiceLine> ());
+			}
+			return invoice;
 		}
 	}
 }

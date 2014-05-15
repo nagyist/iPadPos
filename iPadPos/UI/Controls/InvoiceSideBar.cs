@@ -3,6 +3,7 @@ using MonoTouch.Dialog;
 using Praeclarum.Bind;
 using MonoTouch.UIKit;
 using System.Drawing;
+using System.Threading.Tasks;
 
 namespace iPadPos
 {
@@ -21,7 +22,7 @@ namespace iPadPos
 		UITableViewCell onAccount;
 		UITableViewCell lastPostedChange;
 		CellTableViewSource source;
-		UIPopoverController popover;
+		UIPopoverController popover,newCustPopover;
 
 		public Action Checkout { get; set; }
 
@@ -41,6 +42,21 @@ namespace iPadPos
 									Invoice.Customer = c;
 									popover.Dismiss (true);
 									popover.Dispose ();
+									if(Invoice.Customer.IsNew)
+									{
+										//
+										NewCustomerInfoViewController newCust;
+										newCustPopover = new UIPopoverController(new UINavigationController(newCust = new NewCustomerInfoViewController()));
+										newCust.Popover = newCustPopover;
+										newCust.HowTheyHeard = (i) => {
+											invoice.AddItem(i);
+											newCustPopover.Dismiss(true);
+											newCustPopover.Dispose();
+										};
+										newCustPopover.PresentFromRect (customer.Frame, tableView, UIPopoverArrowDirection.Right, true);
+
+										//
+									}
 								}
 							}) {
 								NavigationBar = {

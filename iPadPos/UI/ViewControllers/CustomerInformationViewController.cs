@@ -37,9 +37,12 @@ namespace iPadPos
 			});
 		}
 
+
+
 		async Task<bool> InsertCustomer()
 		{
 			Customer = await WebService.Main.CreateCustomer(Customer);
+			Customer.IsNew = true;
 			return !string.IsNullOrEmpty (Customer.CustomerId);
 		}
 		async Task<bool> UpdateCustomer ()

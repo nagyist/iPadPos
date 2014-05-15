@@ -1,4 +1,6 @@
 ﻿using System;
+using Newtonsoft.Json;
+using SQLite;
 
 namespace iPadPos
 {
@@ -34,6 +36,7 @@ namespace iPadPos
 
 		#region public properties
 
+		[PrimaryKey]
 		public string ItemID {
 			get { return itemID; }
 			set { ProcPropertyChanged (ref itemID, value); }
@@ -94,7 +97,18 @@ namespace iPadPos
 	
 		public int OnHand {get;set;}
 
+		[JsonIgnore]
+		[Indexed]
+		public ItemType ItemType {get;set;}
+
 		#endregion
+	}
+
+	public enum ItemType
+	{
+		NewCustomerTracking,
+		NewProduct,
+		Coupon,
 	}
 }
 

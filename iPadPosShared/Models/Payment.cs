@@ -17,6 +17,8 @@ namespace iPadPos
 				ProcPropertyChanged ("AmountString");
 			}
 		}
+		public double Change {get;set;}
+
 		public string AmountString
 		{
 			get{ return Amount.ToString ("C"); }

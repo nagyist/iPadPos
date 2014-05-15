@@ -1,10 +1,14 @@
 ﻿using System;
 using Newtonsoft.Json;
+using SQLite;
 
 namespace iPadPos
 {
 	public class InvoiceLine : BaseModel
 	{
+		[PrimaryKey, AutoIncrement]
+		public int LocalId { get; set; }
+		public int LocalParentId { get; set;}
 		public InvoiceLine ()
 		{
 		}
