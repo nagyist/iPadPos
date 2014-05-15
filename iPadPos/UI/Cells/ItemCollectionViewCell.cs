@@ -18,13 +18,17 @@ namespace iPadPos
 
 			ContentView.Layer.BorderColor = UIColor.LightGray.CGColor;
 			ContentView.Layer.BorderWidth = 2.0f;
-			ContentView.BackgroundColor = UIColor.White;
 			//ContentView.Transform = CGAffineTransform.MakeScale (0.8f, 0.8f);
 			label = new UILabel {
+				TextColor = UIColor.White,
+				ShadowColor = Color.DarkGray.ToUIColor().ColorWithAlpha(.25f),
+				ShadowOffset = new System.Drawing.SizeF(1,1),
 				BackgroundColor = UIColor.Clear,
 				TextAlignment = UITextAlignment.Center,
 			};
-
+			Layer.BorderWidth = .5f;
+			Layer.BorderColor = Color.DarkGray.ToUIColor ().CGColor;
+			Layer.CornerRadius = 20;
 
 			ContentView.AddSubview (label);
 		}

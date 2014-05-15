@@ -13,6 +13,7 @@ namespace iPadPos
 			tabbar = new UITabBarController () {
 				ViewControllers = new UIViewController[] {
 					new QuickItemsViewController{
+						ItemBackgroundColor = Color.Red,
 						Title = "Coupons",
 						GetItems = WebService.Main.GetCoupons,
 						AddItem = (i) =>{
@@ -21,6 +22,7 @@ namespace iPadPos
 						},
 					},
 					new QuickItemsViewController{
+						ItemBackgroundColor = Color.Orange,
 						Title = "New Product",
 						GetItems = WebService.Main.GetNewProducts,
 						AddItem = (i) =>{

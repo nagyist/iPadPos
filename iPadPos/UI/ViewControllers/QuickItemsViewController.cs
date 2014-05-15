@@ -9,6 +9,7 @@ namespace iPadPos
 {
 	public class QuickItemsViewController : UICollectionViewController
 	{
+		public UIColor ItemBackgroundColor  = UIColor.Clear;
 		public Action<Item> AddItem { get; set; }
 		public Func<Task<List<Item>>> GetItems { get; set; }
 		public QuickItemsViewController () : base(new UICollectionViewFlowLayout{
@@ -28,7 +29,7 @@ namespace iPadPos
 			var itemCell = (ItemCollectionViewCell)collectionView.DequeueReusableCell (ItemCollectionViewCell.Key, indexPath);
 			//itemCell.Frame = new System.Drawing.RectangleF (0, 0, 200, 100);
 			var item = Items [indexPath.Row];
-
+			itemCell.BackgroundColor = ItemBackgroundColor;
 			itemCell.Item = item;
 
 			return itemCell;
