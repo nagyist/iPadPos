@@ -39,7 +39,13 @@ namespace iPadPos
 			await GetTransactions ();
 			await GetPaymentTypes ();
 		}
-
+		public async Task<bool> SignIn(string id)
+		{
+			var client = CreateClient ();
+			var respons = await client.GetAsync (Path.Combine ("SignIn", id));
+			var success = bool.Parse (await respons.Content.ReadAsStringAsync ());
+			return success;
+		}
 		public async Task<List<Customer>> SearchCustomer (string cust)
 		{
 			return await GetGenericList<Customer> (string.Format ("CustomerSearch/{0}", cust));

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Praeclarum.Bind;
 using iOSHelpers;
+using System.Threading.Tasks;
 
 namespace iPadPos
 {
@@ -51,6 +52,49 @@ namespace iPadPos
 				(View as PaymentView).Invoice = value;
 			}
 		}
+		async Task<bool> SignIn()
+		{
+			var tcs = new TaskCompletionSource<bool> ();
+			var alert = new UIAlertView ("Please sign in", "", null, "Cancel", "Ok");
+			alert.AlertViewStyle = UIAlertViewStyle.SecureTextInput;
+			var tb = alert.GetTextField(0);
+			tb.ShouldReturn = (t)=>{
+
+				alert.DismissWithClickedButtonIndex(1,true);
+				signIn(tcs,tb.Text);
+				return true;
+			};
+
+			alert.Clicked += async (object sender, UIButtonEventArgs e) => {
+				if(e.ButtonIndex == 0)
+				{
+					tcs.TrySetResult(false);
+					alert.Dispose();
+					return;
+				}
+
+				var id = tb.Text;
+				signIn(tcs,id);
+			
+			
+			};
+			alert.Show ();
+			return await tcs.Task;
+		}
+		async void signIn(TaskCompletionSource<bool> tcs,string id)
+		{
+			BigTed.BTProgressHUD.ShowContinuousProgress();
+			var success = await WebService.Main.SignIn(id);
+			if(!success)
+				BigTed.BTProgressHUD.Dismiss ();
+
+			if(success){
+				Invoice.SalesPersonId = id;
+				tcs.TrySetResult(success);
+			}
+			else
+				tcs.TrySetResult(await SignIn());
+		}
 		async void PostInvoice()
 		{
 			var isValid = Invoice.Validate ();
@@ -58,6 +102,9 @@ namespace iPadPos
 				App.ShowAlert ("Error", isValid.Item2);
 				return;
 			}
+
+			if (!await SignIn ())
+				return;
 
 			BigTed.BTProgressHUD.ShowContinuousProgress();
 			var success = await WebService.Main.PostInvoice(Invoice);
