@@ -321,6 +321,8 @@ namespace iPadPos
 			}
 		}
 
+		public string SalesPersonId { get; set; }
+
 		public string AppliedPaymentString {
 			get{ return AppliedPayment.ToString ("C"); }
 		}
