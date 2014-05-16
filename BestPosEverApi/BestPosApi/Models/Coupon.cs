@@ -12,6 +12,12 @@ namespace WebApplication1.Models
 		{
 
 		}
-		public float DiscountPercent {get;set;}
+		public bool SelectedItemsOnly { get; set; }
+
+		public float DiscountPercent { get; set; }
+
+		public DateTime? StartDate { get; set; }
+
+		public DateTime? EndDate { get; set; }
 	}
 }
