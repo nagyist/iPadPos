@@ -26,8 +26,13 @@ namespace iPadPos
 			var cpn = item as Coupon;
 			if (cpn != null) {
 				DiscountPercent = cpn.DiscountPercent;
+				CouponSelectedOnly = cpn.SelectedItemsOnly;
+				CouponIsValid = cpn.IsValidToady;
 			}
 		}
+
+		public bool CouponIsValid { get; set; }
+
 		[JsonIgnore]
 		public ItemType ItemType {get;set;}
 		public int ParentRecordId { get; set; }
@@ -88,6 +93,15 @@ namespace iPadPos
 				}
 			}
 		}
+
+		bool selected;
+		public bool Selected {
+			get {
+				return selected;
+			}
+			set { ProcPropertyChanged (ref selected, value); }
+		}
+		public bool CouponSelectedOnly {get;set;}
 		public float DiscountPercent { get; set; }
 		public string DiscountString {
 			get {
@@ -174,6 +188,13 @@ namespace iPadPos
 		public string FinalPriceString
 		{
 			get{return FinalPrice.ToString("C");}
+		}
+
+		public void ToggleSelected()
+		{
+			if (ItemType == ItemType.Coupon || ItemType == ItemType.NewCustomerTracking)
+				return;
+			Selected = !Selected;
 		}
 	}
 }

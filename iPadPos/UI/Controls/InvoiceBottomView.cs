@@ -14,6 +14,7 @@ namespace iPadPos
 				ViewControllers = new UIViewController[] {
 					new QuickItemsViewController{
 						ItemBackgroundColor = Color.Red,
+						AlternateItemBackgroundColor = Color.Olive,
 						Title = "Coupons",
 						GetItems = WebService.Main.GetCoupons,
 						AddItem = (i) =>{
@@ -23,6 +24,7 @@ namespace iPadPos
 					},
 					new QuickItemsViewController{
 						ItemBackgroundColor = Color.Orange,
+						AlternateItemBackgroundColor = Color.Orange,
 						Title = "New Product",
 						GetItems = WebService.Main.GetNewProducts,
 						AddItem = (i) =>{

@@ -161,6 +161,8 @@ namespace iPadPos
 		{
 			if (CustomerId == Settings.Shared.CashCustomer)
 				return "Cash Customer";
+			if (string.IsNullOrEmpty (FirstName) & string.IsNullOrEmpty (lastName) & string.IsNullOrEmpty (CustomerId))
+				return "Pick a Customer";
 			return string.Format ("{0} {1}",FirstName.UppercaseFirst(), LastName.UppercaseFirst());
 		}
 

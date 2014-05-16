@@ -98,8 +98,14 @@ namespace iPadPos
 		{
 			if (sender is InvoiceLine)
 				Database.Main.Update (sender);
-			if (e.PropertyName == "FinalPrice" || e.PropertyName == "Amount")
+			switch (e.PropertyName) {
+			case "FinalPrice":
+			case "Amount":
+			case "Selected":
 				UpdateTotals ();
+				return;
+			}
+			
 		}
 
 		/// <summary>
@@ -228,8 +234,8 @@ namespace iPadPos
 		}
 		void updateCoupons()
 		{
-			Coupons.Where (x => x.DiscountPercent > 0).ForEach (x => {
-				x.Price = ItemsSubtotal * x.DiscountPercent * -1f;
+			Coupons.Where (x => x.DiscountPercent > 0 && x.CouponIsValid).ForEach (x => {
+				x.Price = (x.CouponSelectedOnly ? selectedItemsSubtotal : ItemsSubtotal) * x.DiscountPercent * -1f;
 			});
 			couponDiscount = Coupons.Sum (x => x.Price);
 			ProcPropertyChanged("TotalDiscountString");
@@ -245,9 +251,11 @@ namespace iPadPos
 			}
 
 		}
+		double selectedItemsSubtotal = 0;
 		void UpdateTotals()
 		{
 			ItemsSubtotal = Items.Where(x => x.ItemType != ItemType.Coupon).Sum (x => x.SubTotal);
+			selectedItemsSubtotal = Items.Where(x => x.ItemType != ItemType.Coupon && x.Selected).Sum (x => x.SubTotal);
 			updateCoupons ();
 			SubTotal = Items.Sum (x => x.FinalPrice);
 			Total = SubTotal - DiscountAmount;

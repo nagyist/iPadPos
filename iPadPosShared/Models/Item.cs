@@ -101,6 +101,15 @@ namespace iPadPos
 		[Indexed]
 		public ItemType ItemType {get;set;}
 
+		public bool UseAlterate ()
+		{
+			var cpn = this as Coupon;
+			if (cpn == null)
+				return false;
+			var useAlt = cpn.DiscountPercent == 0 && cpn.Price == 0;
+			return useAlt;
+		}
+
 		#endregion
 	}
 

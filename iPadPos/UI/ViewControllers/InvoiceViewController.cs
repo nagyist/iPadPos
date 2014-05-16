@@ -83,7 +83,7 @@ namespace iPadPos
 			public InvoiceBottomView BottomView {get;set;}
 
 			const float sideBarWidth = 320f;
-			const float bottomHeight = 340;
+			const float bottomHeight = 240;
 
 			public InvoiceView (UIViewController  parent)
 			{

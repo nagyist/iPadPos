@@ -14,6 +14,9 @@ namespace iPadPos
 			BackgroundView = null;
 			BackgroundColor = UIColor.Clear;
 			AutoScroll = true;
+			this.ItemTapped = (i) => {
+				(i as InvoiceLine).ToggleSelected();
+			};
 		}
 
 		Invoice invoice;

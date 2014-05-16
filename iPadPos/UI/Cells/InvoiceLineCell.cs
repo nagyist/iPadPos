@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace iPadPos
 {
-	public class InvoiceLineCell : ColumnCell
+	public class InvoiceLineCell : ColumnCell, ICellSelectable
 	{
 		public const string Key = "InvoiceLineCell";
 		UIPopoverController popup;
@@ -73,6 +73,7 @@ namespace iPadPos
 				line = value;
 				Bind ();
 				updateTextColor ();
+				updateSelected ();
 			}
 		}
 
@@ -88,6 +89,7 @@ namespace iPadPos
 				Discount.Title == line.DiscountString
 			);
 			line.SubscribeToProperty ("FinalPrice", updateTextColor);
+			line.SubscribeToProperty ("Selected", updateSelected);
 		}
 
 		void Unbind ()
@@ -96,6 +98,7 @@ namespace iPadPos
 				return;
 			binding.Unbind ();
 			line.UnSubscribeToProperty ("FinalPrice",updateTextColor);
+			line.UnSubscribeToProperty ("Selected",updateSelected);
 		}
 
 		void updateTextColor()
@@ -103,7 +106,18 @@ namespace iPadPos
 			Total.TextColor = (line.FinalPrice < 0 ? Color.Red : UIColor.Black);
 			Discount.TintColor = (line.Discount == 0) ? Color.Gray : (UIColor)Color.Red;
 		}
+		void updateSelected()
+		{
+			Accessory = line.Selected ? UITableViewCellAccessory.Checkmark : UITableViewCellAccessory.None;
+		}
+		
 
+		#region ICellSelectable implementation
+		public void OnSelect ()
+		{
+			Line.ToggleSelected ();
+		}
+		#endregion
 	}
 }
 

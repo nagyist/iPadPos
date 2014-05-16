@@ -34,5 +34,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Theme.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Coupon.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CachedData.cs" />
   </ItemGroup>
 </Project>
