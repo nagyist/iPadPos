@@ -17,7 +17,7 @@ namespace iPadPos
 
 		public DateTime? EndDate {get;set;}
 
-		public bool IsValidToady
+		public bool IsValidToday
 		{
 			get{
 				if (StartDate == null)

@@ -84,7 +84,7 @@ namespace iPadPos
 		}
 		public async Task<List<Item>> GetCoupons()
 		{
-			var items = (await GetGenericList<Coupon> ("Coupons"));
+			var items = (await GetGenericList<Coupon> ("Coupons")).Where(x=> x.IsValidToday);
 			return items.Cast<Item>().ToList();
 		}
 

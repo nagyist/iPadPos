@@ -27,7 +27,7 @@ namespace iPadPos
 			if (cpn != null) {
 				DiscountPercent = cpn.DiscountPercent;
 				CouponSelectedOnly = cpn.SelectedItemsOnly;
-				CouponIsValid = cpn.IsValidToady;
+				CouponIsValid = cpn.IsValidToday;
 			}
 		}
 

@@ -12,6 +12,7 @@ namespace iPadPos
 	public class Invoice : BaseModel
 	{
 		int localId;
+
 		[PrimaryKey, AutoIncrement]
 		public int LocalId {
 			get {
@@ -23,18 +24,21 @@ namespace iPadPos
 					Items.ForEach (x => x.LocalParentId = LocalId);
 			}
 		}
-		public Invoice()
+
+		public Invoice ()
 		{
 			Customer = new Customer ();
 			Payments = new ObservableCollection<Payment> ();
 			Items = new ObservableCollection<InvoiceLine> ();
 		}
-		public int RecordId {get;set;}
 
-		[JsonProperty("InvoiceID")]
-		public string Id {get;set;}
+		public int RecordId { get; set; }
+
+		[JsonProperty ("InvoiceID")]
+		public string Id { get; set; }
 
 		Customer customer;
+
 		[SQLite.Ignore]
 		public Customer Customer {
 			get {
@@ -45,12 +49,13 @@ namespace iPadPos
 			}
 		}
 
-		[JsonProperty("InvDate")]
-		public DateTime Date {get;set;}
+		[JsonProperty ("InvDate")]
+		public DateTime Date { get; set; }
 
 		public string RegisterId { get; set; }
 
 		ObservableCollection<Payment> payments;
+
 		[SQLite.Ignore]
 		public ObservableCollection<Payment> Payments {
 			get {
@@ -63,6 +68,7 @@ namespace iPadPos
 				bindAllPayments ();
 			}
 		}
+
 		void HandlePaymentsCollectionChanged (object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
 			UpdateTotals ();
@@ -72,24 +78,24 @@ namespace iPadPos
 				e.NewItems.Cast<Payment> ().ToList ().ForEach (x => x.PropertyChanged += HandlePropertyChanged);
 			}
 		}
-		void bindAllPayments()
+
+		void bindAllPayments ()
 		{
 			if (Payments == null)
 				return;
-			foreach(var item in Payments.OfType<INotifyPropertyChanged>().ToList())
-			{
+			foreach (var item in Payments.OfType<INotifyPropertyChanged>().ToList()) {
 				item.PropertyChanged += HandlePropertyChanged;
 			}
 		}
-		void unbindAllPayments()
+
+		void unbindAllPayments ()
 		{
 			if (Payments == null)
 				return;
 
 			payments.CollectionChanged -= HandlePaymentsCollectionChanged;
 			
-			foreach(var item in Payments.OfType<INotifyPropertyChanged>().ToList())
-			{
+			foreach (var item in Payments.OfType<INotifyPropertyChanged>().ToList()) {
 				item.PropertyChanged -= HandlePropertyChanged;
 			}
 		}
@@ -113,7 +119,8 @@ namespace iPadPos
 		/// </summary>
 
 		ObservableCollection<InvoiceLine> items;
-		[JsonProperty("Lines"), SQLite.Ignore]
+
+		[JsonProperty ("Lines"), SQLite.Ignore]
 		public ObservableCollection<InvoiceLine> Items {
 			get {
 				return items;
@@ -127,7 +134,7 @@ namespace iPadPos
 			}
 		}
 
-		public void AddItem(Item item)
+		public void AddItem (Item item)
 		{
 			var i = new InvoiceLine (item);
 			i.LocalParentId = LocalId;
@@ -142,45 +149,49 @@ namespace iPadPos
 			if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Remove) {
 				e.OldItems.Cast<InvoiceLine> ().ToList ().ForEach (x => {
 					x.PropertyChanged -= HandlePropertyChanged;
-					if(x is InvoiceLine)
-						Database.Main.Delete(x);
+					if (x is InvoiceLine)
+						Database.Main.Delete (x);
 				});
 
 			}
 		}
-		void bindAllItems()
+
+		void bindAllItems ()
 		{
 			if (Items == null)
 				return;
-			foreach(var item in Items.OfType<INotifyPropertyChanged>().ToList())
-			{
+			foreach (var item in Items.OfType<INotifyPropertyChanged>().ToList()) {
 				item.PropertyChanged += HandlePropertyChanged;
 			}
 		}
-		void unbindAllItems()
+
+		void unbindAllItems ()
 		{
 			if (Items == null)
 				return;
 			Items.CollectionChanged -= HandleItemsCollectionChanged;
-			foreach(var item in Items.OfType<INotifyPropertyChanged>().ToList())
-			{
+			foreach (var item in Items.OfType<INotifyPropertyChanged>().ToList()) {
 				item.PropertyChanged -= HandlePropertyChanged;
 			}
 		}
 
 
 		double discountAmount;
+
 		public double DiscountAmount {
 			get {
 				return discountAmount;
 			}
 			set { 
-				if(ProcPropertyChanged (ref discountAmount, Math.Round(value,2)))
-					ProcPropertyChanged("DiscountString");
+				if (ProcPropertyChanged (ref discountAmount, Math.Round (value, 2)))
+					ProcPropertyChanged ("DiscountString");
 			}
 		}
-		public double TaxAmount {get;set;}
+
+		public double TaxAmount { get; set; }
+
 		double subTotal;
+
 		public double SubTotal {
 			get {
 				return subTotal;
@@ -191,144 +202,146 @@ namespace iPadPos
 		}
 
 		double total;
+
 		public double Total {
 			get {
 				return total;
 			}
 			set { 
-				if(ProcPropertyChanged (ref total, Math.Round(value,2)))
-					ProcPropertyChanged("TotalString");
+				if (ProcPropertyChanged (ref total, Math.Round (value, 2)))
+					ProcPropertyChanged ("TotalString");
 			}
 		}
 
-		public string TotalString
-		{
+		public string TotalString {
 			get{ return Total.ToString ("C"); }
 		}
 
-		public string ItemsSubtotalString
-		{
+		public string ItemsSubtotalString {
 			get{ return ItemsSubtotal.ToString ("C"); }
 		}
 
 		public string DiscountString {
-			get { return (DiscountAmount * -1 ).ToString("C"); }
+			get { return (DiscountAmount * -1).ToString ("C"); }
 		}
 
 		public double TotalDiscount {
 			get{ return discountAmount + couponDiscount; }
 		}
-		public string TotalDiscountString
-		{
-			get{ 
+
+		public string TotalDiscountString {
+			get { 
 				return TotalDiscount.ToString ("C");
 			}
 		}
-		double couponDiscount =0;
+
+		double couponDiscount = 0;
+
 		[JsonIgnore,Ignore]
-		public List<InvoiceLine> Coupons
-		{
-			get{
-				return Items.Where(x=> x.ItemType == ItemType.Coupon).ToList ();
+		public List<InvoiceLine> Coupons {
+			get {
+				return Items.Where (x => x.ItemType == ItemType.Coupon).ToList ();
 			}
 		}
-		void updateCoupons()
+
+		void updateCoupons ()
 		{
 			Coupons.Where (x => x.DiscountPercent > 0 && x.CouponIsValid).ForEach (x => {
 				x.Price = (x.CouponSelectedOnly ? selectedItemsSubtotal : ItemsSubtotal) * x.DiscountPercent * -1f;
 			});
 			couponDiscount = Coupons.Sum (x => x.Price);
-			ProcPropertyChanged("TotalDiscountString");
+			ProcPropertyChanged ("TotalDiscountString");
 		}
 
 		double itemSubtotal;
-		public double ItemsSubtotal
-		{
+
+		public double ItemsSubtotal {
 			get{ return itemSubtotal; }
 			set { 
-				if(ProcPropertyChanged (ref itemSubtotal, Math.Round(value,2)))
-					ProcPropertyChanged("ItemsSubtotalString");
+				if (ProcPropertyChanged (ref itemSubtotal, Math.Round (value, 2)))
+					ProcPropertyChanged ("ItemsSubtotalString");
 			}
 
 		}
+
 		double selectedItemsSubtotal = 0;
-		void UpdateTotals()
+
+		void UpdateTotals ()
 		{
-			ItemsSubtotal = Items.Where(x => x.ItemType != ItemType.Coupon).Sum (x => x.SubTotal);
-			selectedItemsSubtotal = Items.Where(x => x.ItemType != ItemType.Coupon && x.Selected).Sum (x => x.SubTotal);
+			ItemsSubtotal = Items.Where (x => x.ItemType != ItemType.Coupon).Sum (x => x.SubTotal);
+			selectedItemsSubtotal = Items.Where (x => x.ItemType != ItemType.Coupon && x.Selected).Sum (x => x.SubTotal);
 			updateCoupons ();
 			SubTotal = Items.Sum (x => x.FinalPrice);
 			Total = SubTotal - DiscountAmount;
-			ProcPropertyChanged("DiscountString");
-			ProcPropertyChanged("Discount");
+			ProcPropertyChanged ("DiscountString");
+			ProcPropertyChanged ("Discount");
 
 			AppliedPayment = Payments.Sum (x => x.Amount);
 			Remaining = AppliedPayment >= Total && Total > 0 ? 0 : Total - AppliedPayment;
 			Change = AppliedPayment <= Total ? 0 : AppliedPayment - Total;
-			if(Items.Count >= 0)
+			if (Items.Count >= 0)
 				Save ();
 		}
 
 		double appliedPayment;
+
 		public double AppliedPayment {
 			get {
 				return appliedPayment;
 			}
 			set {
-				if(ProcPropertyChanged (ref appliedPayment, Math.Round(value,2)))
-					ProcPropertyChanged("AppliedPaymentString");
+				if (ProcPropertyChanged (ref appliedPayment, Math.Round (value, 2)))
+					ProcPropertyChanged ("AppliedPaymentString");
 			}
 		}
 
 		double remaining;
+
 		public double Remaining {
 			get {
 				return remaining;
 			}
 			set {
-				if(ProcPropertyChanged (ref remaining, Math.Round(value,2)))
-					ProcPropertyChanged("RemainingString");
+				if (ProcPropertyChanged (ref remaining, Math.Round (value, 2)))
+					ProcPropertyChanged ("RemainingString");
 			}
 		}
 
 		double change;
+
 		public double Change {
 			get {
 				return change;
 			}
 			set {
-				if(ProcPropertyChanged (ref change, Math.Round(value,2)))
-					ProcPropertyChanged("ChangeString");
-				if(CashPayment != null)
-				CashPayment.Change = value;
+				if (ProcPropertyChanged (ref change, Math.Round (value, 2)))
+					ProcPropertyChanged ("ChangeString");
+				if (CashPayment != null)
+					CashPayment.Change = value;
 			}
 		}
 
-		public string AppliedPaymentString
-		{
+		public string AppliedPaymentString {
 			get{ return AppliedPayment.ToString ("C"); }
 		}
 
-		public string ChangeString
-		{
+		public string ChangeString {
 			get{ return Change.ToString ("C"); }
 		}
 
 
-		public string RemainingString
-		{
+		public string RemainingString {
 			get{ return Remaining.ToString ("C"); }
 		}
 
 		[Newtonsoft.Json.JsonIgnore]
-		public Payment CashPayment
-		{
+		public Payment CashPayment {
 			get { return Payments.Where (x => x.PaymentType.Id == "Cash").FirstOrDefault (); }
 		}
-			
+
 		public Tuple<bool,string> IsReadyForPayment ()
 		{
-			if (Customer == null || string.IsNullOrEmpty(Customer.CustomerId))
+			if (Customer == null || string.IsNullOrEmpty (Customer.CustomerId))
 				return new Tuple<bool, string> (false, "Invoice requires a customer");
 
 			if (!HasItems ())
@@ -336,19 +349,20 @@ namespace iPadPos
 
 			return new Tuple<bool, string> (true, "Ready to go");
 		}
-		public bool HasItems()
+
+		public bool HasItems ()
 		{
 			return items.Any ();
 		}
 
-		public Tuple<bool,string> Validate()
+		public Tuple<bool,string> Validate ()
 		{
 			var result = IsReadyForPayment ();
 			if (!result.Item1)
 				return result;
 
-			if(remaining != 0)
-				return new Tuple<bool,string>(false, "There is still a remaining balance");
+			if (remaining != 0)
+				return new Tuple<bool,string> (false, "There is still a remaining balance");
 
 			return new Tuple<bool, string> (true, "Ready to go");
 		}
@@ -361,8 +375,10 @@ namespace iPadPos
 			}
 			payment.Amount = Remaining;
 		}
+
 		bool hasSaved = false;
-		public void Save()
+
+		public void Save ()
 		{
 			if (LocalId == 0)
 				Database.Main.Insert (this);
@@ -374,19 +390,21 @@ namespace iPadPos
 
 			hasSaved = true;
 		}
-		public void Save(bool force)
+
+		public void Save (bool force)
 		{
 			if (force)
 				hasSaved = false;
 		}
 
-		public void DeleteLocal()
+		public void DeleteLocal ()
 		{
 			Items.ForEach (x => Database.Main.Delete (x));
 			Database.Main.Delete (this);
 			Settings.Shared.CurrentInvoice = 0;
 		}
-		public static Invoice FromLocalId(int id)
+
+		public static Invoice FromLocalId (int id)
 		{
 			var invoice = Database.Main.Table<Invoice> ().Where (x => x.LocalId == id).FirstOrDefault () ?? new Invoice ();
 			if (invoice.LocalId != 0) {
