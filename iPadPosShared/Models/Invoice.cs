@@ -24,7 +24,7 @@ namespace iPadPos
 					Items.ForEach (x => x.LocalParentId = LocalId);
 			}
 		}
-
+		public bool CreditCardProccessed { get; set; }
 		public Invoice ()
 		{
 			Customer = new Customer ();
@@ -339,6 +339,12 @@ namespace iPadPos
 		[Newtonsoft.Json.JsonIgnore]
 		public Payment CashPayment {
 			get { return Payments.Where (x => x.PaymentType.Id == "Cash").FirstOrDefault (); }
+		}
+		[Newtonsoft.Json.JsonIgnore]
+		public Payment CardPayment {
+			get { 
+				return Payments.Where (x => x.PaymentType.Id == "Visa").FirstOrDefault ();
+			}
 		}
 
 		public Tuple<bool,string> IsReadyForPayment ()

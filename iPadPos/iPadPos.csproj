@@ -176,6 +176,10 @@
       <Project>{D801B852-E082-492E-81AB-9357282E1986}</Project>
       <Name>SocketMobile</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\CardFlight\CardFlight.csproj">
+      <Project>{CEFE52A7-C584-4F9A-900D-DD5BF1489E26}</Project>
+      <Name>CardFlight</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\contacts.png" />

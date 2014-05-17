@@ -35,5 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Coupon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CachedData.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\CreditCardProccessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\CFTCardExtension.cs" />
   </ItemGroup>
 </Project>

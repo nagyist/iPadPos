@@ -107,11 +107,14 @@ namespace iPadPos
 				return;
 
 			BigTed.BTProgressHUD.ShowContinuousProgress();
-			var success = await WebService.Main.PostInvoice(Invoice);
+			var paymentSucces = await ProcessPayment ();
+			bool success = false;
+			if(paymentSucces)
+				success = await WebService.Main.PostInvoice(Invoice);
 			BigTed.BTProgressHUD.Dismiss ();
 			if(!success)
 			{
-				new UIAlertView("Error","There was an error posting the invoice. Please try again",null,"Ok").Show();
+				new UIAlertView("Error", paymentSucces ? "There was an error posting the invoice. Please try again" : "There was an error processing your credit card",null,"Ok").Show();
 				return;
 			}
 			Settings.Shared.LastPostedChange = Invoice.Change;
@@ -119,6 +122,15 @@ namespace iPadPos
 			NavigationController.PopViewControllerAnimated(true);
 			if (InvoicePosted != null)
 				InvoicePosted ();
+		}
+
+		public async Task<bool> ProcessPayment ()
+		{
+			if (Invoice.CardPayment == null || Invoice.CardPayment.Amount == 0)
+				return true;
+
+			Invoice.CreditCardProccessed = await CreditCardProccessor.Shared.Charge (Invoice);
+			return Invoice.CreditCardProccessed;
 		}
 
 
