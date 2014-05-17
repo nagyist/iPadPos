@@ -35,9 +35,13 @@ namespace iPadPos
 
 		public async Task SyncAll ()
 		{
+			coupons.Clear ();
+			newProducts.Clear ();
 			await GetTaxTypes ();
 			await GetTransactions ();
 			await GetPaymentTypes ();
+			await GetCoupons ();
+			await GetNewProducts ();
 		}
 		public async Task<bool> SignIn(string id)
 		{
@@ -82,16 +86,28 @@ namespace iPadPos
 			items.ForEach (x => x.ItemType = ItemType.NewCustomerTracking);
 			return items;
 		}	
+
+		List<Item> newProducts = new List<Item>();
 		public async Task<List<Item>> GetNewProducts()
 		{
+			if(newProducts.Count > 0)
+				return newProducts;
 			var items = (await GetGenericList<Item> ("NewProducts"));
 			items.ForEach (x => x.ItemType = ItemType.NewProduct);
-			return items;
+			newProducts = items;
+			NotificationCenter.Shared.ProcNewProductChanged ();
+			return newProducts;
 		}
+
+		List<Item> coupons = new List<Item>();
 		public async Task<List<Item>> GetCoupons()
 		{
+			if (coupons.Count > 0)
+				return coupons;
 			var items = (await GetGenericList<Coupon> ("Coupons")).Where(x=> x.IsValidToday);
-			return items.Cast<Item>().ToList();
+			NotificationCenter.Shared.ProcCouponsChanged ();
+			coupons = items.Cast<Item>().ToList();
+			return coupons;
 		}
 
 		public async Task<List<T>> GetGenericList<T> (string path, bool insert = false)

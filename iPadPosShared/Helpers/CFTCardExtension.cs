@@ -10,17 +10,15 @@ namespace iPadPos
 		public static Task<Tuple<CFTCharge,string>> ChargeAsync(this CFTCard card, Invoice invoice)
 		{
 			var dict = NSDictionary.FromObjectsAndKeys (new object[] {
-				NSNumber.FromDouble(invoice.CardPayment.Amount),
+					NSDecimalNumber.FromDouble(invoice.CardPayment.Amount),
 //				new NSString("Anchorage KiD 2 KiD")
 			}, new [] {
 				new NSString("amount"),
 //				new NSString("description")
 			});
 			var tcs = new TaskCompletionSource<Tuple<CFTCharge,string>>();
-			card.ChargeCard (dict, (charge) =>  tcs.TrySetResult (new Tuple<CFTCharge, string> (charge, "")), (error) => {
-
-				tcs.TrySetResult(new Tuple<CFTCharge, string> (null, error.ToString ()));
-			});
+			Console.WriteLine (dict);
+			card.ChargeCard (dict, (charge) =>  tcs.TrySetResult (new Tuple<CFTCharge, string> (charge, "")), (error) => tcs.TrySetResult (new Tuple<CFTCharge, string> (null, error.ToString ())));
 			return tcs.Task;
 		}
 	}

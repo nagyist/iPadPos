@@ -7,12 +7,14 @@ namespace iPadPos
 	{
 		UITabBarController tabbar;
 		public Action<Item> AddItem {get;set;}
+		QuickItemsViewController coupons;
+		QuickItemsViewController newProduct;
 		public InvoiceBottomView (UIViewController parent)
 		{
 			BackgroundColor = UIColor.LightGray;
 			tabbar = new UITabBarController () {
 				ViewControllers = new UIViewController[] {
-					new QuickItemsViewController{
+					coupons = new QuickItemsViewController{
 						ItemBackgroundColor = Color.Red,
 						AlternateItemBackgroundColor = Color.Olive,
 						Title = "Coupons",
@@ -22,7 +24,7 @@ namespace iPadPos
 								AddItem(i);
 						},
 					},
-					new QuickItemsViewController{
+					newProduct = new QuickItemsViewController{
 						ItemBackgroundColor = Color.Orange,
 						AlternateItemBackgroundColor = Color.Orange,
 						Title = "New Product",
@@ -34,6 +36,8 @@ namespace iPadPos
 					},
 				},
 			};
+			NotificationCenter.Shared.CouponsChanged += () => coupons.ReloadData ();
+			NotificationCenter.Shared.NewProductChanged += () => newProduct.ReloadData ();
 			AddSubview (tabbar.View);
 			parent.AddChildViewController (tabbar);
 		}

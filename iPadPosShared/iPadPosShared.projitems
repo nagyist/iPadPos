@@ -37,5 +37,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\CachedData.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\CreditCardProccessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CFTCardExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\NotificationCenter.cs" />
   </ItemGroup>
 </Project>

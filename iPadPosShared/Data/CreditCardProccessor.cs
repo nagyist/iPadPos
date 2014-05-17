@@ -13,7 +13,7 @@ namespace iPadPos
 			#if DEBUG
 			CardFlight.SharedInstance.Logging = true;
 			#endif
-			CardFlight.SharedInstance.Init ("1fc8e90a2a82f5b02b85ae7945535630", "acc_5c53cb5065a648d1");
+			CardFlight.SharedInstance.Init ("1fc8e90a2a82f5b02b85ae7945535630", "acc_1dae92cb8808e3ce");
 		}
 		static CreditCardProccessor shared;
 		public static CreditCardProccessor Shared {
@@ -52,7 +52,6 @@ namespace iPadPos
 			public MyReader()
 			{
 				Delegate = new CardReaderDelegate(this);
-				Connect();
 			}
 			TaskCompletionSource<Tuple<CFTCard,NSError>> swipeCompletion;
 			public async Task<CFTCard> Swipe()

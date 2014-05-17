@@ -17,6 +17,10 @@ namespace iPadPos
 				Invoice.AddItem(obj);
 			};
 			NavigationItem.RightBarButtonItem = new UIBarButtonItem (searchBar);
+			NavigationItem.LeftBarButtonItem = new UIBarButtonItem (UIImage.FromBundle ("menu").ImageWithRenderingMode (UIImageRenderingMode.AlwaysTemplate), UIBarButtonItemStyle.Plain, (s, e) => {
+				//Show simple actionsheet
+			});
+		
 			//this.AutomaticallyAdjustsScrollViewInsets = false;
 		}
 

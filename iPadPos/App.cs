@@ -2,23 +2,41 @@
 using MonoTouch.UIKit;
 using FlyoutNavigation;
 using MonoTouch.Foundation;
+using MonoTouch.Dialog;
 
 namespace iPadPos
 {
 	public static class App
 	{
+//		static FlyoutNavigationController flyout;
 		public static UIViewController Create()
 		{
-//			var flyout = new FlyoutNavigationController () {
-//				NavigationRoot = ne
+//			flyout = new FlyoutNavigationController () {
+//				ForceMenuOpen = false,
+//				AlwaysShowLandscapeMenu = false,
+//				NavigationRoot = new RootElement("")
+//				{
+//					new Section(){
+//						new StringElement("Sales"),
+//					},
+//
+//				}
 //			};
+//			flyout.ViewControllers = new UIViewController[] {
+				return new UINavigationController(new InvoiceViewController ()){
+					NavigationBar = {
+						BarStyle = UIBarStyle.BlackTranslucent,
+					}
+				};
+//				,
+//			};
+//			return flyout;
 
-			return new UINavigationController(new InvoiceViewController ()){
-				NavigationBar = {
-					BarStyle = UIBarStyle.BlackTranslucent,
-				}
-			};
 		}
+//		public static void ToggleMenu()
+//		{
+//			flyout.ToggleMenu ();
+//		}
 
 		public static void ShowAlert(string title, string message)
 		{

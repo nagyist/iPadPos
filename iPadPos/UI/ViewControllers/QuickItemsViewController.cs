@@ -49,10 +49,19 @@ namespace iPadPos
 		public override async void ViewWillAppear (bool animated)
 		{
 			base.ViewWillAppear (animated);
+			await ReloadData ();
+		}
+		public async Task ReloadData()
+		{
 			if (GetItems == null)
 				return;
-			Items = await GetItems ();
-			this.CollectionView.ReloadData ();
+			try{
+				Items = await GetItems ();
+				this.CollectionView.ReloadData ();
+			}
+			catch(Exception ex) {
+				Console.WriteLine (ex);
+			}
 		}
 	}
 }

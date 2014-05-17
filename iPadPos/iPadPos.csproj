@@ -189,6 +189,8 @@
     <BundleResource Include="Resources\PaymentBG.png" />
     <BundleResource Include="Resources\plus-outline.png" />
     <BundleResource Include="Resources\plus-outline%402x.png" />
+    <BundleResource Include="Resources\menu.png" />
+    <BundleResource Include="Resources\menu%402x.png" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="btprogresshud">

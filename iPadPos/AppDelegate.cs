@@ -5,6 +5,7 @@ using System.Linq;
 using MonoTouch.Foundation;
 using MonoTouch.UIKit;
 using MonoTouch.ObjCRuntime;
+using System.Threading.Tasks;
 
 namespace iPadPos
 {
@@ -31,12 +32,36 @@ namespace iPadPos
 			ApplyTheme ();
 			window.RootViewController = App.Create ();
 			window.TintColor = Theme.Current.PayColor;
+			SyncAll ();
 			window.MakeKeyAndVisible ();
-			WebService.Main.SyncAll ();
 			return true;
 		}
+
 		void ApplyTheme()
 		{
+
+		}
+
+		async Task SyncAll(bool showSpinner = false)
+		{
+			try{
+				if(showSpinner)
+					BigTed.BTProgressHUD.ShowContinuousProgress();
+				await WebService.Main.SyncAll ();
+				return;
+			}
+			catch(Exception ex) {
+				Console.WriteLine (ex);
+			}
+			finally{
+				if (showSpinner)
+					BigTed.BTProgressHUD.Dismiss ();
+			}
+			var alert = new UIAlertView ("Error", "There was an error connecting to the server", null, "Try Again");
+			alert.Clicked += (object sender, UIButtonEventArgs e) => {
+				SyncAll(true);
+			};
+			alert.Show ();
 
 		}
 

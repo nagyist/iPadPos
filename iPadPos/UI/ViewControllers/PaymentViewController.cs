@@ -49,6 +49,7 @@ namespace iPadPos
 				return view.Invoice;
 			}
 			set {
+				value.SalesPersonId = "";
 				(View as PaymentView).Invoice = value;
 			}
 		}
@@ -103,7 +104,7 @@ namespace iPadPos
 				return;
 			}
 
-			if (!await SignIn ())
+			if (string.IsNullOrEmpty(Invoice.SalesPersonId) && !await SignIn ())
 				return;
 
 			BigTed.BTProgressHUD.ShowContinuousProgress();
