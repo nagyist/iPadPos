@@ -178,8 +178,8 @@ namespace iPadPos
 		}
 		void updateTotals()
 		{
-			SubTotal = Qty * price;
-			FinalPrice = Qty *  (Price - Discount);
+			SubTotal = Math.Round(Qty * price,2);
+			FinalPrice = Math.Round(Qty *  (Price - Discount),2);
 		}
 
 		public string PriceString

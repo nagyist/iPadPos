@@ -24,7 +24,9 @@ namespace iPadPos
 					Items.ForEach (x => x.LocalParentId = LocalId);
 			}
 		}
+
 		public bool CreditCardProccessed { get; set; }
+
 		public Invoice ()
 		{
 			customer = new Customer ();
@@ -37,7 +39,8 @@ namespace iPadPos
 		//[JsonProperty ("InvoiceID")]
 		public string Id { get; set; }
 
-		public string CustomerId {get;set;}
+		public string CustomerId { get; set; }
+
 		Customer customer;
 
 		[SQLite.Ignore]
@@ -53,6 +56,7 @@ namespace iPadPos
 			}
 
 		}
+
 		public string CustomerName { get; set; }
 
 		[JsonProperty ("InvDate")]
@@ -141,6 +145,7 @@ namespace iPadPos
 		}
 
 		ChargeDetails chargeDetail;
+
 		[SQLite.Ignore]
 		public ChargeDetails ChargeDetail {
 			get {
@@ -148,7 +153,7 @@ namespace iPadPos
 			}
 			set {
 				chargeDetail = value;
-				if(value != null)
+				if (value != null)
 					value.LocalInvoiceId = LocalId;
 			}
 		}
@@ -287,17 +292,17 @@ namespace iPadPos
 
 		void UpdateTotals ()
 		{
-			ItemsSubtotal = Items.Where (x => x.ItemType != ItemType.Coupon).Sum (x => x.SubTotal);
-			selectedItemsSubtotal = Items.Where (x => x.ItemType != ItemType.Coupon && x.Selected).Sum (x => x.SubTotal);
+			ItemsSubtotal = Math.Round (Items.Where (x => x.ItemType != ItemType.Coupon).Sum (x => x.SubTotal), 2);
+			selectedItemsSubtotal = Math.Round (Items.Where (x => x.ItemType != ItemType.Coupon && x.Selected).Sum (x => x.SubTotal), 2);
 			updateCoupons ();
-			SubTotal = Items.Sum (x => x.FinalPrice);
+			SubTotal = Math.Round (Items.Sum (x => x.FinalPrice), 2);
 			Total = SubTotal - DiscountAmount;
 			ProcPropertyChanged ("DiscountString");
 			ProcPropertyChanged ("Discount");
 
-			AppliedPayment = Payments.Sum (x => x.Amount);
-			Remaining = AppliedPayment >= Total && Total > 0 ? 0 : Total - AppliedPayment;
-			Change = AppliedPayment <= Total ? 0 : AppliedPayment - Total;
+			AppliedPayment = Math.Round (Payments.Sum (x => x.Amount), 2);
+			Remaining = Math.Round (AppliedPayment >= Total && Total > 0 ? 0 : Total - AppliedPayment, 2);
+			Change = Math.Round (AppliedPayment <= Total ? 0 : AppliedPayment - Total, 2);
 			if (Items.Count > 0)
 				Save ();
 		}
@@ -359,6 +364,7 @@ namespace iPadPos
 		public Payment CashPayment {
 			get { return Payments.Where (x => x.PaymentType.Id == "Cash").FirstOrDefault (); }
 		}
+
 		[Newtonsoft.Json.JsonIgnore]
 		public Payment CardPayment {
 			get { 
