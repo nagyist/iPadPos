@@ -51,7 +51,8 @@ namespace iPadPos
 		}
 
 		public int CurrentInvoice {
-			get { return GetInt ("CurrentInvoice"); }
+			get { 
+				return GetInt ("CurrentInvoice"); }
 			set {
 				SetValue ("CurrentInvoice", value);
 			}

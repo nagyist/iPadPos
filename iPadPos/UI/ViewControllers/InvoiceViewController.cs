@@ -11,7 +11,7 @@ namespace iPadPos
 		}
 
 		SimpleActionSheet sheet;
-
+		UIPopoverController popover;
 		public InvoiceViewController ()
 		{
 			Title = "Best POS Ever";
@@ -26,11 +26,24 @@ namespace iPadPos
 					sheet.DismissWithClickedButtonIndex (-1, true);
 					return;
 				}
-				sheet = new SimpleActionSheet { {"New Invoice",() => new SimpleAlertView ("Save invoice", "Do you want to save the current invoice?") {
+				sheet = new SimpleActionSheet { 
+					{"New Invoice",() => new SimpleAlertView ("Save invoice", "Do you want to save the current invoice?") {
 							{ "Cancel",Color.Olive,NewInvoice },
 							{ "Delete",Color.Red,null },
 							{ "Save",Color.Olive,SaveInvoice }
 						}.Show ()
+					},
+					{"Load Invoice",() => {
+							if(popover != null)
+							{
+								popover.Dismiss(true);
+							}
+							popover = new UIPopoverController(new UINavigationController(new LoadInvoiceViewController()));
+							popover.DidDismiss += (sender,  evt) => {
+								popover.Dispose();
+							};
+							popover.PresentFromBarButtonItem(NavigationItem.LeftBarButtonItem, UIPopoverArrowDirection.Any,true);
+						}
 					},
 				};
 				sheet.Dismissed += (object sender, UIButtonEventArgs e2) => {
@@ -78,6 +91,18 @@ namespace iPadPos
 			base.ViewWillAppear (animated);
 			view.Parent = this;
 			SocketScannerHelper.Shared.Scaned = itemScanned;
+			RefreshCustomer ();
+		}
+		async void RefreshCustomer()
+		{
+			if (string.IsNullOrEmpty (Invoice.CustomerId))
+				return;
+			try{
+				Invoice.Customer = await WebService.Main.GetCustomer(Invoice.CustomerId);
+			}
+			catch(Exception ex) {
+				Console.WriteLine (ex);
+			}
 		}
 
 		async void itemScanned (string scannedText)

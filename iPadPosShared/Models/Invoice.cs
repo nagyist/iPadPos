@@ -27,7 +27,7 @@ namespace iPadPos
 		public bool CreditCardProccessed { get; set; }
 		public Invoice ()
 		{
-			Customer = new Customer ();
+			customer = new Customer ();
 			Payments = new ObservableCollection<Payment> ();
 			Items = new ObservableCollection<InvoiceLine> ();
 		}
@@ -37,6 +37,7 @@ namespace iPadPos
 		[JsonProperty ("InvoiceID")]
 		public string Id { get; set; }
 
+		public string CustomerId {get;set;}
 		Customer customer;
 
 		[SQLite.Ignore]
@@ -46,7 +47,11 @@ namespace iPadPos
 			}
 			set { 
 				ProcPropertyChanged (ref customer, value);
+				CustomerId = customer == null ? "" : customer.CustomerId;
+				if (Items != null && Items.Count >= 0)
+					Save ();
 			}
+
 		}
 
 		[JsonProperty ("InvDate")]
@@ -292,7 +297,7 @@ namespace iPadPos
 			AppliedPayment = Payments.Sum (x => x.Amount);
 			Remaining = AppliedPayment >= Total && Total > 0 ? 0 : Total - AppliedPayment;
 			Change = AppliedPayment <= Total ? 0 : AppliedPayment - Total;
-			if (Items.Count >= 0)
+			if (Items.Count > 0)
 				Save ();
 		}
 
@@ -405,6 +410,8 @@ namespace iPadPos
 				Database.Main.Insert (this);
 			else
 				Database.Main.Update (this);
+
+			Settings.Shared.CurrentInvoice = LocalId;
 			if (hasSaved)
 				return;
 			Database.Main.InsertAll (Items, "OR REPLACE");

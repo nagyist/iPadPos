@@ -114,6 +114,11 @@ namespace iPadPos
 			return newProducts;
 		}
 
+		public Task<List<Invoice>> GetInvoices()
+		{
+			return Get<List<Invoice>> ("InvoiceSearch");
+		}
+
 		List<Item> coupons = new List<Item>();
 		public async Task<List<Item>> GetCoupons()
 		{
