@@ -134,6 +134,19 @@ namespace iPadPos
 			}
 		}
 
+		ChargeDetails chargeDetail;
+		[SQLite.Ignore]
+		public ChargeDetails ChargeDetail {
+			get {
+				return chargeDetail;
+			}
+			set {
+				chargeDetail = value;
+				if(value != null)
+					value.LocalInvoiceId = LocalId;
+			}
+		}
+
 		public void AddItem (Item item)
 		{
 			var i = new InvoiceLine (item);

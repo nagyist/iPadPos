@@ -21,6 +21,7 @@ namespace iPadPos
 			CreateTable<PaymentType> ();
 			CreateTable<Customer> ();
 			CreateTable<Item> ();
+			CreateTable<ChargeDetails> ();
 
 		}
 

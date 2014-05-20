@@ -15,10 +15,10 @@ namespace iPadPos
 			tabbar = new UITabBarController () {
 				ViewControllers = new UIViewController[] {
 					coupons = new QuickItemsViewController{
-						TabBarItem = new UITabBarItem ("Coupons", UIImage.FromBundle ("coupon"), 0),
+						TabBarItem = new UITabBarItem ("Offers", UIImage.FromBundle ("coupon"), 0),
 						ItemBackgroundColor = Color.Red,
 						AlternateItemBackgroundColor = Color.Olive,
-						Title = "Coupons",
+						Title = "Offers",
 						GetItems = WebService.Main.GetCoupons,
 						AddItem = (i) =>{
 							if(AddItem != null)

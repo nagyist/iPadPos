@@ -130,7 +130,12 @@ namespace iPadPos
 			if (Invoice.CardPayment == null || Invoice.CardPayment.Amount == 0)
 				return true;
 
-			Invoice.CreditCardProccessed = await CreditCardProccessor.Shared.Charge (Invoice);
+			var charge = Invoice.ChargeDetail =  await CreditCardProccessor.Shared.Charge (Invoice);
+			Invoice.CreditCardProccessed = charge != null;
+			if (charge != null) {
+				charge.LocalInvoiceId = Invoice.LocalId;
+				Database.Main.InsertOrReplace (charge);
+			}
 			return Invoice.CreditCardProccessed;
 		}
 

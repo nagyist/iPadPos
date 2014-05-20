@@ -25,7 +25,7 @@ namespace iPadPos
 			}
 		}
 		MyReader reader;
-		public async Task<bool> Charge(Invoice invoice)
+		public async Task<ChargeDetails> Charge(Invoice invoice)
 		{
 			if (reader == null)
 				reader = new MyReader ();
@@ -35,13 +35,21 @@ namespace iPadPos
 			}
 			var card = await reader.Swipe();
 			if (card == null)
-				return false;
+				return null;
 			var result = await card.ChargeAsync (invoice);
-			if (result.Item1 == null)
-				return false;
-			//TODO save charge
-
-			return true;
+			if (result.Item1 == null) {
+				Console.WriteLine (result.Item2);
+				return null;
+			}
+			var charge = result.Item1;
+			return new ChargeDetails{
+				Amount = double.Parse(charge.Amount.ToString()),
+				AmountRefunded = double.Parse(charge.AmountRefunded.ToString()),
+				Created = charge.Created,
+				IsRefunded = charge.IsRefunded,
+				ReferenceID = charge.ReferenceID,
+				Token = charge.Token,
+			};
 		}
 
 
@@ -52,6 +60,7 @@ namespace iPadPos
 			public MyReader()
 			{
 				Delegate = new CardReaderDelegate(this);
+				this.Connect();
 			}
 			TaskCompletionSource<Tuple<CFTCard,NSError>> swipeCompletion;
 			public async Task<CFTCard> Swipe()
@@ -74,6 +83,11 @@ namespace iPadPos
 				{
 					this.reader = reader;
 
+				}
+
+				public override void ReaderIsAttached ()
+				{
+					Console.WriteLine ("Reader is attached");
 				}
 				public override void CardResponse (CFTCard card, MonoTouch.Foundation.NSError error)
 				{

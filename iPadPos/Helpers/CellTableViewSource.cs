@@ -123,7 +123,12 @@ namespace iPadPos
 		}
 		public bool Remove (UITableViewCell item)
 		{
-			throw new NotImplementedException ();
+			var i =  NSIndexPath.FromRowSection (IndexOf(item), 0);
+
+			var success =  items.Remove (item);
+			if (tableView != null)
+				tableView.DeleteRows (new []{i} , UITableViewRowAnimation.Automatic);
+			return success;
 		}
 		public int Count {
 			get {
