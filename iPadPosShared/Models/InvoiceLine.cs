@@ -65,6 +65,8 @@ namespace iPadPos
 			}
 			set {
 				transType = value;
+				if (transType == null)
+					return;
 				TransactionCode = TransType.Id;
 				Qty = Math.Abs (Qty) * TransType.Multiplier;
 			}
@@ -133,8 +135,8 @@ namespace iPadPos
 			}
 		}
 
-		int taxCode;
-		public int TaxCode {
+		string taxCode;
+		public string TaxCode {
 			get {
 				return taxCode;
 			}

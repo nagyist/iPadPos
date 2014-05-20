@@ -114,6 +114,11 @@ namespace iPadPos
 			return newProducts;
 		}
 
+		public Task<Invoice> GetInvoice(string id)
+		{
+			return Get<Invoice> ("Invoice", id);
+		}
+
 		public Task<List<Invoice>> GetInvoices()
 		{
 			return Get<List<Invoice>> ("InvoiceSearch");

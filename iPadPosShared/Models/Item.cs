@@ -30,7 +30,7 @@ namespace iPadPos
 		private int qty;
 		private string season;
 		private double sellAmt;
-		private int taxCode;
+		private string taxCode;
 
 		#endregion
 
@@ -72,7 +72,7 @@ namespace iPadPos
 			set { ProcPropertyChanged (ref season, value); }
 		}
 
-		public int TaxCode {
+		public string TaxCode {
 			get { return taxCode; }
 			set { ProcPropertyChanged (ref taxCode, value); }
 		}

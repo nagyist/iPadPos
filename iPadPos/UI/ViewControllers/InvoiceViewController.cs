@@ -38,7 +38,21 @@ namespace iPadPos
 							{
 								popover.Dismiss(true);
 							}
-							popover = new UIPopoverController(new UINavigationController(new LoadInvoiceViewController()));
+							popover = new UIPopoverController(new UINavigationController(new LoadInvoiceViewController(){
+								InvoiceSelected = async (i) =>{
+									try{
+										BigTed.BTProgressHUD.ShowContinuousProgress();
+										Invoice = await WebService.Main.GetInvoice(i.Id);
+									}
+									catch(Exception ex)
+									{
+										Console.WriteLine(ex);
+									}
+									finally{
+										BigTed.BTProgressHUD.Dismiss();
+									}
+								},
+							}));
 							popover.DidDismiss += (sender,  evt) => {
 								popover.Dispose();
 							};

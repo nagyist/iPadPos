@@ -34,7 +34,7 @@ namespace iPadPos
 
 		public int RecordId { get; set; }
 
-		[JsonProperty ("InvoiceID")]
+		//[JsonProperty ("InvoiceID")]
 		public string Id { get; set; }
 
 		public string CustomerId {get;set;}
@@ -53,6 +53,7 @@ namespace iPadPos
 			}
 
 		}
+		public string CustomerName { get; set; }
 
 		[JsonProperty ("InvDate")]
 		public DateTime Date { get; set; }

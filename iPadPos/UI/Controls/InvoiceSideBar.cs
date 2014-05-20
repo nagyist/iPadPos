@@ -150,7 +150,7 @@ namespace iPadPos
 			}
 			set {
 				unbind ();
-				invoice = value;
+				invoice = value ?? new Invoice();
 				bind ();
 			}
 		}
@@ -179,6 +179,8 @@ namespace iPadPos
 				return;
 
 			binding.Unbind ();
+			if (Invoice == null)
+				return;
 			Invoice.UnSubscribeToProperty ("Customer", CustomerChanged);
 			invoice.UnSubscribeToProperty ("Discount", updateDiscount);
 		}
