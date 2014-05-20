@@ -15,6 +15,7 @@ namespace iPadPos
 			tabbar = new UITabBarController () {
 				ViewControllers = new UIViewController[] {
 					coupons = new QuickItemsViewController{
+						TabBarItem = new UITabBarItem ("Coupons", UIImage.FromBundle ("coupon"), 0),
 						ItemBackgroundColor = Color.Red,
 						AlternateItemBackgroundColor = Color.Olive,
 						Title = "Coupons",
@@ -25,6 +26,7 @@ namespace iPadPos
 						},
 					},
 					newProduct = new QuickItemsViewController{
+						TabBarItem = new UITabBarItem ("New Product", UIImage.FromBundle ("newProduct"), 1),
 						ItemBackgroundColor = Color.Orange,
 						AlternateItemBackgroundColor = Color.Orange,
 						Title = "New Product",

@@ -55,6 +55,21 @@ namespace iPadPos
 			return await GetGenericList<Customer> (string.Format ("CustomerSearch/{0}", cust));
 		}
 
+		public async Task<bool> SaveWorkingInvoice(Invoice invoice)
+		{
+			try{
+				var client = CreateClient ();
+				var json = Newtonsoft.Json.JsonConvert.SerializeObject (invoice);
+				var respons = await client.PostAsync ("WorkingInvoice", new StringContent (json, Encoding.UTF8, "application/json"));
+				var success = !string.IsNullOrEmpty(await respons.Content.ReadAsStringAsync ());
+				return success;
+			}
+			catch(Exception ex) {
+				Console.WriteLine (ex);
+			}
+			return false;
+		}
+
 		public async Task<Item> GetItem (string id)
 		{
 			return await Get<Item> ("items", id);
