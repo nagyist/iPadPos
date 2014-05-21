@@ -169,6 +169,7 @@
     <Compile Include="Controllers\NewCustomerTrackingController.cs" />
     <Compile Include="Controllers\NewProductsController.cs" />
     <Compile Include="Controllers\PaymentTypeController.cs" />
+    <Compile Include="Controllers\PayoutBuyController.cs" />
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Controllers\TaxTypeController.cs" />
     <Compile Include="Controllers\TransactionTypeController.cs" />
@@ -178,6 +179,7 @@
     </Compile>
     <Compile Include="Helpers\Encryption.cs" />
     <Compile Include="Helpers\SqlStringExtensions.cs" />
+    <Compile Include="Models\BuyInvoice.cs" />
     <Compile Include="Models\Charge.cs" />
     <Compile Include="Models\Coupon.cs" />
     <Compile Include="Models\Customer.cs" />

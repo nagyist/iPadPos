@@ -51,7 +51,7 @@ namespace WebApplication1.Models
 
 		public void CalculateDiscount()
 		{
-			if (Qty == 0)
+			if (Qty == 0 || TransCode == "O")
 				return;
 			var price = Price*Qty;
 			Discount = (FinalPrice - price)/Qty;
