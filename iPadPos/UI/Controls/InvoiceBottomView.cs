@@ -1,5 +1,6 @@
 ﻿using System;
 using MonoTouch.UIKit;
+using System.Linq;
 
 namespace iPadPos
 {
@@ -19,7 +20,8 @@ namespace iPadPos
 						ItemBackgroundColor = Color.Red,
 						AlternateItemBackgroundColor = Color.Olive,
 						Title = "Offers",
-						GetItems = WebService.Main.GetCoupons,
+						Sections = 2,
+						GetItems = WebService.Main.GetGroupedCoupons,
 						AddItem = (i) =>{
 							if(AddItem != null)
 								AddItem(i);
@@ -30,7 +32,7 @@ namespace iPadPos
 						ItemBackgroundColor = Color.Orange,
 						AlternateItemBackgroundColor = Color.Orange,
 						Title = "New Product",
-						GetItems = WebService.Main.GetNewProducts,
+						GetItems = (s) => WebService.Main.GetNewProducts(),
 						AddItem = (i) =>{
 							if(AddItem != null)
 								AddItem(i);

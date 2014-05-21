@@ -11,11 +11,11 @@ namespace iPadPos
 		UILabel Amount;
 		public BuyInvoiceCell () : base(Key)
 		{
-			this.AutoAddSubview (Name = new UILabel{Text = "Name"}, 5);
+			this.AutoAddSubview (Name = new UILabel{Text = "Name"}, 7);
 			Name.SizeToFit ();
-			this.AutoAddSubview (Type = new UILabel {Text = "Cash", TextColor = Color.Olive}, 3);
+			this.AutoAddSubview (Type = new UILabel {Text = "Cash", TextColor = Color.Olive}, 2);
 			Type.SizeToFit ();
-			this.AutoAddSubview (Amount = new UILabel {Text = "$100.00",TextColor = Color.Red, TextAlignment = UITextAlignment.Right}, 3);
+			this.AutoAddSubview (Amount = new UILabel {Text = "$100.00",TextColor = Color.Red, TextAlignment = UITextAlignment.Right}, 2);
 			Amount.SizeToFit ();
 		}
 		BuyInvoice invoice;

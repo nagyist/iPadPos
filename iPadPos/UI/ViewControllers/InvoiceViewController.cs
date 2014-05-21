@@ -2,6 +2,7 @@
 using MonoTouch.UIKit;
 using iOSHelpers;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace iPadPos
 {
@@ -86,7 +87,14 @@ namespace iPadPos
 										}
 										Invoice.DeleteLocal();
 										Invoice = await WebService.Main.GetInvoice(i.Id);
+										//Setup payments
+										Database.Main.Table<PaymentType> ().Where (x => x.IsActive)
+											.OrderBy (X => X.SortOrder).ToList ().ForEach (x => Invoice.Payments.Add (new Payment{ PaymentType = x }));
 										Invoice.Save(true);
+										if((i as BuyInvoice).IsOnAccount)
+											Invoice.OnAccountPayment.Amount = Invoice.Total;
+										else
+											Invoice.CashPayment.Amount = Invoice.Total;
 									}
 									catch(Exception ex)
 									{

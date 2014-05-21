@@ -130,6 +130,13 @@ namespace iPadPos
 		}
 
 		List<Item> coupons = new List<Item>();
+
+		public async Task<List<Item>> GetGroupedCoupons(int section)
+		{
+			var c = await GetCoupons ();
+			return c.GroupBy (x => x.UseAlterate ()).ElementAt(section).ToList();
+		}
+
 		public async Task<List<Item>> GetCoupons()
 		{
 			if (coupons.Count > 0)

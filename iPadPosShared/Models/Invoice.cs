@@ -370,6 +370,11 @@ namespace iPadPos
 		}
 
 		[Newtonsoft.Json.JsonIgnore]
+		public Payment OnAccountPayment {
+			get { return Payments.Where (x => x.PaymentType.Id == "Acct").FirstOrDefault (); }
+		}
+
+		[Newtonsoft.Json.JsonIgnore]
 		public Payment CardPayment {
 			get { 
 				return Payments.Where (x => x.PaymentType.Id == "Visa").FirstOrDefault ();
