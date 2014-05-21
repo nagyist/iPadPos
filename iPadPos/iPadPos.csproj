@@ -95,6 +95,12 @@
     <Reference Include="BTProgressHUD">
       <HintPath>..\Components\btprogresshud-1.9\lib\ios\BTProgressHUD.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Analytics">
+      <HintPath>..\packages\Xamarin.Analytics.1.0.13\lib\MonoTouch10\Xamarin.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="Xamarin.AnalyticsCore">
+      <HintPath>..\packages\Xamarin.Analytics.1.0.13\lib\MonoTouch10\Xamarin.AnalyticsCore.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
@@ -162,6 +168,7 @@
     <Compile Include="UI\ViewControllers\SignatureViewController.cs" />
     <Compile Include="UI\ViewControllers\LoadBuyPayoutViewController.cs" />
     <Compile Include="UI\Cells\BuyInvoiceCell.cs" />
+    <Compile Include="UI\ViewControllers\SettingsViewController.cs" />
   </ItemGroup>
   <Import Project="..\iPadPosShared\iPadPosShared.projitems" Label="Shared" Condition="Exists('..\iPadPosShared\iPadPosShared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

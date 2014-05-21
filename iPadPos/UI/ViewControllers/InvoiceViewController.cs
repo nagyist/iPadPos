@@ -112,6 +112,7 @@ namespace iPadPos
 
 						}
 					},
+					{"Settings",() => this.PresentViewControllerAsync (new UINavigationController (new SettingsViewController ()), true)},
 				};
 				sheet.Dismissed += (object sender, UIButtonEventArgs e2) => {
 					sheet.Dispose ();

@@ -21,6 +21,7 @@ namespace iPadPos
 		public Settings ()
 		{
 			Database.Main.CreateTable<Setting> ();
+			NSUserDefaults.StandardUserDefaults.
 		}
 		public string CurrentServerUrl
 		{

@@ -52,6 +52,36 @@
 			<key>DefaultValue</key>
 			<string>http://clancey.dyndns.org:32021/api/</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>Credit Card Proccessing</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Account Key</string>
+			<key>Key</key>
+			<string>CCAcountKey</string>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>No</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Test Account Key</string>
+			<key>Key</key>
+			<string>TestCCAccountKey</string>
+			<key>AutocapitalizationType</key>
+			<string>None</string>
+			<key>AutocorrectionType</key>
+			<string>Default</string>
+		</dict>
 	</array>
 </dict>
 </plist>

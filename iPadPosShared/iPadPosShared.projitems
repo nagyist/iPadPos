@@ -41,5 +41,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChargeDetails.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Signature.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\BuyInvoice.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\Analytics.cs" />
   </ItemGroup>
 </Project>
