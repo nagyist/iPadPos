@@ -12,7 +12,7 @@ namespace WebApplication1.Tasks
 	{
 		public InvoiceStatus InvoiceStatus { get; set; }
 		public string RegisterId { get; set; }
-		public override SimpleTask Execute()
+		public override void Execute()
 		{
 			bool exists = true;
 			while (exists)
@@ -30,7 +30,6 @@ namespace WebApplication1.Tasks
 					InvoiceStatus == InvoiceStatus.Posted ? "P" : "W", Out.GetSqlCompatible());
 				exists = SharedDb.GetInt(existsString) > 0;
 			}
-			return this;
 		}
 	}
 }

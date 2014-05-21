@@ -18,8 +18,10 @@ namespace WebApplication1.Tasks
 	public class SendEmailTask : SimpleTask
 	{
 		public Invoice Invoice { get; set; }
-		public override SimpleTask Execute()
+		public override void Execute()
 		{
+			if (!IsValidEmail(Invoice.Customer.Email))
+				return;
 			var message = new MimeMessage();
 			message.From.Add(new MailboxAddress("Anchorage Kid to Kid", "anchorage@kidtokid.com"));
 			message.To.Add(new MailboxAddress(Invoice.Customer.ToString(), Invoice.Customer.Email));
@@ -32,7 +34,9 @@ namespace WebApplication1.Tasks
 
 			using (var client = new SmtpClient())
 			{
-				var credentials = new NetworkCredential("James.clancey@gmail.com", "Tng4life!");
+				var userName = SharedDb.GetString("SELECT StringValue FROM  DBA.BYR_PREFS where PrefTitle = 'emailUN'");
+				var pw = SharedDb.GetString("SELECT StringValue FROM  DBA.BYR_PREFS where PrefTitle = 'emailPW'");
+				var credentials = new NetworkCredential(userName, pw);
 
 				// Note: if the server requires SSL-on-connect, use the "smtps" protocol instead
 				var uri = new Uri("smtp://smtp.gmail.com:587");
@@ -52,7 +56,18 @@ namespace WebApplication1.Tasks
 					client.Disconnect(true, cancel.Token);
 				}
 			}
-			return this;
+		}
+		bool IsValidEmail(string email)
+		{
+			try
+			{
+				var addr = new System.Net.Mail.MailAddress(email);
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
 		}
 		private static string GetHtmlBody(Invoice invoice)
 		{

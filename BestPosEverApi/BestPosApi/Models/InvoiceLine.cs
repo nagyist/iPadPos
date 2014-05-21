@@ -7,6 +7,16 @@ namespace WebApplication1.Models
 {
 	public class InvoiceLine
 	{
+		public InvoiceLine()
+		{
+			Description = "";
+			ItemId = "";
+			PriceLevel = "";
+			SerialNumber = "";
+			TaxCode = "";
+			TransCode = "";
+		}
+
 		public double Cost { get; set; }
 
 		public string Description { get; set; }
@@ -17,7 +27,7 @@ namespace WebApplication1.Models
 
 		public int LineOrder { get; set; }
 
-		public double OnHand { get; set; }
+		public int OnHand { get; set; }
 		
 		public int ParentRecordId { get; set; }
 
@@ -38,5 +48,13 @@ namespace WebApplication1.Models
 		public double Discount { get; set; }
 
 		public string TransCode { get; set; }
+
+		public void CalculateDiscount()
+		{
+			if (Qty == 0)
+				return;
+			var price = Price*Qty;
+			Discount = (FinalPrice - price)/Qty;
+		}
 	}
 }

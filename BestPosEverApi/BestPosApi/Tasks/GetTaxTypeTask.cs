@@ -9,7 +9,7 @@ namespace WebApplication1.Tasks
 {
 	public class GetTaxTypeTask : OutSimpleTask<List<TaxType>>
 	{
-		public override SimpleTask Execute()
+		public override void Execute()
 		{
 			var taxTypes = SharedDb.GetMany<TaxType>(@"
 					select 1 as Id, TaxRate1/100 as Rate, TaxDesc1 as Description from InvControls 
@@ -21,7 +21,6 @@ namespace WebApplication1.Tasks
 			taxTypes.Add(new TaxType{Rate = combined, Description = "Combined", Id = "3"});
 
 			Out = taxTypes;
-			return this;
 		}
 	}
 }
