@@ -140,36 +140,7 @@ namespace iPadPos
 			return coupons;
 		}
 
-		public async Task<List<T>> GetGenericList<T> (string path, bool insert = false)
-		{
-			var items = await Get<List<T>> (path);
 
-			if (insert) {
-				Database.Main.InsertAll (items, "OR REPLACE");
-			}
-			return items;
-		}
-
-
-		public Task<Stream> GetUrlStream (string path)
-		{
-			var client = CreateClient ();
-			return client.GetStreamAsync (path);
-		}
-
-
-		public Task<string> GetUrl (string path)
-		{
-			var client = CreateClient ();
-			return client.GetStringAsync (path);
-		}
-
-		HttpClient CreateClient ()
-		{
-			var client = new HttpClient ();
-			client.BaseAddress = new Uri (Settings.Shared.CurrentServerUrl);
-			return client;
-		}
 
 		public async Task<bool> PostInvoice (Invoice invoice)
 		{
@@ -225,6 +196,36 @@ namespace iPadPos
 			return false;
 		}
 
+		public async Task<List<T>> GetGenericList<T> (string path, bool insert = false)
+		{
+			var items = await Get<List<T>> (path);
+
+			if (insert) {
+				Database.Main.InsertAll (items, "OR REPLACE");
+			}
+			return items;
+		}
+
+
+		public Task<Stream> GetUrlStream (string path)
+		{
+			var client = CreateClient ();
+			return client.GetStreamAsync (path);
+		}
+
+
+		public Task<string> GetUrl (string path)
+		{
+			var client = CreateClient ();
+			return client.GetStringAsync (path);
+		}
+
+		HttpClient CreateClient ()
+		{
+			var client = new HttpClient ();
+			client.BaseAddress = new Uri (Settings.Shared.CurrentServerUrl);
+			return client;
+		}
 		public async Task<T> Get<T> (string path, string id = "")
 		{
 			try {
