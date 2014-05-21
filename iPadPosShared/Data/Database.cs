@@ -22,6 +22,7 @@ namespace iPadPos
 			CreateTable<Customer> ();
 			CreateTable<Item> ();
 			CreateTable<ChargeDetails> ();
+			CreateTable<Signature> ();
 
 		}
 

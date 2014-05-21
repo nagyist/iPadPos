@@ -6,7 +6,7 @@ namespace iPadPos
 	public class InvoiceCell : UITableViewCell
 	{
 		public const string Key = "InvoiceCell";
-		public InvoiceCell () : base(UITableViewCellStyle.Subtitle,Key)
+		public InvoiceCell () : base(UITableViewCellStyle.Value1,Key)
 		{
 
 

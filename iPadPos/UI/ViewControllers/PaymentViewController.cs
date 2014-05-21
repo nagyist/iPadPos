@@ -84,6 +84,7 @@ namespace iPadPos
 		}
 		async void signIn(TaskCompletionSource<bool> tcs,string id)
 		{
+			Console.WriteLine ("Signing in");
 			BigTed.BTProgressHUD.ShowContinuousProgress();
 			var success = await WebService.Main.SignIn(id);
 			if(!success)
@@ -95,9 +96,11 @@ namespace iPadPos
 			}
 			else
 				tcs.TrySetResult(await SignIn());
+			Console.WriteLine ("Signed in {0}", success);
 		}
 		async void PostInvoice()
 		{
+			Console.WriteLine ("Posting invoice");
 			var isValid = Invoice.Validate ();
 			if (!isValid.Item1) {
 				App.ShowAlert ("Error", isValid.Item2);
@@ -110,8 +113,10 @@ namespace iPadPos
 			BigTed.BTProgressHUD.ShowContinuousProgress();
 			var paymentSucces = await ProcessPayment ();
 			bool success = false;
-			if(paymentSucces)
-				success = await WebService.Main.PostInvoice(Invoice);
+			if (paymentSucces) {
+				Console.WriteLine ("Posting invoice");
+				success = await WebService.Main.PostInvoice (Invoice);
+			}
 			BigTed.BTProgressHUD.Dismiss ();
 			if(!success)
 			{
@@ -127,19 +132,41 @@ namespace iPadPos
 
 		public async Task<bool> ProcessPayment ()
 		{
+			Console.WriteLine ("Processing Payment");
 			if (Invoice.CardPayment == null || Invoice.CardPayment.Amount == 0)
 				return true;
-
-			var charge = Invoice.ChargeDetail =  await CreditCardProccessor.Shared.Charge (Invoice);
-			Invoice.CreditCardProccessed = charge != null;
-			if (charge != null) {
+			var charge = Database.Main.Table<ChargeDetails> ().Where (x => x.LocalInvoiceId == Invoice.LocalId).FirstOrDefault ();
+			if (charge == null) {
+				Console.WriteLine ("Awaiting Card charge");
+				charge = Invoice.ChargeDetail = await CreditCardProccessor.Shared.Charge (Invoice);
 				charge.LocalInvoiceId = Invoice.LocalId;
 				Database.Main.InsertOrReplace (charge);
 			}
+
+			Invoice.CreditCardProccessed = charge != null;
+
+			if (Invoice.CreditCardProccessed && !charge.Signature.IsValid) {
+				//GetSig
+				BigTed.BTProgressHUD.Dismiss ();
+				charge.Signature.Points = await GetSig ();
+				BigTed.BTProgressHUD.ShowContinuousProgress ();
+				Invoice.CreditCardProccessed = charge.Signature.IsValid;
+				if (!Invoice.CreditCardProccessed)
+					new SimpleAlertView ("Error", "Invalid signature").Show ();
+			}
+			Console.WriteLine ("Card was processed");
 			return Invoice.CreditCardProccessed;
 		}
 
-
+		async Task<PointF[]> GetSig()
+		{
+			Console.WriteLine ("Getting sig");
+			var sigPad = new SignatureViewController ();
+			await PresentViewControllerAsync (new UINavigationController (sigPad), true);
+			await sigPad.GetSignature ();
+			await DismissViewControllerAsync (true);
+			return sigPad.SignatureView.Points;
+		}
 
 		class PaymentView : UIView
 		{

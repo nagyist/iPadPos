@@ -39,5 +39,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CFTCardExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\NotificationCenter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChargeDetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\Signature.cs" />
   </ItemGroup>
 </Project>

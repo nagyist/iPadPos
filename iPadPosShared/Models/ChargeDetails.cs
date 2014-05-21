@@ -5,6 +5,10 @@ namespace iPadPos
 {
 	public class ChargeDetails
 	{
+		public ChargeDetails()
+		{
+			Signature = new Signature ();
+		}
 		public double Amount { get; set;}
 
 		[PrimaryKey]
@@ -20,6 +24,18 @@ namespace iPadPos
 
 		[Newtonsoft.Json.JsonIgnore]
 		public int LocalInvoiceId {get;set;}
+
+		Signature signature;
+		[SQLite.Ignore]
+		public Signature Signature {
+			get {
+				return signature ?? (Database.Main.Table<Signature>().Where(x=> x.Token == Token).FirstOrDefault());
+			}
+			set {
+				signature = value;
+			}
+		}
+
 	}
 }
 
