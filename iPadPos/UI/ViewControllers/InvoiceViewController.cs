@@ -1,6 +1,7 @@
 ﻿using System;
 using MonoTouch.UIKit;
 using iOSHelpers;
+using System.Threading.Tasks;
 
 namespace iPadPos
 {
@@ -27,11 +28,10 @@ namespace iPadPos
 					return;
 				}
 				sheet = new SimpleActionSheet { 
-					{"New Invoice",() => new SimpleAlertView ("Save invoice", "Do you want to save the current invoice?") {
-							{ "Cancel",Color.Olive,NewInvoice },
-							{ "Delete",Color.Red,null },
-							{ "Save",Color.Olive,SaveInvoice }
-						}.Show ()
+					{"New Invoice",async() =>{
+							if(await AskSave())
+								NewInvoice();
+						}
 					},
 					{"Load Invoice",() => {
 							if(popover != null)
@@ -40,9 +40,17 @@ namespace iPadPos
 							}
 							popover = new UIPopoverController(new UINavigationController(new LoadInvoiceViewController(){
 								InvoiceSelected = async (i) =>{
+									popover.Dismiss(true);
 									try{
 										BigTed.BTProgressHUD.ShowContinuousProgress();
+										if(Invoice != null && Invoice.Id != i.Id)
+										{
+											if(!await AskSave())
+												return;
+										}
+										Invoice.DeleteLocal();
 										Invoice = await WebService.Main.GetInvoice(i.Id);
+										Invoice.Save(true);
 									}
 									catch(Exception ex)
 									{
@@ -70,18 +78,64 @@ namespace iPadPos
 			//this.AutomaticallyAdjustsScrollViewInsets = false;
 		}
 
+		async Task<bool> AskSave()
+		{
+			if (Invoice.Items.Count == 0)
+				return true;
+			var tcs = new TaskCompletionSource<bool> ();
+			new SimpleAlertView ("Save invoice", "Do you want to save the current invoice?") {
+				{ "Save",Color.Olive,async () =>{
+						var success = await SaveInvoice();
+						tcs.TrySetResult(success);
+					}},
+				{ "Delete",Color.Red,async () =>{
+						var success = await DeleteInvoice();
+						tcs.TrySetResult(success);
+					}},
+				{ "Cancel",Color.Olive,() => tcs.TrySetResult(false) },
+			}.Show ();
+			return await tcs.Task;
+		}
+
 		void NewInvoice ()
 		{
 			Invoice.DeleteLocal ();
 			Invoice = new Invoice ();
 		}
 
-		async void SaveInvoice ()
+		async Task<bool> SaveInvoice ()
 		{
-			var success = await WebService.Main.SaveWorkingInvoice (Invoice);
-			if (success) {
-				NewInvoice ();
+			try{
+				BigTed.BTProgressHUD.ShowContinuousProgress();
+				var success = await WebService.Main.SaveWorkingInvoice (Invoice);
+				return success;
 			}
+			catch(Exception ex) {
+				new SimpleAlertView ("Error saving invoice", "").Show ();
+			}
+			finally{
+				BigTed.BTProgressHUD.Dismiss ();
+			}
+			return false;
+		}
+		async Task<bool> DeleteInvoice()
+		{
+			try{
+				BigTed.BTProgressHUD.ShowContinuousProgress();
+				bool success = false;
+				if(Invoice.RecordId > 0)
+					success = await WebService.Main.DeleteWorkingInvoice (Invoice);
+				Invoice.DeleteLocal();
+				success = true;
+				return success;
+			}
+			catch(Exception ex) {
+				new SimpleAlertView ("Error deleting invoice", "").Show ();
+			}
+			finally{
+				BigTed.BTProgressHUD.Dismiss ();
+			}
+			return false;
 		}
 
 		public Invoice Invoice {

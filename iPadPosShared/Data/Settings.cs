@@ -65,6 +65,12 @@ namespace iPadPos
 			}
 		}
 
+		public int RegisterId
+		{
+			get{ return Math.Max(GetInt ("RegisterId"),1); }
+			set{ SetValue ("RegisterId", value); }
+		}
+
 
 		public string GetStringValue(string key)
 		{

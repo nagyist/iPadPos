@@ -32,6 +32,7 @@ namespace iPadPos
 			customer = new Customer ();
 			Payments = new ObservableCollection<Payment> ();
 			Items = new ObservableCollection<InvoiceLine> ();
+			RegisterId = Settings.Shared.RegisterId.ToString();
 		}
 
 		public int RecordId { get; set; }
@@ -51,8 +52,8 @@ namespace iPadPos
 			set { 
 				ProcPropertyChanged (ref customer, value);
 				CustomerId = customer == null ? "" : customer.CustomerId;
-				if (Items != null && Items.Count >= 0)
-					Save ();
+//				if (Items != null && Items.Count >= 0)
+//					Save ();
 			}
 
 		}
@@ -421,7 +422,14 @@ namespace iPadPos
 			Settings.Shared.CurrentInvoice = LocalId;
 			if (hasSaved)
 				return;
-			Database.Main.InsertAll (Items, "OR REPLACE");
+			Items.ForEach (x =>{
+				x.LocalParentId = localId;
+				if(x.LocalId == 0)
+					Database.Main.Insert(x);
+				else
+					Database.Main.Update(x);
+			});
+
 
 			hasSaved = true;
 		}
@@ -430,6 +438,7 @@ namespace iPadPos
 		{
 			if (force)
 				hasSaved = false;
+			Save ();
 		}
 
 		public void DeleteLocal ()
@@ -443,7 +452,8 @@ namespace iPadPos
 		{
 			var invoice = Database.Main.Table<Invoice> ().Where (x => x.LocalId == id).FirstOrDefault () ?? new Invoice ();
 			if (invoice.LocalId != 0) {
-				invoice.Items = new  ObservableCollection<InvoiceLine> (Database.Main.Table<InvoiceLine> ());
+				var items = Database.Main.Table<InvoiceLine> ().Where (x => x.LocalParentId == id).ToList ();
+				invoice.Items = new  ObservableCollection<InvoiceLine> (items);
 			}
 			return invoice;
 		}

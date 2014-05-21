@@ -58,6 +58,7 @@ namespace iPadPos
 		public async Task<bool> SaveWorkingInvoice(Invoice invoice)
 		{
 			try{
+				invoice.RegisterId = Settings.Shared.RegisterId.ToString();
 				var client = CreateClient ();
 				var json = Newtonsoft.Json.JsonConvert.SerializeObject (invoice);
 				var respons = await client.PostAsync ("WorkingInvoice", new StringContent (json, Encoding.UTF8, "application/json"));
@@ -68,6 +69,15 @@ namespace iPadPos
 				Console.WriteLine (ex);
 			}
 			return false;
+		}
+
+		public async Task<bool> DeleteWorkingInvoice(Invoice invoice)
+		{	
+			var client = CreateClient ();
+			var json = Newtonsoft.Json.JsonConvert.SerializeObject (invoice);
+			var respons = await client.DeleteAsync (Path.Combine("WorkingInvoice",invoice.RecordId.ToString()));
+			var success = !string.IsNullOrEmpty(await respons.Content.ReadAsStringAsync ());
+			return success;
 		}
 
 		public async Task<Item> GetItem (string id)
@@ -168,15 +178,19 @@ namespace iPadPos
 
 		public async Task<bool> PostInvoice (Invoice invoice)
 		{
+			var stringResult = "";
 			try{
+				invoice.RegisterId = Settings.Shared.RegisterId.ToString();
 				var client = CreateClient ();
 				var json = Newtonsoft.Json.JsonConvert.SerializeObject (invoice);
 				var respons = await client.PostAsync ("Invoice", new StringContent (json, Encoding.UTF8, "application/json"));
-				var success = bool.Parse (await respons.Content.ReadAsStringAsync ());
+				stringResult = await respons.Content.ReadAsStringAsync ();
+				var success = bool.Parse (stringResult);
 				return success;
 			}
 			catch(Exception ex) {
 				Console.WriteLine (ex);
+				Console.WriteLine (stringResult);
 			}
 			return false;
 		}
