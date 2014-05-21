@@ -1,6 +1,7 @@
 ﻿using System;
 using SQLite;
 using System.ComponentModel;
+using MonoTouch.Foundation;
 
 namespace iPadPos
 {
@@ -21,7 +22,49 @@ namespace iPadPos
 		{
 			Database.Main.CreateTable<Setting> ();
 		}
+		public string CurrentServerUrl
+		{
+			get{ return TestMode ? TestServerUrl : ServerUrl; }
+		}
 
+		public string ServerUrl
+		{
+			get{
+				string apiUri = NSUserDefaults.StandardUserDefaults.StringForKey ("Server");
+				if (!string.IsNullOrEmpty (apiUri) && apiUri.EndsWith ("/"))
+					apiUri += "/";
+
+				return apiUri ?? "http://clancey.dyndns.org:32021/api/";
+			}
+			set{
+				NSUserDefaults.StandardUserDefaults.SetValueForKey ((NSString)value, (NSString)"Server");
+				NSUserDefaults.StandardUserDefaults.Synchronize ();
+				ProcPropertyChanged ("ServerUrl");
+			}
+		}
+		public string TestServerUrl
+		{
+			get{
+				string apiUri = NSUserDefaults.StandardUserDefaults.StringForKey ("TestServer");
+				if (!string.IsNullOrEmpty (apiUri) && apiUri.EndsWith ("/"))
+					apiUri += "/";
+				return apiUri  ?? "http://clancey.dyndns.org:32021/api/";
+			}
+			set{
+				NSUserDefaults.StandardUserDefaults.SetValueForKey ((NSString)value, (NSString)"TestServer");
+				NSUserDefaults.StandardUserDefaults.Synchronize ();
+				ProcPropertyChanged ("TestServerUrl");
+			}
+		}
+		public bool TestMode
+		{
+			get{return NSUserDefaults.StandardUserDefaults.BoolForKey ("TestMode");}
+			set{ 
+				NSUserDefaults.StandardUserDefaults.SetValueForKey (NSNumber.FromBoolean(value),(NSString)"TestMode");
+				NSUserDefaults.StandardUserDefaults.Synchronize ();
+				ProcPropertyChanged ("TestMode");
+			}
+		}
 	
 
 		public double LastPostedChange {

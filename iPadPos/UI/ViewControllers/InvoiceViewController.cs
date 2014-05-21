@@ -13,9 +13,11 @@ namespace iPadPos
 
 		SimpleActionSheet sheet;
 		UIPopoverController popover;
+		const string title = "Best POS Ever";
 		public InvoiceViewController ()
 		{
-			Title = "Best POS Ever";
+			SetTitle ();
+			Settings.Shared.SubscribeToProperty ("TestMode", SetTitle);
 			var searchBar = new ItemSearchView{ Frame = new System.Drawing.RectangleF (0, 0, 200, 30) };
 			searchBar.ItemSelected += (Item obj) => {
 				Invoice.AddItem (obj);
@@ -77,7 +79,10 @@ namespace iPadPos
 		
 			//this.AutomaticallyAdjustsScrollViewInsets = false;
 		}
-
+		public void SetTitle()
+		{
+			Title = Settings.Shared.TestMode ? string.Format ("{0} - TEST MODE", title) : title;
+		}
 		async Task<bool> AskSave()
 		{
 			if (Invoice.Items.Count == 0)

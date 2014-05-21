@@ -135,37 +135,42 @@ namespace iPadPos
 			Console.WriteLine ("Processing Payment");
 			if (Invoice.CardPayment == null || Invoice.CardPayment.Amount == 0)
 				return true;
-			var charge = Database.Main.Table<ChargeDetails> ().Where (x => x.LocalInvoiceId == Invoice.LocalId).FirstOrDefault ();
-			if (charge == null) {
+			Invoice.ChargeDetail = Database.Main.Table<ChargeDetails> ().Where (x => x.LocalInvoiceId == Invoice.LocalId).FirstOrDefault ();
+			if (Invoice.ChargeDetail == null) {
 				Console.WriteLine ("Awaiting Card charge");
-				charge = Invoice.ChargeDetail = await CreditCardProccessor.Shared.Charge (Invoice);
-				charge.LocalInvoiceId = Invoice.LocalId;
-				Database.Main.InsertOrReplace (charge);
+				Invoice.ChargeDetail = await CreditCardProccessor.Shared.Charge (Invoice);
+				Invoice.ChargeDetail.LocalInvoiceId = Invoice.LocalId;
+				Database.Main.InsertOrReplace (Invoice.ChargeDetail);
 			}
 
-			Invoice.CreditCardProccessed = charge != null;
+			Invoice.CreditCardProccessed = Invoice.ChargeDetail != null;
 
-			if (Invoice.CreditCardProccessed && !charge.Signature.IsValid) {
+			if (Invoice.CreditCardProccessed && !Invoice.ChargeDetail.Signature.IsValid) {
 				//GetSig
 				BigTed.BTProgressHUD.Dismiss ();
-				charge.Signature.Points = await GetSig ();
+				Invoice.ChargeDetail.Signature.Points = await GetSig ();
 				BigTed.BTProgressHUD.ShowContinuousProgress ();
-				Invoice.CreditCardProccessed = charge.Signature.IsValid;
+				Invoice.CreditCardProccessed = Invoice.ChargeDetail.Signature.IsValid;
 				if (!Invoice.CreditCardProccessed)
 					new SimpleAlertView ("Error", "Invalid signature").Show ();
 			}
 			Console.WriteLine ("Card was processed");
 			return Invoice.CreditCardProccessed;
 		}
-
+		SignatureViewController sigPad;
 		async Task<PointF[]> GetSig()
 		{
 			Console.WriteLine ("Getting sig");
-			var sigPad = new SignatureViewController ();
+			sigPad = new SignatureViewController {
+				Amount = Invoice.ChargeDetail.Amount,
+			};
 			await PresentViewControllerAsync (new UINavigationController (sigPad), true);
 			await sigPad.GetSignature ();
 			await DismissViewControllerAsync (true);
-			return sigPad.SignatureView.Points;
+			var points =  sigPad.SignatureView.Points;
+			sigPad.Dispose ();
+			sigPad = null;
+			return points;
 		}
 
 		class PaymentView : UIView

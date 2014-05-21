@@ -8,6 +8,7 @@ namespace iPadPos
 {
 	public static class App
 	{
+		public static InvoiceViewController InvoiceViewController;
 //		static FlyoutNavigationController flyout;
 		public static UIViewController Create()
 		{
@@ -23,7 +24,7 @@ namespace iPadPos
 //				}
 //			};
 //			flyout.ViewControllers = new UIViewController[] {
-				return new UINavigationController(new InvoiceViewController ()){
+			return new UINavigationController(InvoiceViewController = new InvoiceViewController ()){
 					NavigationBar = {
 						BarStyle = UIBarStyle.BlackTranslucent,
 					}

@@ -64,6 +64,10 @@ namespace iPadPos
 			alert.Show ();
 
 		}
+		public override void WillEnterForeground (UIApplication application)
+		{
+			App.InvoiceViewController.SetTitle ();
+		}
 
 
 	}

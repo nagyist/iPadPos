@@ -11,11 +11,6 @@ namespace iPadPos
 	public class WebService
 	{
 
-		//const string baseUrl = "http://clancey.dyndns.org:83/pos/api/";
-
-		//const string baseUrl = "http://10.0.1.36/pos/api/";
-		//const string baseUrl = "http://10.0.1.14:32021/api/";
-		const string baseUrl = "http://clancey.dyndns.org:32021/api/";
 
 		static WebService main;
 
@@ -172,7 +167,7 @@ namespace iPadPos
 		HttpClient CreateClient ()
 		{
 			var client = new HttpClient ();
-			client.BaseAddress = new Uri (baseUrl);
+			client.BaseAddress = new Uri (Settings.Shared.CurrentServerUrl);
 			return client;
 		}
 
