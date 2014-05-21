@@ -303,7 +303,10 @@ namespace iPadPos
 
 			AppliedPayment = Math.Round (Payments.Sum (x => x.Amount), 2);
 			Remaining = Math.Round (AppliedPayment >= Total && Total > 0 ? 0 : Total - AppliedPayment, 2);
-			Change = Math.Round (AppliedPayment <= Total ? 0 : AppliedPayment - Total, 2);
+			if (CashPayment != null && CashPayment.Amount < 0)
+				Change = Math.Abs (CashPayment.Amount);
+			else
+				Change = Math.Round (AppliedPayment <= Total ? 0 : AppliedPayment - Total, 2);
 			if (Items.Count > 0)
 				Save ();
 		}
@@ -438,7 +441,7 @@ namespace iPadPos
 		{
 			if (force)
 				hasSaved = false;
-			Save ();
+			UpdateTotals ();
 		}
 
 		public void DeleteLocal ()

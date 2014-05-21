@@ -6,7 +6,7 @@ namespace iPadPos
 	public class LoadInvoiceViewController : UIViewController
 	{
 		public Action<Invoice> InvoiceSelected {get;set;}
-		readonly ObservableTableView TableView;
+		protected readonly ObservableTableView TableView;
 		public LoadInvoiceViewController ()
 		{
 			Title = "Load Invoice";
@@ -28,7 +28,7 @@ namespace iPadPos
 			ReloadData ();
 		}
 
-		async void ReloadData()
+		protected async virtual void ReloadData()
 		{
 			TableView.DataSource = await WebService.Main.GetInvoices();
 		}

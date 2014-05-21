@@ -140,7 +140,11 @@ namespace iPadPos
 			return coupons;
 		}
 
-
+		public async Task<List<BuyInvoice>> GetUnpostedBuys()
+		{
+			var items = await GetGenericList<BuyInvoice> ("PayoutBuy");
+			return items;
+		}
 
 		public async Task<bool> PostInvoice (Invoice invoice)
 		{

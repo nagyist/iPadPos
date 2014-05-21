@@ -69,6 +69,41 @@ namespace iPadPos
 							popover.PresentFromBarButtonItem(NavigationItem.LeftBarButtonItem, UIPopoverArrowDirection.Any,true);
 						}
 					},
+					{"Payout Buy",() => {
+							if(popover != null)
+							{
+								popover.Dismiss(true);
+							}
+							popover = new UIPopoverController(new UINavigationController(new LoadBuyPayoutViewController(){
+								InvoiceSelected = async (i) =>{
+									popover.Dismiss(true);
+									try{
+										BigTed.BTProgressHUD.ShowContinuousProgress();
+										if(Invoice != null && Invoice.Id != i.Id)
+										{
+											if(!await AskSave())
+												return;
+										}
+										Invoice.DeleteLocal();
+										Invoice = await WebService.Main.GetInvoice(i.Id);
+										Invoice.Save(true);
+									}
+									catch(Exception ex)
+									{
+										Console.WriteLine(ex);
+									}
+									finally{
+										BigTed.BTProgressHUD.Dismiss();
+									}
+								},
+							}));
+							popover.DidDismiss += (sender,  evt) => {
+								popover.Dispose();
+							};
+							popover.PresentFromBarButtonItem(NavigationItem.LeftBarButtonItem, UIPopoverArrowDirection.Any,true);
+
+						}
+					},
 				};
 				sheet.Dismissed += (object sender, UIButtonEventArgs e2) => {
 					sheet.Dispose ();

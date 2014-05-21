@@ -160,6 +160,8 @@
     <Compile Include="UI\ViewControllers\LoadInvoiceViewController.cs" />
     <Compile Include="UI\Cells\InvoiceCell.cs" />
     <Compile Include="UI\ViewControllers\SignatureViewController.cs" />
+    <Compile Include="UI\ViewControllers\LoadBuyPayoutViewController.cs" />
+    <Compile Include="UI\Cells\BuyInvoiceCell.cs" />
   </ItemGroup>
   <Import Project="..\iPadPosShared\iPadPosShared.projitems" Label="Shared" Condition="Exists('..\iPadPosShared\iPadPosShared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
