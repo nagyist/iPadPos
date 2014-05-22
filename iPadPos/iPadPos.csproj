@@ -76,6 +76,7 @@
     <CodesignKey>iPhone Distribution: INTERACTIVE INNOVATIVE SOLUTIONS LLC</CodesignKey>
     <CrashReportingApiKey>9803131fee8ab2370b975a3dacffc2d25e8464cd</CrashReportingApiKey>
     <CrashReportingEnabled>true</CrashReportingEnabled>
+    <IpaPackageName>iPadPos</IpaPackageName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>full</DebugType>

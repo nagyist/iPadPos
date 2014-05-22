@@ -40,6 +40,15 @@ namespace iPadPos
 		MyReader reader;
 		public async Task<Tuple<ChargeDetails,string>> Charge(Invoice invoice)
 		{
+			if (MonoTouch.ObjCRuntime.Runtime.Arch == MonoTouch.ObjCRuntime.Arch.SIMULATOR) {
+				return new Tuple<ChargeDetails, string>( new ChargeDetails{
+					Amount = invoice.Total,
+					Created = DateTime.Now,
+					IsRefunded = false,
+					ReferenceID = "SimTransaction",
+					Token = string.Format("SimTest-{0}",DateTime.Now),
+				},"");
+			}
 			if (reader == null)
 				reader = new MyReader ();
 			if (!reader.IsConnected) {
