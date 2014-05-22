@@ -16,6 +16,8 @@ namespace WebApplication1.Models
 
 		public float DiscountPercent { get; set; }
 
+		public bool ManualDiscount { get; set; }
+
 		public DateTime? StartDate { get; set; }
 
 		public DateTime? EndDate { get; set; }

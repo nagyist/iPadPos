@@ -29,8 +29,11 @@ namespace WebApplication1.Controllers
 			coupons.ForEach(x =>
 			{
 				float percent;
+				bool isManual;
 				if(float.TryParse(x.Misc1, out percent))
 					x.DiscountPercent = percent;
+				else if (bool.TryParse(x.Misc1, out isManual))
+					x.ManualDiscount = isManual;
 			});
 			return coupons;
 		}
