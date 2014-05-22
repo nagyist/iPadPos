@@ -44,7 +44,7 @@ namespace iPadPos
 				reader = new MyReader ();
 			if (!reader.IsConnected) {
 				await reader.ConnectionTask.Task;
-				Task.Delay (1000);
+				await Task.Delay (1000);
 			}
 			var card = await reader.Swipe();
 			if (card.Item1 == null)
@@ -52,7 +52,7 @@ namespace iPadPos
 			var result = await card.Item1.ChargeAsync (invoice);
 			if (result.Item1 == null) {
 				Console.WriteLine (result.Item2);
-				return null;
+				return new Tuple<ChargeDetails, string>(null,result.Item2.ToString());
 			}
 			var charge = result.Item1;
 			return new Tuple<ChargeDetails, string>( new ChargeDetails{
