@@ -26,11 +26,11 @@ namespace WebApplication1.Tasks
 		public override void Execute()
 		{
 			string query = string.Format("{0}  where InvoiceId = {1}", SelectQuery, Id.GetSqlCompatible());
-			Invoice = SharedDb.Get<Invoice>(query);
+			Invoice = SharedDb.PosimDb.Get<Invoice>(query);
 
 			if (!string.IsNullOrEmpty(Invoice.CustomerId))
 				Invoice.Customer =
-					SharedDb.Get<Customer>(string.Format("{0} where customerid = {1}", CustomerController.select,
+					SharedDb.PosimDb.Get<Customer>(string.Format("{0} where customerid = {1}", CustomerController.select,
 						Invoice.CustomerId.GetSqlCompatible()));
 
 			string linesQuery = string.Format(@"select 
@@ -53,7 +53,7 @@ Transcode
 
 from WInvLines where ParentRecordId = {0} order by LineOrder",
 				Invoice.RecordId.ToString().GetSqlCompatible());
-			InvoiceLine[] lines = SharedDb.GetMany<InvoiceLine>(linesQuery);
+			InvoiceLine[] lines = SharedDb.PosimDb.GetMany<InvoiceLine>(linesQuery);
 			lines.ForEach(x => x.CalculateDiscount());
 			//TODO remove payments
 			Invoice.ParseLines(lines);

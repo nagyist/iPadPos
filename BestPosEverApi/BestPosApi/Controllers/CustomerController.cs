@@ -42,7 +42,7 @@ from DBA.Customers as C ";
 		public Customer Get(string id)
 		{
 			string query = select + string.Format("where customerid = '{0}'", id);
-			return SharedDb.Get<Customer>(query);
+			return SharedDb.PosimDb.Get<Customer>(query);
 		}
 
 		// POST: api/Customer
@@ -77,7 +77,7 @@ from DBA.Customers as C ";
 					value.Email.GetSqlCompatible(),
 					value.FirstName.GetSqlCompatible()
 					);
-			SharedDb.Execute(ins);
+			SharedDb.PosimDb.Execute(ins);
 			return Get(value.CustomerID);
 		}
 
@@ -121,7 +121,7 @@ from DBA.Customers as C ";
 					date.GetSqlCompatible(true),
 					value.Email.GetSqlCompatible());
 
-			return SharedDb.Execute(update) > 0;
+			return SharedDb.PosimDb.Execute(update) > 0;
 		}
 	}
 }

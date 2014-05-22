@@ -43,24 +43,24 @@ namespace WebApplication1.Tasks
 						string.Format(
 							@"INSERT INTO DBA.ARItems(LockFlag,PARENTRECORDID,CLOSEDON,DOCDATE, DOCTYPE,REFNO,TERMS,SALE,PAYMENT,APPLIED,BALANCE,BALANCEFORWARDED,PERIOD,REGISTERID,LATEFEECODE)
 						VALUES (0,{0},'2300/jan/01 00:00',{1},0,{2},'Net30',{3},0,0,{3},0,0,{4},0)", In.Customer.RecordID, invDate.GetSqlCompatible(), pId.GetSqlCompatible(), acctPayment.Amount, In.RegisterId.GetSqlCompatible());
-					SharedDb.Execute(insertArQuery);
+					SharedDb.PosimDb.Execute(insertArQuery);
 
-					SharedDb.Execute(string.Format("call ApplyToOldestAux({0})", In.Customer.RecordID));
+					SharedDb.PosimDb.Execute(string.Format("call ApplyToOldestAux({0})", In.Customer.RecordID));
 				}
 
 				//Create posted invoice
 				string copyQuery = string.Format("CALL CopyWInv2PInv ('{0}','{1}', '{2}' )", wId, pId, invDate);
-				SharedDb.Execute(copyQuery);
+				SharedDb.PosimDb.Execute(copyQuery);
 
 				
 				//Post
 				string precQuery = "select RecordID from PInvHeaders where InvoiceID = " + pId.GetSqlCompatible(true);
-				var recordId = SharedDb.GetInt(precQuery);
+				var recordId = SharedDb.PosimDb.GetInt(precQuery);
 
 				string postQuery = string.Format("CALL PostPInvLines ({0},{1},{2},0,{3},'')", recordId, pId.GetSqlCompatible(true),
 					In.Customer.CustomerID.GetSqlCompatible(true),
 					invDate.GetSqlCompatible(true));
-				SharedDb.Execute(postQuery);
+				SharedDb.PosimDb.Execute(postQuery);
 
 				Task.Factory.StartNew(() =>
 				{
@@ -71,7 +71,7 @@ namespace WebApplication1.Tasks
 				});
 
 				//Cleanup
-				SharedDb.Execute(string.Format("CALL DisposeWInv ({0})", wId.GetSqlCompatible(true)));
+				SharedDb.PosimDb.Execute(string.Format("CALL DisposeWInv ({0})", wId.GetSqlCompatible(true)));
 
 				//t.Complete();
 				Out = true;

@@ -39,9 +39,9 @@ namespace WebApplication1.Controllers
         public bool Delete(string id)
 		{
 			var deleteLinesQuery = string.Format("delete from WInvLines where ParentRecordID = {0}", id);
-			SharedDb.Execute(deleteLinesQuery);
+			SharedDb.PosimDb.Execute(deleteLinesQuery);
 	        var deleteQuery = string.Format("delete from WInvHeaders where RecordID = {0}", id);
-	        SharedDb.Execute(deleteQuery);
+	        SharedDb.PosimDb.Execute(deleteQuery);
 	        return true;
 		}
     }

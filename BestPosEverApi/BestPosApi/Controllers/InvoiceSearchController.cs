@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
 		{
 			string invDate = DateTime.Today.AddDays(-1).ToString("yyyy'-'MM'-'dd");
 			var query = SelectQuery + " where InvoiceID not like 'BUY%' and InvDate > " + invDate.GetSqlCompatible();
-	       return SharedDb.GetMany<Invoice>(query);
+	       return SharedDb.PosimDb.GetMany<Invoice>(query);
         }
 
         // GET: api/InvoiceSearch/5

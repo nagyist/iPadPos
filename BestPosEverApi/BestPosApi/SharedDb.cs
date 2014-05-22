@@ -10,16 +10,31 @@ using Simpler.Data;
 namespace WebApplication1
 {
 
-	internal static class SharedDb
+	internal class SharedDb
 	{
-		//public static string DefaltDatabaseConnection = "Driver=Adaptive Server Anywhere 6;Dsn=Posim;DatabaseFile=c://Posim//Posim.db;UID=dba;PWD=mtdew;DBN=posim;LINKS=TCPIP(HOST=localhost);";
-		public static string DefaltDatabaseConnection = "Dsn=Posim;uid=dba;pwd=mtdew";//"Data Source=OFFICE-PC;Initial Catalog=eMAPSS_DB_032614;User Id=sa;Password=openup;";
-		static OdbcConnection GetConnection()
+		readonly string connection;
+
+		public static SharedDb PosimDb
 		{
-			return new OdbcConnection(DefaltDatabaseConnection);
+			get { return posimDb ?? (posimDb = new SharedDb(DefaltDatabaseConnection1)); }
 		}
 
-		public static T Get<T>(string sql, object data = null)
+		//public static string DefaltDatabaseConnection = "Driver=Adaptive Server Anywhere 6;Dsn=Posim;DatabaseFile=c://Posim//Posim.db;UID=dba;PWD=mtdew;DBN=posim;LINKS=TCPIP(HOST=localhost);";
+		public static string DefaltDatabaseConnection1 = "Dsn=Posim;uid=dba;pwd=mtdew";//"Data Source=OFFICE-PC;Initial Catalog=eMAPSS_DB_032614;User Id=sa;Password=openup;";
+		static SharedDb posimDb;
+
+
+		public SharedDb(string connection)
+		{
+			this.connection = connection;
+		}
+
+		OdbcConnection GetConnection()
+		{
+			return new OdbcConnection(connection);
+		}
+
+		public T Get<T>(string sql, object data = null)
 		{
 			try
 			{
@@ -39,7 +54,7 @@ namespace WebApplication1
 			}
 		}
 
-		public static string GetString(string sql, object data = null)
+		public string GetString(string sql, object data = null)
 		{
 			try
 			{
@@ -58,7 +73,7 @@ namespace WebApplication1
 			}
 		}
 
-		public static int GetInt(string sql, object data = null)
+		public  int GetInt(string sql, object data = null)
 		{
 			try
 			{
@@ -78,7 +93,7 @@ namespace WebApplication1
 		}
 
 
-		public static object Get(string sql, object data = null)
+		public  object Get(string sql, object data = null)
 		{
 			try
 			{
@@ -98,7 +113,7 @@ namespace WebApplication1
 			}
 		}
 
-		public static int Execute(string sql, object data = null)
+		public int Execute(string sql, object data = null)
 		{
 			using (var connection = GetConnection())
 			{
@@ -106,7 +121,7 @@ namespace WebApplication1
 			}
 		}
 
-		public static T[] GetMany<T>(string sql, object data = null)
+		public T[] GetMany<T>(string sql, object data = null)
 		{
 			try
 			{
@@ -142,7 +157,7 @@ namespace WebApplication1
 		//	}
 		//}
 
-		public static DataSet GetDataSet(string sql)
+		public DataSet GetDataSet(string sql)
 		{
 			using (var connection = GetConnection())
 			{

@@ -34,8 +34,8 @@ namespace WebApplication1.Tasks
 
 			using (var client = new SmtpClient())
 			{
-				var userName = SharedDb.GetString("SELECT StringValue FROM  DBA.BYR_PREFS where PrefTitle = 'emailUN'");
-				var pw = SharedDb.GetString("SELECT StringValue FROM  DBA.BYR_PREFS where PrefTitle = 'emailPW'");
+				var userName = SharedDb.PosimDb.GetString("SELECT StringValue FROM  DBA.BYR_PREFS where PrefTitle = 'emailUN'");
+				var pw = SharedDb.PosimDb.GetString("SELECT StringValue FROM  DBA.BYR_PREFS where PrefTitle = 'emailPW'");
 				var credentials = new NetworkCredential(userName, pw);
 
 				// Note: if the server requires SSL-on-connect, use the "smtps" protocol instead

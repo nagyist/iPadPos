@@ -12,10 +12,10 @@ namespace WebApplication1.Tasks
 		public override void Execute()
 		{
 			var sql = "SELECT AutoCustPrefix as Prefix, AutoCustSuffix as Suffix, AutoCustSize as Length from DBA.PosControls";
-			Out = SharedDb.Get<SuffixPrefix>(sql).StringValue;
+			Out = SharedDb.PosimDb.Get<SuffixPrefix>(sql).StringValue;
 			sql =
 				string.Format("update PosControls set  AutoCustSuffix =  AutoCustSuffix + 1");
-			SharedDb.Execute(sql);
+			SharedDb.PosimDb.Execute(sql);
 		}
 	}
 }

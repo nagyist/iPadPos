@@ -14,7 +14,7 @@ namespace WebApplication1.Controllers
 		public IEnumerable<Item> Get()
 		{
 			var selectString = string.Format(ItemsController.select + " Where ItemId in ({0})", "'NPCC0016','NPCC0014','NPHHSW','NPWA415','NPGTMIP','NPHH260','NPHHSLHB','NPHHBRAC','NPDT199'");
-			var items = SharedDb.GetMany<Item>(selectString);
+			var items = SharedDb.PosimDb.GetMany<Item>(selectString);
 			return items;
 		}
 

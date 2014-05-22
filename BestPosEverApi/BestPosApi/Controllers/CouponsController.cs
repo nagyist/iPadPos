@@ -15,7 +15,7 @@ namespace WebApplication1.Controllers
 		public IEnumerable<Coupon> Get()
 		{
 			var selectString = string.Format(ItemsController.select + " Where ItemId in ({0})", "'CPNMILITITARY','CPNFSG','CPNFSR','CPNBKCG','CPNBKCR','CPNBOWCLUB','CPNBOWR','CPNTEXT'");
-			var coupons = SharedDb.GetMany<Coupon>(selectString).ToList();
+			var coupons = SharedDb.PosimDb.GetMany<Coupon>(selectString).ToList();
 			coupons.Add(new Coupon
 			{
 				Description = "Memorial Day Sale",

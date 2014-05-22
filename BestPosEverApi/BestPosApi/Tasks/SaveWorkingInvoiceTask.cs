@@ -33,7 +33,7 @@ namespace WebApplication1.Tasks
 						line.Qty, line.ItemId.GetSqlCompatible(true), line.Description.GetSqlCompatible(true), line.PriceLevel.GetSqlCompatible(true), line.Price.ToString("F2"), line.TaxCode.ToString().GetSqlCompatible(true), line.Cost,
 						line.OnHand,
 						line.FinalPrice.ToString("F2"), line.SerialNumber.GetSqlCompatible(true), "''", line.Points, "''");
-					SharedDb.Execute(winLineInsertString);
+					SharedDb.PosimDb.Execute(winLineInsertString);
 				});
 
 				Out = true;
@@ -53,7 +53,7 @@ namespace WebApplication1.Tasks
 			InvoiceId = In.Id = invTask.Out;
 			//Create Working Invoice
 			var recordQuery = "select max(recordID) + 1 from DBA.WInvHeaders";
-			int recordId = SharedDb.GetInt(recordQuery);
+			int recordId = SharedDb.PosimDb.GetInt(recordQuery);
 			In.RecordId = recordId;
 			//var recordId = int.Parse(recordIdstring);
 			string winHdrArray = recordId + ",'" + In.Id + "','" +
@@ -91,7 +91,7 @@ namespace WebApplication1.Tasks
 							ShipFName,
 							InvTotal) 
 						VALUES (" + winHdrArray + ")";
-			bool success = SharedDb.Execute(winHdrInsertString) > 0;
+			bool success = SharedDb.PosimDb.Execute(winHdrInsertString) > 0;
 		}
 
 		public void Update()
@@ -137,10 +137,10 @@ namespace WebApplication1.Tasks
 															In.Customer.FirstName.GetSqlCompatible(),
 															In.Total,
 															In.RecordId);
-			SharedDb.Execute(updateQuery);
+			SharedDb.PosimDb.Execute(updateQuery);
 			//Clear lines
 			var deleteLinesQuery = string.Format("delete from WInvLines where ParentRecordID = {0}", In.RecordId);
-			SharedDb.Execute(deleteLinesQuery);
+			SharedDb.PosimDb.Execute(deleteLinesQuery);
 		}
 
 		

@@ -11,7 +11,7 @@ namespace WebApplication1.Tasks
 	{
 		public override void Execute()
 		{
-			var taxTypes = SharedDb.GetMany<TaxType>(@"
+			var taxTypes = SharedDb.PosimDb.GetMany<TaxType>(@"
 					select 1 as Id, TaxRate1/100 as Rate, TaxDesc1 as Description from InvControls 
 					union
 

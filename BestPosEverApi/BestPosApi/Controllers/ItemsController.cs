@@ -29,14 +29,14 @@ from Items
 		//public IEnumerable<Item> Get(string search)
 		//{
 		//	var searchQuery = select + string.Format("where itemid = '{0}'" , search);
-		//	return SharedDb.GetMany<Item>(searchQuery);
+		//	return SharedDb.PosimDb.GetMany<Item>(searchQuery);
 		//}
 
         // GET: api/Items/5
         public Item Get(string id)
 		{
 			var searchQuery = select + string.Format("where itemid = '{0}'", id);
-			return SharedDb.Get<Item>(searchQuery);
+			return SharedDb.PosimDb.Get<Item>(searchQuery);
         }
 
         // POST: api/Items

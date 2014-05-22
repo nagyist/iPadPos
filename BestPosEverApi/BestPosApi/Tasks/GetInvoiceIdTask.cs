@@ -21,14 +21,14 @@ namespace WebApplication1.Tasks
 					string.Format(
 						"select {0}InvPrefix as Prefix, {0}InvSuffix as Suffix, {0}InvSize as Length from PosimRegisters where RegisterId = '{1}'",
 						InvoiceStatus == InvoiceStatus.Posted ? "P" : "W", RegisterId);
-				Out = SharedDb.Get<SuffixPrefix>(sql).StringValue;
+				Out = SharedDb.PosimDb.Get<SuffixPrefix>(sql).StringValue;
 				sql =
 					string.Format("update PosimRegisters set  {0}InvSuffix =  {0}InvSuffix + 1 where RegisterId = '{1}'",
 						InvoiceStatus == InvoiceStatus.Posted ? "P" : "W", RegisterId);
-				SharedDb.Execute(sql);
+				SharedDb.PosimDb.Execute(sql);
 				string existsString = string.Format("select count(InvoiceId) from {0}InvHeaders where InvoiceID = {1}",
 					InvoiceStatus == InvoiceStatus.Posted ? "P" : "W", Out.GetSqlCompatible());
-				exists = SharedDb.GetInt(existsString) > 0;
+				exists = SharedDb.PosimDb.GetInt(existsString) > 0;
 			}
 		}
 	}

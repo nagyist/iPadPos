@@ -19,7 +19,7 @@ namespace WebApplication1.Models
 				                         string.Format(
 					                         " WHERE (CustomerID = '{0}') OR (BillPhone like'%{0}%') OR (Misc1 like'%{0}%') or (BillLname like '{0}%')",
 					                         id);
-				return SharedDb.GetMany<Customer>(custSearchQuery);
+				return SharedDb.PosimDb.GetMany<Customer>(custSearchQuery);
 			}
 			catch (Exception ex)
 			{

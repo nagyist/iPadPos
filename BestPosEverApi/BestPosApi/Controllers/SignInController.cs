@@ -21,7 +21,7 @@ namespace WebApplication1.Controllers
         public bool Get(string id)
         {
 	        var sql = string.Format("SELECT * FROM SalesPeople where SalesPersonId = {0}", id.GetSqlCompatible());
-			var success = SharedDb.GetMany<SalesPerson>(sql).Any();
+			var success = SharedDb.PosimDb.GetMany<SalesPerson>(sql).Any();
 
 			return success;
         }
@@ -29,7 +29,7 @@ namespace WebApplication1.Controllers
         // POST: api/SignIn
         public bool Post([FromBody]string value)
         {
-			var success = SharedDb.Get<SalesPerson>(string.Format("SELECT * FROM SalesPeople where SalesPersonId = {0}",value.GetSqlCompatible())) != null;
+			var success = SharedDb.PosimDb.Get<SalesPerson>(string.Format("SELECT * FROM SalesPeople where SalesPersonId = {0}",value.GetSqlCompatible())) != null;
 
 	        return success;
 
