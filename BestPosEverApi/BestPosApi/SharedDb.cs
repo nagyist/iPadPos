@@ -10,30 +10,31 @@ using Simpler.Data;
 namespace WebApplication1
 {
 
-	internal class SharedDb
+	class SharedDb
 	{
-		readonly string connection;
-
 		public static SharedDb PosimDb
 		{
-			get { return posimDb ?? (posimDb = new SharedDb(DefaltDatabaseConnection1)); }
+			get { return posimDb ?? (posimDb = new SharedDb(() => new OdbcConnection(DefaltDatabaseConnection))); }
 		}
 
-		//public static string DefaltDatabaseConnection = "Driver=Adaptive Server Anywhere 6;Dsn=Posim;DatabaseFile=c://Posim//Posim.db;UID=dba;PWD=mtdew;DBN=posim;LINKS=TCPIP(HOST=localhost);";
-		public static string DefaltDatabaseConnection1 = "Dsn=Posim;uid=dba;pwd=mtdew";//"Data Source=OFFICE-PC;Initial Catalog=eMAPSS_DB_032614;User Id=sa;Password=openup;";
+		public static SharedDb SqlServer
+		{
+			get { return sqlServer ?? (sqlServer = new SharedDb(() => new SqlConnection(SqlDatabaseConnection))); }
+		}
+
+		//static string DefaltDatabaseConnection = "Driver=Adaptive Server Anywhere 6;Dsn=Posim;uid=dba;pwd=mtdew;";
+		static string DefaltDatabaseConnection = "Dsn=Posim;uid=dba;pwd=mtdew";
+		static string SqlDatabaseConnection = "Data Source=localhost;Initial Catalog=Affinity;User Id=sa;Password=openup;";
 		static SharedDb posimDb;
+		static SharedDb sqlServer;
 
-
-		public SharedDb(string connection)
+		Func<IDbConnection> GetConnection { get; set; } 
+		public SharedDb(Func<IDbConnection> getConnection)
 		{
-			this.connection = connection;
+			this.GetConnection = getConnection;
 		}
 
-		OdbcConnection GetConnection()
-		{
-			return new OdbcConnection(connection);
-		}
-
+	
 		public T Get<T>(string sql, object data = null)
 		{
 			try
@@ -157,22 +158,22 @@ namespace WebApplication1
 		//	}
 		//}
 
-		public DataSet GetDataSet(string sql)
-		{
-			using (var connection = GetConnection())
-			{
-				using (var da = new OdbcDataAdapter(sql, connection))
-				{
-					DataSet ds = new DataSet();
+		//public DataSet GetDataSet(string sql)
+		//{
+		//	using (var connection = GetConnection())
+		//	{
+		//		using (var da = new OdbcDataAdapter(sql, connection))
+		//		{
+		//			DataSet ds = new DataSet();
 
-					connection.Open();
-					da.Fill(ds);
-					connection.Close();
-					return ds;
-				}
+		//			connection.Open();
+		//			da.Fill(ds);
+		//			connection.Close();
+		//			return ds;
+		//		}
 
-			}
+		//	}
 
-		}
+		//}
 	}
 }

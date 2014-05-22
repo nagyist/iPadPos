@@ -43,6 +43,8 @@ namespace WebApplication1.Models
 
 		public DateTime InvoiceDate { get; set; }
 
+		public ChargeDetails ChargeDetail { get; set; }
+
 		[JsonIgnore]
 		public double SubTotal
 		{

@@ -42,7 +42,8 @@ namespace WebApplication1.Tasks
 					string insertArQuery =
 						string.Format(
 							@"INSERT INTO DBA.ARItems(LockFlag,PARENTRECORDID,CLOSEDON,DOCDATE, DOCTYPE,REFNO,TERMS,SALE,PAYMENT,APPLIED,BALANCE,BALANCEFORWARDED,PERIOD,REGISTERID,LATEFEECODE)
-						VALUES (0,{0},'2300/jan/01 00:00',{1},0,{2},'Net30',{3},0,0,{3},0,0,{4},0)", In.Customer.RecordID, invDate.GetSqlCompatible(), pId.GetSqlCompatible(), acctPayment.Amount, In.RegisterId.GetSqlCompatible());
+						VALUES (0,{0},'2300/jan/01 00:00',{1},0,{2},'Net30',{3},0,0,{3},0,0,{4},0)", In.Customer.RecordID,
+							invDate.GetSqlCompatible(), pId.GetSqlCompatible(), acctPayment.Amount, In.RegisterId.GetSqlCompatible());
 					SharedDb.PosimDb.Execute(insertArQuery);
 
 					SharedDb.PosimDb.Execute(string.Format("call ApplyToOldestAux({0})", In.Customer.RecordID));
@@ -52,7 +53,15 @@ namespace WebApplication1.Tasks
 				string copyQuery = string.Format("CALL CopyWInv2PInv ('{0}','{1}', '{2}' )", wId, pId, invDate);
 				SharedDb.PosimDb.Execute(copyQuery);
 
-				
+				//Save sharge and signature
+				if (In.ChargeDetail != null)
+				{
+					In.ChargeDetail.InvoiceId = pId;
+					new SaveChargeTask{Charge = In.ChargeDetail}.Execute();
+					
+				}
+			
+			//
 				//Post
 				string precQuery = "select RecordID from PInvHeaders where InvoiceID = " + pId.GetSqlCompatible(true);
 				var recordId = SharedDb.PosimDb.GetInt(precQuery);
