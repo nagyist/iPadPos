@@ -22,6 +22,8 @@
     <MtouchLink>None</MtouchLink>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchDebug>true</MtouchDebug>
+    <CrashReportingApiKey>
+    </CrashReportingApiKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -55,6 +57,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CrashReportingApiKey>9803131fee8ab2370b975a3dacffc2d25e8464cd</CrashReportingApiKey>
+    <CrashReportingEnabled>true</CrashReportingEnabled>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Developer</CodesignKey>
   </PropertyGroup>
@@ -70,6 +74,8 @@
     <BuildIpa>true</BuildIpa>
     <CodesignProvision>F38A1ECD-A3D3-4A9D-99AD-037D9C03B17A</CodesignProvision>
     <CodesignKey>iPhone Distribution: INTERACTIVE INNOVATIVE SOLUTIONS LLC</CodesignKey>
+    <CrashReportingApiKey>9803131fee8ab2370b975a3dacffc2d25e8464cd</CrashReportingApiKey>
+    <CrashReportingEnabled>true</CrashReportingEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>full</DebugType>
