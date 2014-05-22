@@ -267,6 +267,23 @@ namespace iPadPos
 			const float sideBarWidth = 320f;
 			const float bottomHeight = 240;
 
+			async Task<double> AskForValue(string reason,string extra)
+			{
+				var inputAlert = new SimpleAlertView (reason, extra) {
+					{"Cancel",null},
+					{"Ok",null},
+				};
+				inputAlert.AlertViewStyle = UIAlertViewStyle.PlainTextInput;
+				inputAlert.Show ();
+				var index = await inputAlert.ClickedAsync ();
+				if (index == 0)
+					return 0;
+				double amount;
+				if (double.TryParse (inputAlert.TextEntryValue, out amount))
+					return amount;
+				return await AskForValue (reason, "Invalid amount");
+			}
+
 			public InvoiceView (UIViewController  parent)
 			{
 				BackgroundColor = Theme.Current.BackgroundGray;
@@ -278,7 +295,15 @@ namespace iPadPos
 					}
 				});
 				Add (BottomView = new InvoiceBottomView (parent) {
-					AddItem = (i) => {
+					AddItem = async (i) => {
+						var c = i as Coupon;
+						if(c != null && c.ManualDiscount)
+						{
+							var amount = await AskForValue("Coupon Amount","");
+							if(amount == 0)
+								return;
+							i.Price = amount;
+						}
 						Invoice.AddItem (i);
 					}
 				});
