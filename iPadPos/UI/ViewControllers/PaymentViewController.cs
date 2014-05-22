@@ -112,15 +112,15 @@ namespace iPadPos
 
 			BigTed.BTProgressHUD.ShowContinuousProgress();
 			var paymentSucces = await ProcessPayment ();
-			bool success = false;
-			if (paymentSucces) {
-				Console.WriteLine ("Posting invoice");
-				success = await WebService.Main.PostInvoice (Invoice);
+			if (!paymentSucces) {
+				BigTed.BTProgressHUD.Dismiss ();
+				return;
 			}
+			var success = await WebService.Main.PostInvoice (Invoice);
 			BigTed.BTProgressHUD.Dismiss ();
 			if(!success)
 			{
-				new UIAlertView("Error", paymentSucces ? "There was an error posting the invoice. Please try again" : "There was an error processing your credit card",null,"Ok").Show();
+				new UIAlertView("Error", "There was an error posting the invoice. Please try again",null,"Ok").Show();
 				return;
 			}
 			Settings.Shared.LastPostedChange = Invoice.Change;
@@ -138,9 +138,12 @@ namespace iPadPos
 			Invoice.ChargeDetail = Database.Main.Table<ChargeDetails> ().Where (x => x.LocalInvoiceId == Invoice.LocalId).FirstOrDefault ();
 			if (Invoice.ChargeDetail == null) {
 				Console.WriteLine ("Awaiting Card charge");
-				Invoice.ChargeDetail = await CreditCardProccessor.Shared.Charge (Invoice);
-				if (Invoice.ChargeDetail == null)
+				var charge = await CreditCardProccessor.Shared.Charge (Invoice);
+				Invoice.ChargeDetail = charge.Item1;
+				if (Invoice.ChargeDetail == null) {
+					new SimpleAlertView ("Credit Card Error", charge.Item2).Show ();
 					return false;
+				}
 				Invoice.ChargeDetail.LocalInvoiceId = Invoice.LocalId;
 				Database.Main.InsertOrReplace (Invoice.ChargeDetail);
 			}

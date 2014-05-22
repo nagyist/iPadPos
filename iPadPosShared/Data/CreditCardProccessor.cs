@@ -13,7 +13,20 @@ namespace iPadPos
 			#if DEBUG
 			CardFlight.SharedInstance.Logging = true;
 			#endif
-			CardFlight.SharedInstance.Init ("1fc8e90a2a82f5b02b85ae7945535630", "acc_1dae92cb8808e3ce");
+			Init ();
+			Settings.Shared.SubscribeToProperty ("CCAcountKey", Init);
+			Settings.Shared.SubscribeToProperty ("TestMode", Init);
+
+		}
+		void Init()
+		{
+			var api = ApiKey;
+			var acc = Settings.Shared.CurrentCCAcountKey;
+			CardFlight.SharedInstance.Init (api, acc);
+		}
+		static string ApiKey
+		{
+			get{ return Settings.Shared.TestMode ? "1fc8e90a2a82f5b02b85ae7945535630" : "269a6e69b827b9e8229c0654f85e1ee2"; }
 		}
 		static CreditCardProccessor shared;
 		public static CreditCardProccessor Shared {
@@ -25,7 +38,7 @@ namespace iPadPos
 			}
 		}
 		MyReader reader;
-		public async Task<ChargeDetails> Charge(Invoice invoice)
+		public async Task<Tuple<ChargeDetails,string>> Charge(Invoice invoice)
 		{
 			if (reader == null)
 				reader = new MyReader ();
@@ -34,22 +47,22 @@ namespace iPadPos
 				Task.Delay (1000);
 			}
 			var card = await reader.Swipe();
-			if (card == null)
-				return null;
-			var result = await card.ChargeAsync (invoice);
+			if (card.Item1 == null)
+				return new Tuple<ChargeDetails, string>(null,card.Item2.ToString());
+			var result = await card.Item1.ChargeAsync (invoice);
 			if (result.Item1 == null) {
 				Console.WriteLine (result.Item2);
 				return null;
 			}
 			var charge = result.Item1;
-			return new ChargeDetails{
+			return new Tuple<ChargeDetails, string>( new ChargeDetails{
 				Amount = double.Parse(charge.Amount.ToString()),
 				AmountRefunded = double.Parse(charge.AmountRefunded.ToString()),
 				Created = charge.Created,
 				IsRefunded = charge.IsRefunded,
 				ReferenceID = charge.ReferenceID,
 				Token = charge.Token,
-			};
+			},"");
 		}
 
 
@@ -63,14 +76,12 @@ namespace iPadPos
 				this.Connect();
 			}
 			TaskCompletionSource<Tuple<CFTCard,NSError>> swipeCompletion;
-			public async Task<CFTCard> Swipe()
+			public async Task<Tuple<CFTCard, NSError>> Swipe()
 			{
 				swipeCompletion = new TaskCompletionSource<Tuple<CFTCard, NSError>> ();
 				BeginSwipeWithMessage ("Please swipe the card");
 				var response = await swipeCompletion.Task;
-				if (response.Item1 != null)
-					return response.Item1;
-				return null;
+				return response;
 			}
 
 

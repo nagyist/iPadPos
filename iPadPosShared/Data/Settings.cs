@@ -25,6 +25,10 @@ namespace iPadPos
 			get{ return TestMode ? TestServerUrl : ServerUrl; }
 		}
 
+		public string CurrentCCAcountKey
+		{
+			get{ return TestMode ? TestCCAccountKey : CCAcountKey; }
+		}
 		public string CCAcountKey
 		{
 			get{
@@ -45,7 +49,7 @@ namespace iPadPos
 			}
 			set{
 				SetValue ("TestCCAccountKey", value);
-				ProcPropertyChanged ("TestCCAccountKey");
+				ProcPropertyChanged ("CCAcountKey");
 			}
 		}
 

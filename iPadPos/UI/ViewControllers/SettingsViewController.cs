@@ -25,6 +25,11 @@ namespace iPadPos
 					},
 				},
 				new Section ("iPad Settings") {
+					new BooleanElement("Test Mode",Settings.Shared.TestMode){
+						ValueUpdated = (v) =>{
+							Settings.Shared.TestMode = v;
+						}
+					},
 					new EntryElement ("Register Id", "1", Settings.Shared.RegisterId.ToString()) {
 						ValueUpdated = (v) => {
 							try {
