@@ -3,6 +3,7 @@ using MonoTouch.Dialog;
 using MonoTouch.UIKit;
 using iOSHelpers;
 using System.Threading.Tasks;
+using MonoTouch.Foundation;
 
 namespace iPadPos
 {
@@ -54,6 +55,7 @@ namespace iPadPos
 							}
 						},
 					},
+
 				},
 				new Section ("Payment Settings") {
 					new EntryElement ("Account Key", "acc_1dae92cb8808e3ce", Settings.Shared.CCAcountKey) {
@@ -69,6 +71,10 @@ namespace iPadPos
 						},
 					},
 				},
+				new Section(){
+					new StringElement("Version",NSBundle.MainBundle.InfoDictionary["CFBundleVersion"].ToString()),
+					new StringElement("Check for updates",() => Updater.Shared.Update()), 
+				}
 			};
 		}
 

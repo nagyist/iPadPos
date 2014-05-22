@@ -24,6 +24,9 @@
     <MtouchDebug>true</MtouchDebug>
     <CrashReportingApiKey>
     </CrashReportingApiKey>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>full</DebugType>
@@ -48,6 +51,11 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchDebug>true</MtouchDebug>
     <CodesignKey>iPhone Developer</CodesignKey>
+    <IpaPackageName>
+    </IpaPackageName>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>full</DebugType>
@@ -77,6 +85,9 @@
     <CrashReportingApiKey>9803131fee8ab2370b975a3dacffc2d25e8464cd</CrashReportingApiKey>
     <CrashReportingEnabled>true</CrashReportingEnabled>
     <IpaPackageName>iPadPos</IpaPackageName>
+    <MtouchI18n>
+    </MtouchI18n>
+    <MtouchArch>ARMv7</MtouchArch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>full</DebugType>
@@ -203,6 +214,10 @@
     <ProjectReference Include="..\..\SignaturePad\src\SignaturePad.iOS\SignaturePad.iOS.csproj">
       <Project>{1E112A81-4384-42E3-84CF-CDEDC5FD1B24}</Project>
       <Name>SignaturePad.iOS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\hockeyapp-monotouch\src\HockeyApp\HockeyApp.csproj">
+      <Project>{D5C80D93-FF55-47E6-BAA3-9E13B6CB6954}</Project>
+      <Name>HockeyApp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
