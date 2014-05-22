@@ -40,7 +40,7 @@ namespace iPadPos
 		class NumberInputView : UIView
 		{
 			public Action<string> ButtonPressed{get;set;}
-			public Action EndEditing{get;set;}
+			public new Action EndEditing{get;set;}
 			StackPanel numberPanel;
 			TintedButton done;
 			public NumberInputView()

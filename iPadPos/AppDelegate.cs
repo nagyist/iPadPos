@@ -32,8 +32,8 @@ namespace iPadPos
 			ApplyTheme ();
 			window.RootViewController = App.Create ();
 			window.TintColor = Theme.Current.PayColor;
-			SyncAll ();
 			window.MakeKeyAndVisible ();
+			SyncAll ();
 			return true;
 		}
 
@@ -57,9 +57,15 @@ namespace iPadPos
 				if (showSpinner)
 					BigTed.BTProgressHUD.Dismiss ();
 			}
-			var alert = new UIAlertView ("Error", "There was an error connecting to the server", null, "Try Again");
-			alert.Clicked += (object sender, UIButtonEventArgs e) => {
-				SyncAll(true);
+			var alert = new UIAlertView ("Error", "There was an error connecting to the server", null, "Try Again","Settings");
+			alert.Clicked += async (object sender, UIButtonEventArgs e) => {
+				if(e.ButtonIndex == 1)
+				{
+					var settings = new SettingsViewController();
+					await window.RootViewController.PresentViewControllerAsync(new UINavigationController(settings),true);
+					await settings.Saved();
+				}
+				await SyncAll(true);
 			};
 			alert.Show ();
 

@@ -41,7 +41,7 @@ namespace iPadPos
 			Layer.BorderColor = CurrentTitleColor.CGColor;
 		}
 
-		public UIColor TitleColor
+		public new UIColor TitleColor
 		{
 			get{ return TitleColor (UIControlState.Normal); }
 			set{ 
@@ -58,7 +58,7 @@ namespace iPadPos
 			Layer.BorderColor = TintColor.CGColor;
 		}
 
-		public string Title
+		public new string Title
 		{
 			get{ return Title (UIControlState.Normal); }
 			set{ SetTitle (value, UIControlState.Normal); }

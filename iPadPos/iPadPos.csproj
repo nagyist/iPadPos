@@ -110,7 +110,6 @@
     <Folder Include="UI\ViewControllers\" />
     <Folder Include="UI\Cells\" />
     <Folder Include="UI\Controls\ViewComponents\" />
-    <Folder Include="Resources\Settings.bundle\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Info.plist" />
@@ -169,6 +168,7 @@
     <Compile Include="UI\ViewControllers\LoadBuyPayoutViewController.cs" />
     <Compile Include="UI\Cells\BuyInvoiceCell.cs" />
     <Compile Include="UI\ViewControllers\SettingsViewController.cs" />
+    <Compile Include="Helpers\ViewExtensions.cs" />
   </ItemGroup>
   <Import Project="..\iPadPosShared\iPadPosShared.projitems" Label="Shared" Condition="Exists('..\iPadPosShared\iPadPosShared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -212,7 +212,6 @@
     <BundleResource Include="Resources\coupon%402x.png" />
     <BundleResource Include="Resources\newProduct.png" />
     <BundleResource Include="Resources\newProduct%402x.png" />
-    <BundleResource Include="Resources\Settings.bundle\Root.plist" />
   </ItemGroup>
   <ItemGroup>
     <XamarinComponentReference Include="btprogresshud">

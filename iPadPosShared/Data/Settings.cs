@@ -1,7 +1,6 @@
 ﻿using System;
 using SQLite;
 using System.ComponentModel;
-using MonoTouch.Foundation;
 
 namespace iPadPos
 {
@@ -17,52 +16,72 @@ namespace iPadPos
 				return shared ?? (shared = new Settings());
 			}
 		}
-
 		public Settings ()
 		{
 			Database.Main.CreateTable<Setting> ();
-			NSUserDefaults.StandardUserDefaults.
 		}
 		public string CurrentServerUrl
 		{
 			get{ return TestMode ? TestServerUrl : ServerUrl; }
 		}
 
+		public string CCAcountKey
+		{
+			get{
+				string apiUri = GetStringValue("CCAcountKey");
+				return apiUri ?? "acc_1dae92cb8808e3ce";
+			}
+			set{
+				SetValue ("CCAcountKey", value);
+				ProcPropertyChanged ("CCAcountKey");
+			}
+		}
+
+		public string TestCCAccountKey
+		{
+			get{
+				string apiUri = GetStringValue("TestCCAccountKey");
+				return apiUri ?? "acc_1dae92cb8808e3ce";
+			}
+			set{
+				SetValue ("TestCCAccountKey", value);
+				ProcPropertyChanged ("TestCCAccountKey");
+			}
+		}
+
 		public string ServerUrl
 		{
 			get{
-				string apiUri = NSUserDefaults.StandardUserDefaults.StringForKey ("Server");
-				if (!string.IsNullOrEmpty (apiUri) && apiUri.EndsWith ("/"))
+				string apiUri = GetStringValue("Server");
+				if (!string.IsNullOrEmpty (apiUri) && !apiUri.EndsWith ("/"))
 					apiUri += "/";
 
 				return apiUri ?? "http://clancey.dyndns.org:32021/api/";
 			}
 			set{
-				NSUserDefaults.StandardUserDefaults.SetValueForKey ((NSString)value, (NSString)"Server");
-				NSUserDefaults.StandardUserDefaults.Synchronize ();
+				SetValue ("Server", value);
 				ProcPropertyChanged ("ServerUrl");
 			}
 		}
 		public string TestServerUrl
 		{
 			get{
-				string apiUri = NSUserDefaults.StandardUserDefaults.StringForKey ("TestServer");
-				if (!string.IsNullOrEmpty (apiUri) && apiUri.EndsWith ("/"))
+				string apiUri = GetStringValue("TestServer");
+				if (!string.IsNullOrEmpty (apiUri) && !apiUri.EndsWith ("/"))
 					apiUri += "/";
-				return apiUri  ?? "http://clancey.dyndns.org:32021/api/";
+
+				return apiUri ?? "http://clancey.dyndns.org:32021/api/";
 			}
 			set{
-				NSUserDefaults.StandardUserDefaults.SetValueForKey ((NSString)value, (NSString)"TestServer");
-				NSUserDefaults.StandardUserDefaults.Synchronize ();
-				ProcPropertyChanged ("TestServerUrl");
+				SetValue ("TestServer", value);
+				ProcPropertyChanged ("TestServer");
 			}
 		}
 		public bool TestMode
 		{
-			get{return NSUserDefaults.StandardUserDefaults.BoolForKey ("TestMode");}
-			set{ 
-				NSUserDefaults.StandardUserDefaults.SetValueForKey (NSNumber.FromBoolean(value),(NSString)"TestMode");
-				NSUserDefaults.StandardUserDefaults.Synchronize ();
+			get{return GetBool ("TestMode");}
+			set{
+				SetValue ("TestMode", value);
 				ProcPropertyChanged ("TestMode");
 			}
 		}

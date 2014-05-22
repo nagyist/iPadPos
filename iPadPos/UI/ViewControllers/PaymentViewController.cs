@@ -139,6 +139,8 @@ namespace iPadPos
 			if (Invoice.ChargeDetail == null) {
 				Console.WriteLine ("Awaiting Card charge");
 				Invoice.ChargeDetail = await CreditCardProccessor.Shared.Charge (Invoice);
+				if (Invoice.ChargeDetail == null)
+					return false;
 				Invoice.ChargeDetail.LocalInvoiceId = Invoice.LocalId;
 				Database.Main.InsertOrReplace (Invoice.ChargeDetail);
 			}

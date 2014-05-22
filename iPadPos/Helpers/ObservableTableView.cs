@@ -28,7 +28,7 @@ namespace iPadPos
 		public bool AutoDeselectRows { get; set; }
 		public string CellIdentifier = "C";
 		public bool UnEvenRows{get;set;}
-		public object DataSource {
+		public new object DataSource {
 			get {
 				return dataSource;
 			}
