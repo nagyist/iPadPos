@@ -26,7 +26,7 @@ namespace WebApplication1.Controllers
         // GET: api/PayoutBuy
 		public IEnumerable<BuyInvoice> Get()
 		{
-			var query = SelectQuery + " where InvoiceID like 'BUY%'";
+			var query = SelectQuery + " where InvoiceID like 'BUY%' Order by BillLName, BillFName ";
 			return SharedDb.GetMany<BuyInvoice>(query);
         }
 
