@@ -172,6 +172,7 @@
     <Compile Include="Controllers\PayoutBuyController.cs" />
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Controllers\TaxTypeController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\TransactionTypeController.cs" />
     <Compile Include="Controllers\WorkingInvoiceController.cs" />
     <Compile Include="Global.asax.cs">

@@ -23,7 +23,7 @@ namespace WebApplication1.Controllers
 				DiscountPercent = .3f,
 				TransCode = "S",
 				StartDate = DateTime.Today,
-				EndDate = new DateTime(2014,5,20),
+				EndDate = new DateTime(2014,5,26),
 				SelectedItemsOnly = true,
 			});
 			coupons.ForEach(x =>
