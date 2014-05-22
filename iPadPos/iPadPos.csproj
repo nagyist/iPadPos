@@ -68,8 +68,8 @@
     <ConsolePause>false</ConsolePause>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <BuildIpa>true</BuildIpa>
-    <CodesignProvision>Automatic:AdHoc</CodesignProvision>
-    <CodesignKey>iPhone Distribution</CodesignKey>
+    <CodesignProvision>F38A1ECD-A3D3-4A9D-99AD-037D9C03B17A</CodesignProvision>
+    <CodesignKey>iPhone Distribution: INTERACTIVE INNOVATIVE SOLUTIONS LLC</CodesignKey>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
     <DebugType>full</DebugType>

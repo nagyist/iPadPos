@@ -74,6 +74,17 @@ namespace iPadPos
 			var success = !string.IsNullOrEmpty(await respons.Content.ReadAsStringAsync ());
 			return success;
 		}
+		public async Task<bool> Test()
+		{
+			try{
+				var success = await GetUrl ("Test");
+				return bool.Parse(success);
+			}
+			catch(Exception ex) {
+				Console.WriteLine (ex);
+				return false;
+			}
+		}
 
 		public async Task<Item> GetItem (string id)
 		{
