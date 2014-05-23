@@ -3,6 +3,7 @@ using MonoTouch.UIKit;
 using Praeclarum.Bind;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using iOSHelpers;
 
 namespace iPadPos
 {
@@ -23,9 +24,14 @@ namespace iPadPos
 				else
 					success = await UpdateCustomer();
 				BigTed.BTProgressHUD.Dismiss();
-				if(success && Created != null)
+				if(!success)
+				{
+					new SimpleAlertView("Error", "There was an error saving the customer. Please try again.").Show();
+					return;
+				}
+				if(Created != null)
 					Created(Customer);
-				if(success && !IsCreate)
+				if(!IsCreate)
 					Popover.Dismiss(true);
 			});
 			this.NavigationItem.LeftBarButtonItem = new UIBarButtonItem (UIBarButtonSystemItem.Cancel, (s, e) => {

@@ -34,6 +34,7 @@ namespace iPadPos
 			window.TintColor = Theme.Current.PayColor;
 			window.MakeKeyAndVisible ();
 			SyncAll ();
+			Updater.Shared.Init ();
 			return true;
 		}
 

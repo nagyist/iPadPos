@@ -10,7 +10,7 @@ namespace iPadPos
 	{
 		public static InvoiceViewController InvoiceViewController;
 //		static FlyoutNavigationController flyout;
-		public static UIViewController Create()
+		public static UIViewController Create ()
 		{
 //			flyout = new FlyoutNavigationController () {
 //				ForceMenuOpen = false,
@@ -24,11 +24,12 @@ namespace iPadPos
 //				}
 //			};
 //			flyout.ViewControllers = new UIViewController[] {
-			return new UINavigationController(InvoiceViewController = new InvoiceViewController ()){
-					NavigationBar = {
-						BarStyle = UIBarStyle.BlackTranslucent,
-					}
-				};
+			return new UINavigationController (InvoiceViewController = new InvoiceViewController ()) {
+				NavigationBar = {
+					BarStyle = UIBarStyle.Black,
+					Translucent = true,
+				}
+			};
 //				,
 //			};
 //			return flyout;
@@ -39,12 +40,14 @@ namespace iPadPos
 //			flyout.ToggleMenu ();
 //		}
 
-		public static void ShowAlert(string title, string message)
+		public static void ShowAlert (string title, string message)
 		{
 			EnsureRunOnMainThread (() => new UIAlertView (title, message, null, "Ok").Show ());
 		}
+
 		static NSObject invoker;
-		public static void EnsureRunOnMainThread(Action action)
+
+		public static void EnsureRunOnMainThread (Action action)
 		{
 			if (NSThread.Current.IsMainThread) {
 				action ();
@@ -52,7 +55,7 @@ namespace iPadPos
 			}
 			if (invoker == null)
 				invoker = new NSObject ();
-			invoker.BeginInvokeOnMainThread (() => action());
+			invoker.BeginInvokeOnMainThread (() => action ());
 		}
 	}
 }
