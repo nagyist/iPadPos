@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.Odbc;
 using System.Data.SqlClient;
@@ -14,17 +15,26 @@ namespace WebApplication1
 	{
 		public static SharedDb PosimDb
 		{
-			get { return posimDb ?? (posimDb = new SharedDb(() => new OdbcConnection(DefaltDatabaseConnection))); }
+			get { return posimDb ?? (posimDb = new SharedDb(() => new OdbcConnection(Default))); }
 		}
 
 		public static SharedDb SqlServer
 		{
-			get { return sqlServer ?? (sqlServer = new SharedDb(() => new SqlConnection(SqlDatabaseConnection))); }
+			get { return sqlServer ?? (sqlServer = new SharedDb(() => new SqlConnection(ConfigurationManager.ConnectionStrings["sql"].ConnectionString))); }
+		}
+
+		static string Default
+		{
+			get
+			{
+				var d = ConfigurationManager.ConnectionStrings["sybase"].ConnectionString;
+				return d;
+			}
 		}
 
 		//static string DefaltDatabaseConnection = "Driver=Adaptive Server Anywhere 6;Dsn=Posim;uid=dba;pwd=mtdew;";
-		static string DefaltDatabaseConnection = "Dsn=Posim;uid=dba;pwd=mtdew";
-		static string SqlDatabaseConnection = "Data Source=localhost;Initial Catalog=Affinity;User Id=sa;Password=openup;";
+		//static string DefaltDatabaseConnection = "Dsn=Posim;uid=dba;pwd=mtdew";
+		//static string SqlDatabaseConnection = "Data Source=localhost;Initial Catalog=Affinity;Trusted_Connection=True;";
 		static SharedDb posimDb;
 		static SharedDb sqlServer;
 
