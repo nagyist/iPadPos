@@ -59,14 +59,14 @@ namespace WebApplication1.Printing
 			var headerImage = Receipt40Col.GetInvoiceHeaderBitmap();
 			if (headerImage != null)
 			{
-				m_Printer.PrintBitmap(PrinterStation.Receipt, headerImage, 300, PosPrinter.PrinterBitmapCenter);
+				m_Printer.PrintBitmap(PrinterStation.Receipt, headerImage, 400, PosPrinter.PrinterBitmapCenter);
 			}
 			//m_Printer.PrintMemoryBitmap(new BitmapData());
 			m_Printer.PrintNormal(PrinterStation.Receipt, receiptString);
 
 			var footerImage = Receipt40Col.GetInvoiceFooterBitmap();
 			if (footerImage != null)
-				m_Printer.PrintBitmap(PrinterStation.Receipt, footerImage, 300, PosPrinter.PrinterBitmapCenter);
+				m_Printer.PrintBitmap(PrinterStation.Receipt, footerImage, 400, PosPrinter.PrinterBitmapCenter);
 			m_Printer.PrintNormal(PrinterStation.Receipt, Receipt40Col.extraLines(8));
 			if (openDrawer)
 				m_Printer.PrintNormal(PrinterStation.Receipt, ((char) 27).ToString() + "|\x07");

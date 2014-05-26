@@ -19,7 +19,7 @@ namespace WebApplication1.Printing
             Center
         };
 
-        private const int charLimit = 45;
+        private const int charLimit = 40;
         private const int column1Width = 10;
         private const int column2Width = 21;
         private const int column3Width = 8;

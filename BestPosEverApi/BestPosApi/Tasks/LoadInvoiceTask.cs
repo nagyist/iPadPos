@@ -7,6 +7,7 @@ namespace WebApplication1.Tasks
 {
 	public class LoadInvoiceTask : SimpleTask
 	{
+		public InvoiceStatus Status { get; set; }
 		public const string SelectQuery = @" select 
 							RecordID,
 							InvoiceID as Id,
