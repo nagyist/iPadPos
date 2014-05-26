@@ -12,9 +12,10 @@ namespace WebApplication1.Controllers
     public class SignInController : ApiController
     {
         // GET: api/SignIn
-        public IEnumerable<string> Get()
+        public IEnumerable<Signature> Get()
         {
-            return new string[] { "value1", "value2" };
+	        return SharedDb.SqlServer.GetMany<Signature>("select * from signature");
+	        // return new string[] { "value1", "value2" };
         }
 
         // GET: api/SignIn/5

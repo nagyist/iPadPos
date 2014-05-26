@@ -87,6 +87,12 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="bin/MailKit.dll">
       <publishTime>05/13/2014 23:53:46</publishTime>
     </File>
+    <File Include="bin/Microsoft.PointOfService.ControlBase.dll">
+      <publishTime>02/29/2008 12:26:20</publishTime>
+    </File>
+    <File Include="bin/Microsoft.PointOfService.dll">
+      <publishTime>02/29/2008 12:26:22</publishTime>
+    </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>05/05/2014 15:59:01</publishTime>
     </File>
@@ -97,7 +103,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2014 15:59:04</publishTime>
     </File>
     <File Include="bin/Simpler.dll">
-      <publishTime>05/21/2014 19:39:30</publishTime>
+      <publishTime>05/22/2014 12:08:38</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>05/05/2014 15:58:56</publishTime>
@@ -130,7 +136,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2014 15:59:01</publishTime>
     </File>
     <File Include="bin/WebApplication1.dll">
-      <publishTime>05/21/2014 19:46:36</publishTime>
+      <publishTime>05/25/2014 16:27:13</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>05/05/2014 15:59:06</publishTime>
@@ -214,7 +220,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>05/05/2014 15:57:37</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>05/21/2014 19:43:39</publishTime>
+      <publishTime>05/25/2014 15:06:01</publishTime>
     </File>
   </ItemGroup>
 </Project>

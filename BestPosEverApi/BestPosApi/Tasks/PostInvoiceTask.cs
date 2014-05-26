@@ -5,6 +5,7 @@ using System.Transactions;
 using Simpler;
 using WebApplication1.Helpers;
 using WebApplication1.Models;
+using WebApplication1.Printing;
 
 namespace WebApplication1.Tasks
 {
@@ -71,13 +72,15 @@ namespace WebApplication1.Tasks
 					invDate.GetSqlCompatible(true));
 				SharedDb.PosimDb.Execute(postQuery);
 
-				Task.Factory.StartNew(() =>
-				{
-					new SendEmailTask
+				if(SendEmailTask.IsValidEmail(In.Customer.Email))
+					Task.Factory.StartNew(() => new SendEmailTask
 					{
 						Invoice = In,
-					}.Execute();
-				});
+					}.Execute());
+				else
+				{
+					Task.Factory.StartNew(() => new ReceiptPrinter().printReceipt(In));
+				}
 
 				//Cleanup
 				SharedDb.PosimDb.Execute(string.Format("CALL DisposeWInv ({0})", wId.GetSqlCompatible(true)));

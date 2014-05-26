@@ -34,6 +34,8 @@ namespace WebApplication1.Models
 		{
 			get { return Points.Length > 2; }
 		}
+		
+		public DateTime Date { get; set; }
 
 		string data;
 
