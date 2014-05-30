@@ -4,13 +4,17 @@ using MonoTouch.UIKit;
 using iOSHelpers;
 using System.Threading.Tasks;
 using MonoTouch.Foundation;
+using System.Linq;
 
 namespace iPadPos
 {
 	public class SettingsViewController : DialogViewController
 	{
+		Section paymentSection;
+		StringElement processorType;
 		public SettingsViewController () : base (UITableViewStyle.Grouped, null)
 		{
+
 			var testButton = new SimpleButton {
 				Title = "Test Connection",
 				TitleColor = UIColor.Black,
@@ -58,6 +62,37 @@ namespace iPadPos
 
 				},
 				new Section ("Payment Settings") {
+					(processorType = new StringElement("Credit Card Processor",Settings.Shared.CreditCardProcessor.ToString(),()=>{
+						//
+						var sheet = new SimpleActionSheet();
+						Enum.GetValues(typeof(CreditCardProcessorType)).Cast<CreditCardProcessorType>().ToList().ForEach(x=> sheet.Add(x.ToString(),Color.LightBlue,()=> {
+							if(x == CreditCardProcessorType.Paypal)
+							{
+								//check if paypal is installed
+							}
+							processorType.Value = x.ToString();
+							Settings.Shared.CreditCardProcessor = x;
+							processorType.Reload();
+							UpdatePaymentDetails();
+						}));
+						sheet.ShowFrom(processorType.GetActiveCell().Bounds,processorType.GetActiveCell(),true);
+					})),
+
+				},
+				new Section(){
+					new StringElement("Version",NSBundle.MainBundle.InfoDictionary["CFBundleVersion"].ToString()),
+					new StringElement("Check for updates",() => Updater.Shared.Update()), 
+				}
+			};
+			UpdatePaymentDetails ();
+		}
+
+		void UpdatePaymentDetails()
+		{
+			if(paymentSection != null)
+				Root.Remove (paymentSection);
+			if (Settings.Shared.CreditCardProcessor == CreditCardProcessorType.CardFlight) {
+				paymentSection = new Section ("Cardflight details") {
 					new EntryElement ("Account Key", "acc_1dae92cb8808e3ce", Settings.Shared.CCAcountKey) {
 						ShouldAutoCorrect = false,
 						ValueUpdated = (v) => {
@@ -70,13 +105,23 @@ namespace iPadPos
 							Settings.Shared.TestCCAccountKey = v;
 						},
 					},
-				},
-				new Section(){
-					new StringElement("Version",NSBundle.MainBundle.InfoDictionary["CFBundleVersion"].ToString()),
-					new StringElement("Check for updates",() => Updater.Shared.Update()), 
-				}
-			};
+				};
+				Root.Insert (3, paymentSection);
+			} else if (Settings.Shared.CreditCardProcessor == CreditCardProcessorType.Paypal) {
+				paymentSection = new Section ("Paypal details") {
+					new EntryElement("Email", "Paypal email address",Settings.Shared.PaypalId)
+					{
+						ShouldAutoCorrect = false,
+						KeyboardType = UIKeyboardType.EmailAddress,
+						ValueUpdated = (v) =>{
+							Settings.Shared.PaypalId = v;
+						},
+					}
+				};
+				Root.Insert (3, paymentSection);
+			}
 		}
+
 
 		void save ()
 		{

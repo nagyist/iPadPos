@@ -116,6 +116,7 @@ namespace iPadPos
 				BigTed.BTProgressHUD.Dismiss ();
 				return;
 			}
+			Console.WriteLine ("Posting invoice");
 			var success = await WebService.Main.PostInvoice (Invoice);
 			BigTed.BTProgressHUD.Dismiss ();
 			if(!success)
@@ -138,19 +139,20 @@ namespace iPadPos
 			Invoice.ChargeDetail = Database.Main.Table<ChargeDetails> ().Where (x => x.LocalInvoiceId == Invoice.LocalId).FirstOrDefault ();
 			if (Invoice.ChargeDetail == null) {
 				Console.WriteLine ("Awaiting Card charge");
-				var charge = await CreditCardProccessor.Shared.Charge (Invoice);
-				Invoice.ChargeDetail = charge.Item1;
-				if (Invoice.ChargeDetail == null) {
-					new SimpleAlertView ("Credit Card Error", charge.Item2).Show ();
+				var charge = await CreditCardProcessor.Shared.Charge (Invoice);
+				if (charge == null || charge.Item1 == null){
+					Invoice.ChargeDetail = null;
+					new SimpleAlertView ("Credit Card Error", charge == null ? "Unknown Error":charge.Item2).Show ();
 					return false;
 				}
+				Invoice.ChargeDetail = charge.Item1;
 				Invoice.ChargeDetail.LocalInvoiceId = Invoice.LocalId;
 				Database.Main.InsertOrReplace (Invoice.ChargeDetail);
 			}
 
 			Invoice.CreditCardProccessed = Invoice.ChargeDetail != null;
 
-			if (Invoice.CreditCardProccessed && !Invoice.ChargeDetail.Signature.IsValid) {
+			if (CreditCardProcessor.Shared.NeedsSignature && Invoice.CreditCardProccessed && !Invoice.ChargeDetail.Signature.IsValid) {
 				//GetSig
 				BigTed.BTProgressHUD.Dismiss ();
 				Invoice.ChargeDetail.Signature.Points = await GetSig ();

@@ -272,7 +272,7 @@ namespace iPadPos
 		void updateCoupons ()
 		{
 			Coupons.Where (x => x.DiscountPercent > 0 && x.CouponIsValid).ForEach (x => {
-				x.Price = (x.CouponSelectedOnly ? selectedItemsSubtotal : ItemsSubtotal) * x.DiscountPercent * -1f;
+				x.Price = (x.CouponSelectedOnly ? selectedItemsSubtotal : SubTotal) * x.DiscountPercent * -1f;
 			});
 			couponDiscount = Coupons.Sum (x => x.Price);
 			ProcPropertyChanged ("TotalDiscountString");
@@ -294,8 +294,11 @@ namespace iPadPos
 		void UpdateTotals ()
 		{
 			ItemsSubtotal = Math.Round (Items.Where (x => x.ItemType != ItemType.Coupon).Sum (x => x.SubTotal), 2);
-			selectedItemsSubtotal = Math.Round (Items.Where (x => x.ItemType != ItemType.Coupon && x.Selected).Sum (x => x.SubTotal), 2);
+			selectedItemsSubtotal = Math.Round (Items.Where (x => x.ItemType != ItemType.Coupon && x.Selected).Sum (x => x.FinalPrice), 2);
+			//First get the total amount for coupon calculation
+			SubTotal = Math.Round (Items.Where(x=> x.ItemType != ItemType.Coupon).Sum (x => x.FinalPrice), 2);
 			updateCoupons ();
+			//Update with the coupon prices
 			SubTotal = Math.Round (Items.Sum (x => x.FinalPrice), 2);
 			Total = SubTotal - DiscountAmount;
 			ProcPropertyChanged ("DiscountString");

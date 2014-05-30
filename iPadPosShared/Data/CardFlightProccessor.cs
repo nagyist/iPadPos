@@ -6,10 +6,11 @@ using MonoTouch.Foundation;
 
 namespace iPadPos
 {
-	public class CreditCardProccessor
+	public class CardFlightProccessor : CreditCardProcessor
 	{
-		public CreditCardProccessor ()
+		public CardFlightProccessor ()
 		{
+			this.ProcessorType = CreditCardProcessorType.CardFlight;
 			#if DEBUG
 			CardFlight.SharedInstance.Logging = true;
 			#endif
@@ -24,21 +25,18 @@ namespace iPadPos
 			var acc = Settings.Shared.CurrentCCAcountKey;
 			CardFlight.SharedInstance.Init (api, acc);
 		}
+		public override bool NeedsSignature {
+			get {
+				return true;
+			}
+		}
 		static string ApiKey
 		{
 			get{ return Settings.Shared.TestMode ? "1fc8e90a2a82f5b02b85ae7945535630" : "269a6e69b827b9e8229c0654f85e1ee2"; }
 		}
-		static CreditCardProccessor shared;
-		public static CreditCardProccessor Shared {
-			get {
-				return shared ?? (shared = new CreditCardProccessor());
-			}
-			set {
-				shared = value;
-			}
-		}
+
 		MyReader reader;
-		public async Task<Tuple<ChargeDetails,string>> Charge(Invoice invoice)
+		public override async Task<Tuple<ChargeDetails,string>> Charge(Invoice invoice)
 		{
 			if (MonoTouch.ObjCRuntime.Runtime.Arch == MonoTouch.ObjCRuntime.Arch.SIMULATOR) {
 				return new Tuple<ChargeDetails, string>( new ChargeDetails{

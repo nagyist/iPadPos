@@ -29,6 +29,27 @@ namespace iPadPos
 		{
 			get{ return TestMode ? TestCCAccountKey : CCAcountKey; }
 		}
+
+		public CreditCardProcessorType CreditCardProcessor {
+			get {
+				return (CreditCardProcessorType)GetInt("CreditCardProcessor");
+			}
+			set {
+				SetValue("CreditCardProcessor",(int)value);
+				iPadPos.CreditCardProcessor.Shared = null;
+			}
+		}
+
+		public string PaypalId {
+			get {
+				return GetStringValue("PaypalId");
+			}
+			set {
+				SetValue("PaypalId",value);
+				ProcPropertyChanged ("PaypalId");
+			}
+		}
+
 		public string CCAcountKey
 		{
 			get{

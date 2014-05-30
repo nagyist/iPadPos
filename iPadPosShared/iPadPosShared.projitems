@@ -35,7 +35,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\StringExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Coupon.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\CachedData.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Data\CreditCardProccessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\CFTCardExtension.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\NotificationCenter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ChargeDetails.cs" />
@@ -43,5 +42,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\BuyInvoice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Analytics.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Updater.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\PaypalProcessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\CardFlightProccessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\CreditCardProcessor.cs" />
   </ItemGroup>
 </Project>
