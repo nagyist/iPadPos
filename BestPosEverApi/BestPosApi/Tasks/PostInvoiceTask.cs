@@ -27,15 +27,22 @@ namespace WebApplication1.Tasks
 				winvTask.Execute();
 				var wId = In.Id;
 				string invDate = Date.ToString("yyyy'-'MM'-'dd HH':'mm':'ss");
-				var invTask = new GetInvoiceIdTask
+				string pId;
+				if (string.IsNullOrEmpty(In.Id))
 				{
-					RegisterId = In.RegisterId,
-					InvoiceStatus = InvoiceStatus.Posted,
-				};
-				invTask.Execute();
-				string pId = invTask.Out;
-
-				//Update Rewards
+					var invTask = new GetInvoiceIdTask
+					{
+						RegisterId = In.RegisterId,
+						InvoiceStatus = InvoiceStatus.Posted,
+					};
+					invTask.Execute();
+					pId = invTask.Out;
+				}
+				else
+				{
+					pId = In.Id;
+				}
+			//Update Rewards
 				var acctPayment = In.Payments.FirstOrDefault(x => x.PaymentType.Id == "Acct" && x.Amount != 0);
 				if (acctPayment != null)
 				{

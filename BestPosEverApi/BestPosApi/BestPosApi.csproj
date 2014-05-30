@@ -194,6 +194,7 @@
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\NewCustomerTrackingController.cs" />
     <Compile Include="Controllers\NewProductsController.cs" />
+    <Compile Include="Controllers\NextInvoiceIdController.cs" />
     <Compile Include="Controllers\PaymentTypeController.cs" />
     <Compile Include="Controllers\PayoutBuyController.cs" />
     <Compile Include="Controllers\PrintInvoiceController.cs" />
