@@ -76,7 +76,15 @@ namespace iPadPos
 			App.InvoiceViewController.SetTitle ();
 		}
 
+		public override bool OpenUrl (UIApplication application, NSUrl url, string sourceApplication, NSObject annotation)
+		{
+			if (url.Host.IndexOf("paypalHandler", StringComparison.OrdinalIgnoreCase) >= 0)
+			{
+				(CreditCardProcessor.Shared as PaypalProcessor).ProcessCallback (url.AbsoluteString);
 
+			}
+			return true;
+		}
 	}
 }
 

@@ -57,6 +57,16 @@ namespace iPadPos
 				invoker = new NSObject ();
 			invoker.BeginInvokeOnMainThread (() => action ());
 		}
+
+		public static bool CanOpenUrl(string url)
+		{
+			return UIApplication.SharedApplication.CanOpenUrl (new NSUrl(url));
+		}
+
+		public static bool OpenUrl (string url)
+		{
+			return UIApplication.SharedApplication.OpenUrl (new NSUrl(url));
+		}
 	}
 }
 

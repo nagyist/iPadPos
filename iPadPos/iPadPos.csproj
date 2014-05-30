@@ -119,6 +119,7 @@
     <Reference Include="Xamarin.AnalyticsCore">
       <HintPath>..\packages\Xamarin.Analytics.1.0.14\lib\MonoTouch10\Xamarin.AnalyticsCore.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />

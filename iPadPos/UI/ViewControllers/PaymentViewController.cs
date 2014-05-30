@@ -136,6 +136,10 @@ namespace iPadPos
 			Console.WriteLine ("Processing Payment");
 			if (Invoice.CardPayment == null || Invoice.CardPayment.Amount == 0)
 				return true;
+			if (string.IsNullOrEmpty (Invoice.Id)) {
+				Invoice.Id = await WebService.Main.GetNextPostedInvoiceId ();
+				Invoice.Save ();
+			}
 			Invoice.ChargeDetail = Database.Main.Table<ChargeDetails> ().Where (x => x.LocalInvoiceId == Invoice.LocalId).FirstOrDefault ();
 			if (Invoice.ChargeDetail == null) {
 				Console.WriteLine ("Awaiting Card charge");

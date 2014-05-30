@@ -130,6 +130,10 @@ namespace iPadPos
 			return newProducts;
 		}
 
+		public async Task<string> GetNextPostedInvoiceId()
+		{
+			return (await GetUrl (string.Format("NextInvoiceId/{0}", Settings.Shared.RegisterId))).Trim('"');
+		}
 		public Task<Invoice> GetInvoice(string id)
 		{
 			return Get<Invoice> ("Invoice", id);
