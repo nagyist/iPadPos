@@ -6,7 +6,7 @@ namespace iPadPos
 {
 	public enum CreditCardProcessorType
 	{
-		CardFlight,
+		//CardFlight,
 		Paypal,
 		PayAnywhere,
 	}
@@ -18,9 +18,9 @@ namespace iPadPos
 			get {
 				if (shared == null) {
 					switch (Settings.Shared.CreditCardProcessor) {
-					case CreditCardProcessorType.CardFlight:
-						shared = new CardFlightProccessor ();
-						return shared;
+//					case CreditCardProcessorType.CardFlight:
+//						shared = new CardFlightProccessor ();
+//						return shared;
 					case CreditCardProcessorType.Paypal:
 						shared = new PaypalProcessor ();
 						return shared;

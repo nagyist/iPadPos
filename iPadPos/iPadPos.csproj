@@ -208,10 +208,6 @@
       <Project>{D801B852-E082-492E-81AB-9357282E1986}</Project>
       <Name>SocketMobile</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CardFlight\CardFlight.csproj">
-      <Project>{CEFE52A7-C584-4F9A-900D-DD5BF1489E26}</Project>
-      <Name>CardFlight</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\SignaturePad\src\SignaturePad.iOS\SignaturePad.iOS.csproj">
       <Project>{1E112A81-4384-42E3-84CF-CDEDC5FD1B24}</Project>
       <Name>SignaturePad.iOS</Name>

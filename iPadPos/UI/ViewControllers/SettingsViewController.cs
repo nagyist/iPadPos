@@ -92,29 +92,29 @@ namespace iPadPos
 		{
 			if(paymentSection != null)
 				Root.Remove (paymentSection);
-			if (Settings.Shared.CreditCardProcessor == CreditCardProcessorType.CardFlight) {
-				paymentSection = new Section ("Cardflight details") {
-					new EntryElement ("Account Key", "acc_1dae92cb8808e3ce", Settings.Shared.CCAcountKey) {
-						ShouldAutoCorrect = false,
-						ValueUpdated = (v) => {
-							Settings.Shared.CCAcountKey = v;
-						},
-					},
-					new EntryElement ("Test Account Key", "acc_1dae92cb8808e3ce", Settings.Shared.TestCCAccountKey) {
-						ShouldAutoCorrect = false,
-						ValueUpdated = (v) => {
-							Settings.Shared.TestCCAccountKey = v;
-						},
-					},
-				};
-				Root.Insert (3, paymentSection);
-			} else if (Settings.Shared.CreditCardProcessor == CreditCardProcessorType.Paypal) {
+//			if (Settings.Shared.CreditCardProcessor == CreditCardProcessorType.CardFlight) {
+//				paymentSection = new Section ("Cardflight details") {
+//					new EntryElement ("Account Key", "acc_1dae92cb8808e3ce", Settings.Shared.CCAcountKey) {
+//						ShouldAutoCorrect = false,
+//						ValueUpdated = (v) => {
+//							Settings.Shared.CCAcountKey = v;
+//						},
+//					},
+//					new EntryElement ("Test Account Key", "acc_1dae92cb8808e3ce", Settings.Shared.TestCCAccountKey) {
+//						ShouldAutoCorrect = false,
+//						ValueUpdated = (v) => {
+//							Settings.Shared.TestCCAccountKey = v;
+//						},
+//					},
+//				};
+//				Root.Insert (3, paymentSection);
+//			}
+			if (Settings.Shared.CreditCardProcessor == CreditCardProcessorType.Paypal) {
 				paymentSection = new Section ("Paypal details") {
-					new EntryElement("Email", "Paypal email address",Settings.Shared.PaypalId)
-					{
+					new EntryElement ("Email", "Paypal email address", Settings.Shared.PaypalId) {
 						ShouldAutoCorrect = false,
 						KeyboardType = UIKeyboardType.EmailAddress,
-						ValueUpdated = (v) =>{
+						ValueUpdated = (v) => {
 							Settings.Shared.PaypalId = v;
 						},
 					}
@@ -123,14 +123,43 @@ namespace iPadPos
 					var testButton = new SimpleButton {
 						Title = "Install Paypal",
 						TitleColor = UIColor.Black,
-						Tapped = async (t) =>{
-							View.DismissKeyboard();
+						Tapped = async (t) => {
+							View.DismissKeyboard ();
 
-							App.OpenUrl("itms://itunes.apple.com/us/app/paypal-here/id505911015?mt=8");
+							App.OpenUrl ("itms://itunes.apple.com/us/app/paypal-here/id505911015?mt=8");
 						}
 					};
-					paymentSection.Add(new UIViewElement("",testButton,false));
+					paymentSection.Add (new UIViewElement ("", testButton, false));
 				}
+				Root.Insert (3, paymentSection);
+			} else if (Settings.Shared.CreditCardProcessor == CreditCardProcessorType.PayAnywhere) {
+				paymentSection = new Section ("PayAnywhere details") {
+					new EntryElement ("MerchantId", "", Settings.Shared.PayAnywhereMerchantId) {
+						ShouldAutoCorrect = false,
+						ValueUpdated = (v) => {
+							Settings.Shared.PayAnywhereMerchantId = v;
+						},
+					},
+					new EntryElement ("Login", "", Settings.Shared.PayAnywhereLogin) {
+						ShouldAutoCorrect = false,
+						ValueUpdated = (v) => {
+							Settings.Shared.PayAnywhereLogin = v;
+						},
+					},
+					new EntryElement ("UserName", "", Settings.Shared.PayAnywhereUserId) {
+						ShouldAutoCorrect = false,
+						ValueUpdated = (v) => {
+							Settings.Shared.PayAnywhereUserId = v;
+						},
+					},
+					new EntryElement ("Password", "", Settings.Shared.PayAnywherePw) {
+						ShouldAutoCorrect = false,
+						ValueUpdated = (v) => {
+							Settings.Shared.PayAnywherePw = v;
+						},
+					},
+				};
+
 				Root.Insert (3, paymentSection);
 			}
 		}
