@@ -12,6 +12,7 @@
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
     <Folder Include="$(MSBuildThisFileDirectory)Helpers\" />
     <Folder Include="$(MSBuildThisFileDirectory)Data\" />
+    <Folder Include="$(MSBuildThisFileDirectory)CreditCards\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Models\Invoice.cs" />
@@ -42,8 +43,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\BuyInvoice.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Analytics.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Data\Updater.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Data\PaypalProcessor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Data\CardFlightProccessor.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Data\CreditCardProcessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CreditCards\PaypalProcessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CreditCards\CardFlightProccessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CreditCards\CreditCardProcessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)CreditCards\PayAnywhereProcessor.cs" />
   </ItemGroup>
 </Project>

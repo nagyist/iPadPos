@@ -220,6 +220,10 @@
       <Project>{D5C80D93-FF55-47E6-BAA3-9E13B6CB6954}</Project>
       <Name>HockeyApp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\PayAnywhere\PayAnywhere.csproj">
+      <Project>{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}</Project>
+      <Name>PayAnywhere</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\contacts.png" />
