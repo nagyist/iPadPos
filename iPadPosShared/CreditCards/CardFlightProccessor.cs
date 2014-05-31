@@ -2,6 +2,7 @@
 using CardFlightSdk;
 using System.Threading.Tasks;
 using MonoTouch.Foundation;
+using MonoTouch.UIKit;
 
 
 namespace iPadPos
@@ -36,7 +37,7 @@ namespace iPadPos
 		}
 
 		MyReader reader;
-		public override async Task<Tuple<ChargeDetails,string>> Charge(Invoice invoice)
+		public override async Task<Tuple<ChargeDetails,string>> Charge(UIViewController parent,Invoice invoice)
 		{
 			if (MonoTouch.ObjCRuntime.Runtime.Arch == MonoTouch.ObjCRuntime.Arch.SIMULATOR) {
 				return new Tuple<ChargeDetails, string>( new ChargeDetails{

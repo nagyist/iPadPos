@@ -143,7 +143,7 @@ namespace iPadPos
 			Invoice.ChargeDetail = Database.Main.Table<ChargeDetails> ().Where (x => x.LocalInvoiceId == Invoice.LocalId).FirstOrDefault ();
 			if (Invoice.ChargeDetail == null) {
 				Console.WriteLine ("Awaiting Card charge");
-				var charge = await CreditCardProcessor.Shared.Charge (Invoice);
+				var charge = await CreditCardProcessor.Shared.Charge ( this,Invoice);
 				if (charge == null || charge.Item1 == null){
 					Invoice.ChargeDetail = null;
 					new SimpleAlertView ("Credit Card Error", charge == null ? "Unknown Error":charge.Item2).Show ();

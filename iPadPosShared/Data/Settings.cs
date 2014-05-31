@@ -50,6 +50,47 @@ namespace iPadPos
 			}
 		}
 
+		#region PayAnywhere
+
+		public string PayAnywhereLogin
+		{
+			get{ return GetStringValue ("PayAnywhereLogin"); }
+			set {
+				SetValue("PayAnywhereLogin",value);
+				ProcPropertyChanged ("PayAnywhereLogin");
+			}
+		}
+
+		public string PayAnywhereMerchantId
+		{
+			get{ return GetStringValue ("PayAnywhereMerchantId"); }
+			set {
+				SetValue("PayAnywhereMerchantId",value);
+				ProcPropertyChanged ("PayAnywhereMerchantId");
+			}
+		}
+
+		public string PayAnywhereUserId
+		{
+			get{ return GetStringValue ("PayAnywhereUserId"); }
+			set {
+				SetValue("PayAnywhereUserId",value);
+				ProcPropertyChanged ("PayAnywhereUserId");
+			}
+		}
+
+		public string PayAnywherePw
+		{
+			get{ return GetStringValue ("PayAnywherePw"); }
+			set {
+				SetValue("PayAnywherePw",value);
+				ProcPropertyChanged ("PayAnywherePw");
+			}
+		}
+
+
+		#endregion // PayAnywhere
+
 		public string CCAcountKey
 		{
 			get{

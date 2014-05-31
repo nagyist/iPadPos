@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using MonoTouch.UIKit;
 
 namespace iPadPos
 {
@@ -7,6 +8,7 @@ namespace iPadPos
 	{
 		CardFlight,
 		Paypal,
+		PayAnywhere,
 	}
 	public abstract class CreditCardProcessor
 	{
@@ -22,6 +24,9 @@ namespace iPadPos
 					case CreditCardProcessorType.Paypal:
 						shared = new PaypalProcessor ();
 						return shared;
+					case CreditCardProcessorType.PayAnywhere:
+						shared = new PayAnywhereProcessor ();
+						return shared;
 					}
 				}
 				return shared;
@@ -32,7 +37,7 @@ namespace iPadPos
 		}
 
 		public CreditCardProcessorType ProcessorType {get;set;}
-		public abstract Task<Tuple<ChargeDetails,string>> Charge(Invoice invoice);
+		public abstract Task<Tuple<ChargeDetails,string>> Charge(UIViewController parent, Invoice invoice);
 
 		public abstract bool NeedsSignature {get;}
 	}

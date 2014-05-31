@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Web;
+using MonoTouch.UIKit;
 
 namespace iPadPos
 {
@@ -38,7 +39,7 @@ namespace iPadPos
 		}
 		Invoice invoice;
 		TaskCompletionSource<Tuple<ChargeDetails, string>> tcs;
-		public override async Task<Tuple<ChargeDetails, string>> Charge (Invoice invoice)
+		public override async Task<Tuple<ChargeDetails, string>> Charge (UIViewController parent,Invoice invoice)
 		{
 			this.invoice = invoice;
 			if(!App.CanOpenUrl("paypalhere://takePayment"))
@@ -56,7 +57,7 @@ namespace iPadPos
 					item = {
 						new PaypalItem{
 							name = "KiD to KiD of Anchorage",
-							description = "Payment for invoice",
+							description = "Payment for invoice " + invoice.Id,
 							quantity = "1",
 							unitPrice = invoice.CardPayment.Amount.ToString()
 						}
