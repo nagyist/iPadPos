@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignaturePad.iOS", "..\Sign
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HockeyApp", "..\hockeyapp-monotouch\src\HockeyApp\HockeyApp.csproj", "{D5C80D93-FF55-47E6-BAA3-9E13B6CB6954}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayAnywhere", "..\PayAnywhere\PayAnywhere.csproj", "{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|iPhoneSimulator = Debug|iPhoneSimulator
@@ -74,6 +76,20 @@ Global
 		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.Tests|iPhoneSimulator.ActiveCfg = Debug|iPhoneSimulator
 		{3FFBFFF8-5560-4EDE-82E5-3FFDFBBA8A50}.Tests|iPhoneSimulator.Build.0 = Debug|iPhoneSimulator
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.AppStore|iPhone.Build.0 = Release|Any CPU
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.Release|iPhone.Build.0 = Release|Any CPU
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.Tests|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE}.Tests|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{4483B8BC-4226-4F9A-9418-4E554BF5EF1D}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
 		{4483B8BC-4226-4F9A-9418-4E554BF5EF1D}.Ad-Hoc|iPhone.Build.0 = Release|Any CPU
 		{4483B8BC-4226-4F9A-9418-4E554BF5EF1D}.AppStore|iPhone.ActiveCfg = Release|Any CPU
@@ -154,6 +170,7 @@ Global
 		{CEFE52A7-C584-4F9A-900D-DD5BF1489E26} = {A9B568D9-A5E1-4C56-89B0-70BB6CC0B251}
 		{1E112A81-4384-42E3-84CF-CDEDC5FD1B24} = {A9B568D9-A5E1-4C56-89B0-70BB6CC0B251}
 		{D5C80D93-FF55-47E6-BAA3-9E13B6CB6954} = {A9B568D9-A5E1-4C56-89B0-70BB6CC0B251}
+		{41B67EDC-66DB-4EC3-BAC8-F1D8A35FE0AE} = {A9B568D9-A5E1-4C56-89B0-70BB6CC0B251}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = iPadPos\iPadPos.csproj

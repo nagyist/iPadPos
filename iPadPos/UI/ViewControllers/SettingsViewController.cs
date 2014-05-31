@@ -21,6 +21,7 @@ namespace iPadPos
 				Tapped = async (t) =>{
 					View.DismissKeyboard();
 					var f =  t.Frame;
+					t.Title = "Testing...";
 					t.Title = string.Format("Test Connection: {0}", await WebService.Main.Test());
 					t.Frame = f;
 				}
@@ -118,8 +119,26 @@ namespace iPadPos
 						},
 					}
 				};
+				if (!App.HasPaypal ()) {
+					var testButton = new SimpleButton {
+						Title = "Install Paypal",
+						TitleColor = UIColor.Black,
+						Tapped = async (t) =>{
+							View.DismissKeyboard();
+
+							App.OpenUrl("itms://itunes.apple.com/us/app/paypal-here/id505911015?mt=8");
+						}
+					};
+					paymentSection.Add(new UIViewElement("",testButton,false));
+				}
 				Root.Insert (3, paymentSection);
 			}
+		}
+
+		public override void ViewWillAppear (bool animated)
+		{
+			base.ViewWillAppear (animated);
+			UpdatePaymentDetails ();
 		}
 
 

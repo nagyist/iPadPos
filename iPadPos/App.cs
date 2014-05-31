@@ -67,6 +67,11 @@ namespace iPadPos
 		{
 			return UIApplication.SharedApplication.OpenUrl (new NSUrl(url));
 		}
+
+		public static bool HasPaypal()
+		{
+			return CanOpenUrl("paypalhere://takePayment");
+		}
 	}
 }
 
