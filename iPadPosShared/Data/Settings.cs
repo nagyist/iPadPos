@@ -54,7 +54,7 @@ namespace iPadPos
 
 		public string PayAnywhereLogin
 		{
-			get{ return GetStringValue ("PayAnywhereLogin"); }
+			get{ return GetStringValue ("PayAnywhereLogin") ?? "602075"; }
 			set {
 				SetValue("PayAnywhereLogin",value);
 				ProcPropertyChanged ("PayAnywhereLogin");
@@ -63,7 +63,7 @@ namespace iPadPos
 
 		public string PayAnywhereMerchantId
 		{
-			get{ return GetStringValue ("PayAnywhereMerchantId"); }
+			get{ return GetStringValue ("PayAnywhereMerchantId") ?? "8788292183928"; }
 			set {
 				SetValue("PayAnywhereMerchantId",value);
 				ProcPropertyChanged ("PayAnywhereMerchantId");
@@ -72,7 +72,7 @@ namespace iPadPos
 
 		public string PayAnywhereUserId
 		{
-			get{ return GetStringValue ("PayAnywhereUserId"); }
+			get{ return GetStringValue ("PayAnywhereUserId") ?? "mepa204822"; }
 			set {
 				SetValue("PayAnywhereUserId",value);
 				ProcPropertyChanged ("PayAnywhereUserId");
@@ -81,7 +81,7 @@ namespace iPadPos
 
 		public string PayAnywherePw
 		{
-			get{ return GetStringValue ("PayAnywherePw"); }
+			get{ return GetStringValue ("PayAnywherePw") ?? "R2RWWvqD"; }
 			set {
 				SetValue("PayAnywherePw",value);
 				ProcPropertyChanged ("PayAnywherePw");
