@@ -25,7 +25,7 @@ namespace iPadPos
 			tcs = new TaskCompletionSource<Tuple<ChargeDetails, string>> ();
 
 			PATransactionHandler.DataHolder.Delegate = new HandlerDelegate (tcs, invoice);
-
+			PATransactionHandler.DataHolder.IsEmailOn = false;
 			PATransactionHandler.DataHolder.AppName = "Affinity";
 			PATransactionHandler.DataHolder.LoginId = Settings.Shared.PayAnywhereLogin;
 			PATransactionHandler.DataHolder.MerchantId = Settings.Shared.PayAnywhereMerchantId;
@@ -131,6 +131,14 @@ namespace iPadPos
 				}
 
 				tcs.TrySetResult (new Tuple<ChargeDetails, string> (null, response.Status == TransactionStatus.Canceled ? "The transaction was canceled" : "The card was declined"));
+			}
+			public override void Failed(NSError error)
+			{
+				tcs.TrySetResult (new Tuple<ChargeDetails, string> (null, error.ToString()));
+			}
+			public override void Finished(NSObject obj)
+			{
+				Console.WriteLine ("finished");
 			}
 		}
 	}
