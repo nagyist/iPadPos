@@ -197,6 +197,8 @@ namespace iPadPos
 			UIButton five;
 			UIButton ten;
 			UIButton twenty;
+			UIButton fifty;
+			UIButton hundred;
 
 
 			public PaymentView ()
@@ -312,6 +314,26 @@ namespace iPadPos
 				};
 				twenty.SizeToFit();
 
+				backgroundView.Add(fifty = new TintedButton{
+					Title = "$50",
+					TitleColor = UIColor.White.ColorWithAlpha(.75f),
+					SelectedTintColor = Theme.Current.PayColor,
+				});
+				fifty.TouchUpInside += (object sender, EventArgs e) => {
+					Invoice.CashPayment.Amount = 50;
+				};
+				fifty.SizeToFit();
+
+				backgroundView.Add(hundred = new TintedButton{
+					Title = "$100",
+					TitleColor = UIColor.White.ColorWithAlpha(.75f),
+					SelectedTintColor = Theme.Current.PayColor,
+				});
+				hundred.TouchUpInside += (object sender, EventArgs e) => {
+					Invoice.CashPayment.Amount = 100;
+				};
+				hundred.SizeToFit();
+
 
 			}
 
@@ -319,7 +341,7 @@ namespace iPadPos
 			public override void LayoutSubviews ()
 			{
 				base.LayoutSubviews ();
-				var frame = new RectangleF (0, 0, 500, 400);
+				var frame = new RectangleF (0, 0, 500, 420);
 				float h = 54;
 				backgroundView.Frame = frame;
 				var c = Center;
@@ -338,7 +360,7 @@ namespace iPadPos
 				var bottom = frame.Bottom + 10;
 				frame = five.Frame;
 
-				var width = (backgroundView.Frame.Width - 40)/3;
+				var width = (backgroundView.Frame.Width - 60)/5;
 				frame.X = 10;
 				frame.Width = width;
 				frame.Y = bottom;
@@ -349,6 +371,12 @@ namespace iPadPos
 
 				frame.X = frame.Right + 10;
 				twenty.Frame = frame;
+
+				frame.X = frame.Right + 10;
+				fifty.Frame = frame;
+
+				frame.X = frame.Right + 10;
+				hundred.Frame = frame;
 
 			}
 
