@@ -11,7 +11,8 @@ namespace iPadPos
 			SelectionStyle = UITableViewCellSelectionStyle.None;
 			BackgroundColor = Theme.Current.SideBarCellColor;
 			TextLabel.TextColor = UIColor.White;
-			DetailTextLabel.TextColor = UIColor.White;
+			DetailTextLabel.TextColor = Color.Orange;
+			DetailTextLabel.Font = UIFont.BoldSystemFontOfSize (20);
 		}
 	}
 }
