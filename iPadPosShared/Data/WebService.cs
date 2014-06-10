@@ -136,7 +136,7 @@ namespace iPadPos
 		}
 		public Task<Invoice> GetInvoice(string id)
 		{
-			return Get<Invoice> ("Invoice", id);
+			return Get<Invoice> ("WorkingInvoice", id);
 		}
 
 		public Task<List<Invoice>> GetInvoices()

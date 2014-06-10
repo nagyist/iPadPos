@@ -113,13 +113,16 @@
     <Reference Include="BTProgressHUD">
       <HintPath>..\Components\btprogresshud-1.9\lib\ios\BTProgressHUD.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Services" />
     <Reference Include="Xamarin.Analytics">
-      <HintPath>..\packages\Xamarin.Analytics.1.0.14\lib\MonoTouch10\Xamarin.Analytics.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Analytics.1.0.17\lib\MonoTouch10\Xamarin.Analytics.dll</HintPath>
+    </Reference>
+    <Reference Include="PLCrashReporter">
+      <HintPath>..\packages\Xamarin.Analytics.1.0.17\lib\MonoTouch10\PLCrashReporter.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.AnalyticsCore">
-      <HintPath>..\packages\Xamarin.Analytics.1.0.14\lib\MonoTouch10\Xamarin.AnalyticsCore.dll</HintPath>
+      <HintPath>..\packages\Xamarin.Analytics.1.0.17\lib\MonoTouch10\Xamarin.AnalyticsCore.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Services" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
