@@ -24,14 +24,19 @@ namespace WebApplication1.Controllers
         }
 
         // POST: api/Invoice
-        public bool Post([FromBody]Invoice value)
+        public PostedInvoiceResult Post([FromBody]Invoice value)
         {
 	        var task = new PostInvoiceTask
 	        {
 		        In = value,
 	        };
 			task.Execute();
-	        return task.Out;
+	        return new PostedInvoiceResult
+	        {
+		        Success = task.Out,
+		        InvoiceId = task.PostedInvoiceId,
+
+	        };
         }
 
         // PUT: api/Invoice/5
