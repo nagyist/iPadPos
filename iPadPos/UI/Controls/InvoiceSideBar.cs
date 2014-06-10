@@ -21,6 +21,7 @@ namespace iPadPos
 		UITableViewCell phoneNumber;
 		UITableViewCell onAccount;
 		UITableViewCell lastPostedChange;
+		ButtonCell printLastInvoice;
 		CellTableViewSource source;
 		UIPopoverController popover,newCustPopover;
 
@@ -84,11 +85,17 @@ namespace iPadPos
 					}, (lastPostedChange = new LastPostedCell () {
 
 					}),
+					(printLastInvoice = new ButtonCell{
+						Text = "Print last invoice",
+						Tapped = ()=>{
+							WebService.Main.PrintInvoice(Settings.Shared.LastPostedInvoice);
+						}
+					}),
 				},
 				ScrollEnabled = false,
 				TableHeaderView = new UIView (new RectangleF (0, 0, 0, 64)),
 			});
-			Binding.Create (() => lastPostedChange.DetailTextLabel.Text == Settings.Shared.LastPostedChangeString);
+			Binding.Create (() => lastPostedChange.DetailTextLabel.Text == Settings.Shared.LastPostedInvoice);
 			customerInfo = new UITableViewCell[] {
 				(email = new MiniCell {
 					TextLabel = {

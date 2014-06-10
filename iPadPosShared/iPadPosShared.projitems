@@ -47,5 +47,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)CreditCards\CardFlightProccessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CreditCards\CreditCardProcessor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)CreditCards\PayAnywhereProcessor.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\PostedInvoiceResult.cs" />
   </ItemGroup>
 </Project>

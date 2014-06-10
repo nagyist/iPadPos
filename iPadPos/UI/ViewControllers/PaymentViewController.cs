@@ -125,7 +125,6 @@ namespace iPadPos
 				return;
 			}
 			Settings.Shared.LastPostedChange = Invoice.Change;
-			Settings.Shared.LastPostedInvoice = Invoice.Id;
 			NavigationController.PopViewControllerAnimated(true);
 			if (InvoicePosted != null)
 				InvoicePosted ();

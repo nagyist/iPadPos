@@ -176,9 +176,13 @@ namespace iPadPos
 				var client = CreateClient ();
 				var json = Newtonsoft.Json.JsonConvert.SerializeObject (invoice);
 				var respons = await client.PostAsync ("Invoice", new StringContent (json, Encoding.UTF8, "application/json"));
+
 				stringResult = await respons.Content.ReadAsStringAsync ();
-				var success = bool.Parse (stringResult);
-				return success;
+				var result = Deserialize<PostedInvoiceResult>(stringResult);
+			
+				if(result.Success)
+					Settings.Shared.LastPostedInvoice = result.InvoiceId;
+				return result.Success;
 			}
 			catch(Exception ex) {
 				Console.WriteLine (ex);
@@ -187,6 +191,18 @@ namespace iPadPos
 			return false;
 		}
 
+		public async Task<bool> PrintInvoice(string invoiceId)
+		{
+			try{
+			var success = await GetUrl (string.Format("PrintInvoice/{0}", invoiceId));
+			return bool.Parse(success);
+			}
+			catch(Exception ex)
+			{
+				Console.WriteLine(ex);
+			}
+			return false;
+		}
 		public async Task<Customer> CreateCustomer (Customer customer)
 		{
 			try {
