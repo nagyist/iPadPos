@@ -85,7 +85,7 @@ namespace iPadPos
 					}, (lastPostedChange = new LastPostedCell () {
 
 					}),
-					(printLastInvoice = new ButtonCell{
+					(printLastInvoice = new PrintLastInvoiceCell{
 						Text = "Print last invoice",
 						Tapped = ()=>{
 							WebService.Main.PrintInvoice(Settings.Shared.LastPostedInvoice);
@@ -95,7 +95,7 @@ namespace iPadPos
 				ScrollEnabled = false,
 				TableHeaderView = new UIView (new RectangleF (0, 0, 0, 64)),
 			});
-			Binding.Create (() => lastPostedChange.DetailTextLabel.Text == Settings.Shared.LastPostedInvoice);
+			Binding.Create (() => lastPostedChange.DetailTextLabel.Text == Settings.Shared.LastPostedChangeString);
 			customerInfo = new UITableViewCell[] {
 				(email = new MiniCell {
 					TextLabel = {

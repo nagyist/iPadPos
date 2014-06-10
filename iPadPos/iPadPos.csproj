@@ -191,6 +191,7 @@
     <Compile Include="UI\Cells\BuyInvoiceCell.cs" />
     <Compile Include="UI\ViewControllers\SettingsViewController.cs" />
     <Compile Include="Helpers\ViewExtensions.cs" />
+    <Compile Include="UI\Cells\PrintLastInvoiceCell.cs" />
   </ItemGroup>
   <Import Project="..\iPadPosShared\iPadPosShared.projitems" Label="Shared" Condition="Exists('..\iPadPosShared\iPadPosShared.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
