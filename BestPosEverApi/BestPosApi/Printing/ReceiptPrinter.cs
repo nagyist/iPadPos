@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Configuration;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Threading;
@@ -17,7 +18,6 @@ namespace WebApplication1.Printing
 	{
 		PosExplorer explorer;
 		PosPrinter m_Printer;
-		string printerName = "Star TSP100 Tear Bar (TSP113)";
 
 		public void printReceipt(Invoice invoice, bool openDrawer = false)
 		{
@@ -178,7 +178,10 @@ namespace WebApplication1.Printing
 
 			try
 			{
-				deviceInfo = devices.OfType<DeviceInfo>().FirstOrDefault(x => x.ServiceObjectName.Contains("Star"));
+				var printerName = ConfigurationManager.AppSettings["ReceiptPrinter"];
+
+				deviceInfo = devices.OfType<DeviceInfo>().FirstOrDefault(x => x.ServiceObjectName.Contains(printerName)) ??
+				             devices.OfType<DeviceInfo>().FirstOrDefault(x => x.ServiceObjectName.Contains("Star"));
 				// this call returns a valid object
 				var p = posExplorer.CreateInstance(deviceInfo);
 

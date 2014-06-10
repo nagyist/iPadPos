@@ -15,8 +15,9 @@ namespace WebApplication1.Tasks
 							InvDate as InvoiceDate,
 							BillLName + ', ' + BillFName  as CustomerName,
 							RegisterID,
+							SalesPerson as SalesPersonId,
 							InvTotal as Total
-						From WInvHeaders
+						From 
 			";
 
 		public string Id { get; set; }
@@ -24,7 +25,7 @@ namespace WebApplication1.Tasks
 
 		public override void Execute()
 		{
-			string query = string.Format("{0}  where InvoiceId = {1}", SelectQuery, Id.GetSqlCompatible());
+			string query = string.Format("{0} {1}  where InvoiceId = {2}", SelectQuery, Status == InvoiceStatus.Posted ? "pinvheaders" : "Winvheaders", Id.GetSqlCompatible());
 			Invoice = SharedDb.PosimDb.Get<Invoice>(query);
 
 			if (!string.IsNullOrEmpty(Invoice.CustomerId))
@@ -50,8 +51,8 @@ TaxCode,
 --Discount,
 Transcode
 
-from WInvLines where ParentRecordId = {0} order by LineOrder",
-				Invoice.RecordId.ToString().GetSqlCompatible());
+from {0}InvLines where ParentRecordId = {1} order by LineOrder"
+				,Status == InvoiceStatus.Posted ? "p" : "w",Invoice.RecordId.ToString().GetSqlCompatible());
 			InvoiceLine[] lines = SharedDb.PosimDb.GetMany<InvoiceLine>(linesQuery);
 			lines.ForEach(x => x.CalculateDiscount());
 			//TODO remove payments

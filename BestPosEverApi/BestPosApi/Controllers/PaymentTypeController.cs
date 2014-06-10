@@ -10,12 +10,8 @@ namespace WebApplication1.Controllers
 {
     public class PaymentTypeController : ApiController
     {
-        // GET: api/PaymentTypeSS
-        public IEnumerable<PaymentType> Get()
-        {
-            return new []
-            {
-				new PaymentType
+        // GET: api/PaymentTypeS
+		internal static PaymentType[] PaymentTypes = new []{new PaymentType
 				{
 					Id = "Cash",
 					Description = "Cash",
@@ -48,6 +44,9 @@ namespace WebApplication1.Controllers
 			   },
 
             };
+        public IEnumerable<PaymentType> Get()
+        {
+			return PaymentTypes;
         }
 
 		//// GET: api/PaymentType/5

@@ -15,7 +15,12 @@ namespace WebApplication1.Controllers
         // GET: api/WorkingInvoice/5
 		public Invoice Get(string id)
 		{
-			return null;
+			var task = new LoadInvoiceTask
+			{
+				Status = InvoiceStatus.Posted,
+				Id = id,
+			}.ExecuteMe();
+			return task.Invoice;
 		}
 
         // POST: api/WorkingInvoice

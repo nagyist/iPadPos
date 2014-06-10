@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Newtonsoft.Json;
+using WebApplication1.Controllers;
 
 namespace WebApplication1.Models
 {
@@ -90,12 +91,41 @@ namespace WebApplication1.Models
 			foreach (var invoiceLine in lines)
 			{
 				bool isSeperator = invoiceLine.Description == "--------------------" && invoiceLine.TransCode == "N";
-				if (foundSeperator || isSeperator)
-					return;
-				Lines.Add(invoiceLine);
+				if (isSeperator)
+				{
+					foundSeperator = true;
+					continue;
+				}
+				if(foundSeperator)
+					ParseBottomLine(invoiceLine);
+				else 
+					Lines.Add(invoiceLine);
+			}
+
+			var paymentsTotal = Payments.Sum(x => x.Amount);
+			var change = paymentsTotal - Total;
+
+			if (change != 0)
+			{
+				Payments.Where(x => x.PaymentType.Id == "Cash").FirstOrDefault().Change = change;
 			}
 
 		}
+
+		void ParseBottomLine(InvoiceLine line)
+		{
+			if (line.TransCode.ToLower() == "y")
+				Payments.Add(new Payment
+				{
+					Amount = line.Price,
+					PaymentType = PaymentTypeController.PaymentTypes.Where(x=> x.Id == line.Description).FirstOrDefault(),
+					
+				});
+			else 
+				Console.WriteLine(line);
+		}
+
+
 
 	}
 }

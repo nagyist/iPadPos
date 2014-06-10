@@ -17,7 +17,7 @@ namespace WebApplication1.Controllers
         {
 	        var task = new LoadInvoiceTask
 	        {
-				Status = InvoiceStatus.Working,
+				Status = InvoiceStatus.Posted,
 		        Id = id,
 	        }.ExecuteMe();
 	        return task.Invoice;

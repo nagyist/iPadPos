@@ -4,28 +4,36 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Microsoft.PointOfService;
 using WebApplication1.Models;
 using WebApplication1.Printing;
+using WebApplication1.Tasks;
 
 namespace WebApplication1.Controllers
 {
     public class PrintInvoiceController : ApiController
     {
-        // GET: api/PrintInvoice
-        public IEnumerable<string> Get()
-        {
-			new ReceiptPrinter().printReceipt(new Invoice()
-			{
-				Customer = new Customer(),
-			});
 
-            return new string[] { "value1", "value2" };
-        }
 
         // GET: api/PrintInvoice/5
-        public string Get(int id)
+        public bool Get(string id)
         {
-            return "value";
+	        try
+	        {
+		        var invoice = new LoadInvoiceTask
+		        {
+					Id = id,
+					Status = InvoiceStatus.Posted
+		        }.ExecuteMe().Invoice;
+		        new ReceiptPrinter().printReceipt(invoice);
+		        return true;
+	        }
+	        catch (Exception ex)
+	        {
+		        Console.WriteLine(ex);
+	        }
+	        return false;
+
         }
 
         // POST: api/PrintInvoice
